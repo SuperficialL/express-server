@@ -1,11 +1,28 @@
-import request from '../http'
+/*
+ * @author: SuperficialL
+ * @Date: 2019-08-24 12:35:32
+ * @LastEditTime: 2019-08-31 14:37:36
+ * @Description: 接口
+ */
 
-export function loginByUserName(data) {
+import qs from 'qs';
+import request from '@/utils/request';
+
+
+export function login(data) {
     // 通过用户名登录
     return request({
         url: `login`,
         method: 'post',
         data
+    })
+}
+
+export function getUserInfo() {
+    // 获取管理员信息
+    return request({
+        url: `profile`,
+        method: 'get'
     })
 }
 
@@ -21,7 +38,7 @@ export function getCategories(params) {
     // 请求所有分类数据
     return request({
         url: 'categories',
-        method:'get',
+        method: 'get',
         params
     })
 }
@@ -30,16 +47,16 @@ export function createCategory(data) {
     // 创建分类数据
     return request({
         url: 'categories',
-        method:'post',
+        method: 'post',
         data
     })
 }
 
-export function updateCategory(id,data) {
+export function updateCategory(id, data) {
     // 修改分类数据
     return request({
         url: `categories/${id}`,
-        method:'put',
+        method: 'put',
         data
     })
 }
@@ -78,7 +95,7 @@ export function createTag(data) {
     })
 }
 
-export function updateTag(id,data) {
+export function updateTag(id, data) {
     // 更新标签数据
     return request({
         url: `tags/${id}`,
@@ -107,7 +124,7 @@ export function getArticles(params) {
     // 请求所有文章数据
     return request({
         url: 'articles',
-        method:'get',
+        method: 'get',
         params
     })
 }
@@ -116,16 +133,16 @@ export function createArticle(data) {
     // 创建文章数据
     return request({
         url: 'articles',
-        method:'post',
+        method: 'post',
         data
     })
 }
 
-export function updateArticle(id,data) {
+export function updateArticle(id, data) {
     // 修改文章数据
     return request({
         url: `articles/${id}`,
-        method:'patch',
+        method: 'patch',
         data
     })
 }
@@ -141,7 +158,7 @@ export function deleteArticle(id) {
 export function uploadImage(formData) {
     // 上传文件
     return request({
-        url:'uploads',
+        url: 'uploads',
         method: 'post',
         data: formData
     })
@@ -160,7 +177,7 @@ export function getBanners(params) {
     // 请求所有分类数据
     return request({
         url: 'banners',
-        method:'get',
+        method: 'get',
         params
     })
 }
@@ -169,16 +186,16 @@ export function createBanner(data) {
     // 创建分类数据
     return request({
         url: 'banners',
-        method:'post',
+        method: 'post',
         data
     })
 }
 
-export function updateBanner(id,data) {
+export function updateBanner(id, data) {
     // 修改分类数据
     return request({
         url: `banners/${id}`,
-        method:'put',
+        method: 'put',
         data
     })
 }
@@ -192,7 +209,7 @@ export function deleteBanner(id) {
 }
 
 
-export function getAdmin(id) {
+export function getUser(id) {
     // 请求单条分类数据
     return request({
         url: `users/${id}`,
@@ -200,34 +217,43 @@ export function getAdmin(id) {
     })
 }
 
-export function getAdminList(params) {
+export function getUserList(params) {
     // 请求所有分类数据
     return request({
         url: 'users',
-        method:'get',
+        method: 'get',
         params
     })
 }
 
-export function createAdmin(data) {
+export function createUser(data) {
     // 创建分类数据
     return request({
         url: 'users',
-        method:'post',
+        method: 'post',
         data
     })
 }
 
-export function updateAdmin(id,data) {
+export function updateUser(id, data) {
     // 修改分类数据
     return request({
         url: `users/${id}`,
-        method:'put',
+        method: 'patch',
         data
     })
 }
 
-export function deleteAdmin(id) {
+export function updateProfile(params) {
+    // 请求所有分类数据
+    return request({
+        url: 'users',
+        method: 'get',
+        params
+    })
+}
+
+export function deleteUser(id) {
     // 删除单条分类数据
     return request({
         url: `users/${id}`,
@@ -235,3 +261,11 @@ export function deleteAdmin(id) {
     })
 }
 
+
+
+
+// export {
+//     loginByUsername, getUserInfo, getUserList, updateUser, createPost, updateProfile,
+//     getPostList, createUser, updatePost, updatePostStatus, deletePost, fetchPost, userSearch, fetchTags,
+//     getCategory
+// }

@@ -1,36 +1,59 @@
-const path = require('path')
+const path = require('path');
+
+function resolve(dir) {
+    return path.join(__dirname, './', dir)
+}
+
 
 module.exports = {
-  // eslint-loader是否在保存时检查
-  lintOnSave: true,
-  // 基本路径
-  publicPath: './',
-  // 输出文件目录
-  outputDir: '../backend/dist',
-  assetsDir: 'static',
-  // webpack-dev-server 相关配置
-  devServer: {
-    // open: true,
-    overlay: {
-      warning: true,
-      errors: true
+    publicPath: process.env.NODE_ENV === 'production' ?'/admin/' :'/',
+    outputDir: __dirname + '/../server/admin',
+    lintOnSave: true,
+    productionSourceMap: true,  // 生产环境禁用
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://127.0.0.1:3000',
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            },
+            '/uploads': {
+                target: 'http://127.0.0.1:3000/admin/uploads',
+                changeOrigin: true,
+                ws: true,
+                // pathRewrite: {
+                //     '^/api': ''
+                // }
+            }
+        }
     },
-    // 设置代理
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://127.0.0.1:8000/',
-    //     // 是否允许跨域
-    //     changeOrigin: true
-    //   }
-    // }
-  },
-  // webpack 配置
-  chainWebpack: config => {
-    config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src'))
-      .set('static', path.resolve(__dirname, 'static'))
-      .set('components', path.resolve(__dirname, 'src/components'))
-      .set('assets', path.resolve(__dirname, 'src/assets'))
-      .set('api', path.resolve(__dirname, 'src/api'))
-  }
-}
+    configureWebpack: {
+        resolve: {
+            alias: {
+                '@': resolve('src')
+            }
+        }
+    },
+
+    chainWebpack: config => {
+        // webpack链接API，用于生成和修改webpack配置
+        config.module
+            .rule('svg')
+            .exclude.add(resolve('src/icons'))
+            .end();
+
+        config.module
+            .rule('icons')
+            .test(/\.svg$/)
+            .include.add(resolve('src/icons'))
+            .end()
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .options({
+                symbolId: 'icon-[name]'
+            });
+    }
+};

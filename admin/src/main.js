@@ -1,34 +1,57 @@
-import Vue from 'vue'
-import App from './App.vue'
-import './plugins/element.js'
-import router from './router'
+import Vue from 'vue';
+import App from './App';
+import store from './store';
+import router from './router';
+import Cookies from 'js-cookie';
 
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-Vue.use(mavonEditor)
+import 'normalize.css/normalize.css';
 
-// import './assets/scss/highlight.css'
+import Element from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
-import './assets/scss/style.scss'
+import mavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
+Vue.use(mavonEditor);
 
-Vue.config.productionTip = false
+import '@/styles/index.scss'; // global css
+import { getToken } from '@/utils/auth';
+
+import '@/icons'; // icon
+import * as filters from './filters'; // global filters
+
+Vue.use(Element, {
+    size: Cookies.get('size') || 'medium', // set element-ui default size
+});
+
+// Vue.use(mavonEditor);
+
+Object.keys(filters).forEach(key => {
+    Vue.filter(key, filters[key])
+});
 
 Vue.mixin({
-  computed: {
-    uploadUrl() {
-      return 'http://127.0.0.1:8000/admin/uploads'
+    computed: {
+        uploadUrl() {
+            // return process.env.VUE_APP_UPLOAD_URL || '/admin/uploads'
+            // return '/admin/uploads'
+            return 'http://127.0.0.1:3000/admin/uploads'
+        }
+    },
+    methods: {
+        getAuthHeaders() {
+            return {
+                // Authorization: `Bearer ${localStorage.token || ''}`
+                Authorization: `Bearer ${getToken() || ''}`
+            }
+        }
     }
-  },
-  methods: {
-    getAuthHeaders(){
-      return {
-        Authorization: `Bearer ${localStorage.token || ''}`
-      }
-    }
-  }
 })
 
+Vue.config.productionTip = false;
+
 new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app');
