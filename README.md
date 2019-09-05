@@ -1,1 +1,3 @@
-# 一个express + vue后台 + vue前台的个人博客
+# 服务端(node-server)
+
+> server 使用node  express,采用前后端分离的形式
