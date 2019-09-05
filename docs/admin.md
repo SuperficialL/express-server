@@ -1,29 +1,21 @@
-<!--
- * @Author: SuperficialL
- * @Date: 2019-09-04 23:38:22
- * @LastEditTime: 2019-09-04 23:38:22
- * @Description: Do not edit
- -->
 # 接口前缀
 
-```javescript
-http://localhost:3000/
-```
+    http://localhost:3000/
 
 ## 管理员
 
 ## 管理员注册
 
-> 部署线上建议屏蔽掉此注册接口
+> 项目上线后建议屏蔽掉此注册接口
 
-```javascript
+```js
 POST    /admin/register
 ```
 
 ### 参数说明
 参数 | 说明 | 是否必填
----|---|:---:
-nickname | 昵称 | 是
+| - |:-:|:-:|
+username | 昵称 | 是
 email | 邮箱 | 是
 password1 | 密码 | 是
 password2 | 确认密码 | 是
@@ -38,10 +30,12 @@ password2 | 确认密码 | 是
 ```
 
 ## 管理员登录
-```
+
+```js
 POST    /admin/login
 ```
 ### 参数说明
+
 参数 | 说明 | 是否必填
 ---|---|:---:
 email | 邮箱 | 是
@@ -55,6 +49,7 @@ password | 密码 | 是
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsInNjb3BlIjoxNiwiaWF0IjoxNTYwNTE0NzQwLCJleHAiOjE1NjA1MTgzNDB9.E7k-3bFWizGq2ykrmBgIF0Ng-2oPI70RdhvRTJ3GC4Y"
 }
 ```
+
 ## 管理员身份验证
 ```
 POST    /admin/auth
@@ -102,9 +97,9 @@ config.headers['Authorization'] = _encode();
     "msg": "success",
     "errorCode": 0,
     "data": {
-        "id": 3,
-        "nickname": "梁凤波",
-        "email": "itbo@163.com"
+        "id": 1,
+        "nickname": "SuperficialL",
+        "email": "347106739@qq.com"
     }
 }
 ```
