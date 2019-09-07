@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-09-05 00:42:09
+ * @LastEditTime: 2019-09-07 13:52:33
  * @Description:  用户增删改查
  */
 
@@ -9,10 +9,9 @@ const assert = require('http-assert');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const User = require('../../models/User');
-const authMiddleware = require('../../middleware/auth');
 
 /**
- * @description: 登录处理
+ * @description: 登录
  * @param {username} string
  * @param {password} string
  * @return: token
@@ -23,22 +22,24 @@ exports.login = async (req, res) => {
         username,
         password
     } = req.body;
-    // 去除空格
+    // 去除用户输入的不必要的空格
     username = username.trim();
     password = password.trim();
 
     // 判断账号是否为空
     if (!username) {
-        return res.status(400).json({
-            code: 0,
+        return res.json({
+            code: 200,
+            errorCode: 1000101,
             message: '账号不可为空~',
         });
     };
 
     // 判断密码是否为空
     if (!password) {
-        return res.status(400).json({
-            code: 0,
+        return res.json({
+            code: 200,
+            errorCode: 1000102,
             message: '密码不可为空~',
         });
     }
@@ -50,14 +51,15 @@ exports.login = async (req, res) => {
         // 查询错误
         if (err) {
             return res.status(500).json({
-                code: 0,
+                code: 500,
+                errorCode: 500,
                 message: err.message
             });
         } else {
             if (!user) {
                 // 用户不存在
                 return res.status(400).json({
-                    code: 0,
+                    code: 1,
                     message: '用户不存在!'
                 });
             } else {
@@ -71,13 +73,13 @@ exports.login = async (req, res) => {
                         expiresIn: config.security.expiresIn
                     });
                     return res.json({
-                        code: 1,
+                        code: 0,
                         message: '登录成功~',
                         token
                     });
                 } else {
                     return res.json({
-                        code: 0,
+                        code: 1,
                         message: '密码错误!'
                     });
                 }
@@ -98,13 +100,14 @@ exports.register = async (req, res) => {
     const {
         username,
         password,
+        password2,
         email,
         avatar
     } = req.body;
     // 用户账号为空
     if (!username) {
         return res.status(400).json({
-            code: 0,
+            code: 1,
             message: '账号不可为空~',
         });
     };
@@ -112,45 +115,50 @@ exports.register = async (req, res) => {
     // 用户没有输入密码
     if (!password) {
         return res.status(400).json({
-            code: 0,
+            code: 1,
             message: '密码不可为空~',
         });
     };
 
-    // 查询
+    // 两次密码输入不正确
+    if (!password || password !== password2) {
+        return res.status(400).json({
+            code: 1,
+            message: '两次密码输入不正确~',
+        });
+    };
+
+    // 查询用户是否存在
     await User.findOne({
         username
     }, (err, user) => {
         // 查询错误
         if (err) {
             return res.status(500).json({
-                code: 0,
+                code: 1,
                 message: err.message
             });
         } else {
-
-        }
-
-        if (!user) {
-            // 用户不存在,可以注册
-            user = new User({
-                username,
-                password,
-                email,
-                avatar
-            });
-            user.save();
-            res.json({
-                code: 1,
-                message: '创建用户成功~'
-            })
-            return;
-        } else {
-            // 用户已存在
-            return res.status(400).json({
-                code: 0,
-                message: '用户已存在~'
-            });
+            if (!user) {
+                // 用户不存在,可以注册
+                user = new User({
+                    username,
+                    password,
+                    email,
+                    avatar
+                });
+                user.save();
+                return res.json({
+                    code: 0,
+                    message: '创建用户成功~'
+                })
+            } else {
+                // 用户已存在
+                return res.status(400).json({
+                    code: 1,
+                    message: '用户已存在~'
+                });
+            }
         }
     })
 }
@@ -161,9 +169,7 @@ exports.register = async (req, res) => {
  * @return: 当前用户
  */
 exports.profile = async (req, res) => {
-    console.log(req);
     const token = String(req.headers.authorization || '').split(' ').pop();
-    console.log(token);
     const {id} = jwt.verify(token, req.app.get('secret'));
     await User.find({_id: id}, {password: 0}).exec((err, user) => {
         if (err) {

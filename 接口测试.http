@@ -2,26 +2,24 @@
 @json = Content-Type: application/json
 
 ### 登录
-### params:{username:string,password:string}
 POST {{url}}/admin/login
 {{json}}
 
 {
-    "username": "  SuperficialL  ",
-    "password": "  123456  "
+    "username": "SuperficialL",
+    "password": "123456"
 }
 
 
 ### 注册
-### params:{username:string,password:string,avatar?:string,email?:string}
 POST {{url}}/admin/register
 {{json}}
 
 {
-    "username": "SuperficialL",
+    "username": " test 1",
     "password": "123456",
-    "email": "347106739@qq.com",
-    "avatar": ""
+    "password2": "123456",
+    "email": "347106739@qq.com"
 }
 
 ### 请求当前用户信息

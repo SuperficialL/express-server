@@ -2,7 +2,7 @@
  * @Description: 数据库模块
  * @Author: SuperficialL
  * @Date: 2019-09-04 21:49:02
- * @LastEditTime: 2019-09-04 23:46:57
+ * @LastEditTime: 2019-09-07 12:17:19
  */
 
 const mongoose  = require('mongoose');
@@ -29,12 +29,12 @@ exports.connect = () => {
     })
     // 连接错误
     mongoose.connection.on('error', error => {
-		consola.warn('数据库连接失败!', error)
+		consola.error('数据库连接失败!', error)
 	})
 
 	// 连接成功
 	mongoose.connection.once('open', () => {
-		consola.ready('数据库连接成功!')
+		consola.success('数据库连接成功!')
 	})
 	
 	// 返回实例

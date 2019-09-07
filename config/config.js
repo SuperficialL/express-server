@@ -1,12 +1,14 @@
 /*
- * @Description: 配置
+ * @Description: 配置文件
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2019-09-05 00:30:05
+ * @LastEditTime: 2019-09-07 11:57:51
  */
 
 module.exports = {
     environment: 'dev',
+    // 端口
+    port: 3000,
     // mongo数据库
     mongo: {
         uri: `mongodb://127.0.0.1:27017/express`
