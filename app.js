@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-09-07 13:11:29
+ * @LastEditTime: 2019-09-08 12:46:07
  * @Description: 入口文件
  */
 
@@ -9,7 +9,7 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
 const consola = require('consola');
-const jwt = require('express-jwt');
+const expressJwt = require('express-jwt');
 const config = require('./config/config');
 const mongodb = require('./core/mongodb');
 const authMiddleware = require('./middleware/auth');
@@ -28,7 +28,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/admin',
-    jwt({secret: config.security.secretKey}).unless({
+expressJwt({secret: config.security.secretKey}).unless({
         path: ['/admin/login','/admin/register']
     })
 )

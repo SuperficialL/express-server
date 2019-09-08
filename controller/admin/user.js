@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-09-07 13:52:33
+ * @LastEditTime: 2019-09-08 12:29:04
  * @Description:  用户增删改查
  */
 
@@ -16,7 +16,6 @@ const User = require('../../models/User');
  * @param {password} string
  * @return: token
  */
-
 exports.login = async (req, res) => {
     let {
         username,
@@ -31,7 +30,7 @@ exports.login = async (req, res) => {
         return res.json({
             code: 200,
             errorCode: 1000101,
-            message: '账号不可为空~',
+            message: '账号不可为空～',
         });
     };
 
@@ -40,7 +39,7 @@ exports.login = async (req, res) => {
         return res.json({
             code: 200,
             errorCode: 1000102,
-            message: '密码不可为空~',
+        message: '密码不可为空～',
         });
     }
 
@@ -58,9 +57,10 @@ exports.login = async (req, res) => {
         } else {
             if (!user) {
                 // 用户不存在
-                return res.status(400).json({
-                    code: 1,
-                    message: '用户不存在!'
+                return res.json({
+                    code: 400,
+                    errorCode: 1000404,
+                    message: '用户不存在～'
                 });
             } else {
                 // 用户存在验证密码
@@ -73,14 +73,16 @@ exports.login = async (req, res) => {
                         expiresIn: config.security.expiresIn
                     });
                     return res.json({
-                        code: 0,
-                        message: '登录成功~',
+                        code: 200,
+                        errorCode: 0,
+                        message: '登录成功～',
                         token
                     });
                 } else {
                     return res.json({
-                        code: 1,
-                        message: '密码错误!'
+                        code: 200,
+                        errorCode: 1000103,
+                        message: '密码错误～'
                     });
                 }
             }
@@ -104,26 +106,34 @@ exports.register = async (req, res) => {
         email,
         avatar
     } = req.body;
+    // let username = username.trim();
+    // let password = password.trim();
+    // let password2 = password2.trim();
+    // let email = email.trim();
+    // let avatar = avatar.trim();
     // 用户账号为空
     if (!username) {
-        return res.status(400).json({
-            code: 1,
+        return res.json({
+            code: 200,
+            errorCode: 1000101,
             message: '账号不可为空~',
         });
     };
 
     // 用户没有输入密码
     if (!password) {
-        return res.status(400).json({
-            code: 1,
+        return res.json({
+            code: 400,
+            errorCode: 1000102,
             message: '密码不可为空~',
         });
     };
 
     // 两次密码输入不正确
     if (!password || password !== password2) {
-        return res.status(400).json({
-            code: 1,
+        return res.json({
+            code: 400,
+            errorCode: 1000103,
             message: '两次密码输入不正确~',
         });
     };
@@ -135,7 +145,8 @@ exports.register = async (req, res) => {
         // 查询错误
         if (err) {
             return res.status(500).json({
-                code: 1,
+                code: 500,
+                errorCode: 500,
                 message: err.message
             });
         } else {
@@ -148,14 +159,16 @@ exports.register = async (req, res) => {
                     avatar
                 });
                 user.save();
-                return res.json({
-                    code: 0,
+                return res.status(201).json({
+                    code: 201,
+                    errorCode: 0,
                     message: '创建用户成功~'
                 })
             } else {
                 // 用户已存在
-                return res.status(400).json({
-                    code: 1,
+                return res.json({
+                    code: 400,
+                    errorCode: 1000104,
                     message: '用户已存在~'
                 });
             }
@@ -170,23 +183,40 @@ exports.register = async (req, res) => {
  */
 exports.profile = async (req, res) => {
     const token = String(req.headers.authorization || '').split(' ').pop();
-    const {id} = jwt.verify(token, req.app.get('secret'));
+    if (!token) {
+        return res.status(403) .json({
+            code: 403,
+            errrorCode: 403,
+            message: "token不存在～"
+        })
+    }
+    const {id} = jwt.verify(token, config.security.secretKey,{
+        expiresIn: config.security.expiresIn
+    });
+    if (!id) {
+        return res.status(403) .json({
+            code: 403,
+            errrorCode: 403,
+            message: "用户不存在～"
+        })
+    }
     await User.find({_id: id}, {password: 0}).exec((err, user) => {
         if (err) {
-            return res.json({
-                code: 0,
+            return res.status(500).json({
+                code: 500,
+                errorCode: 500,
                 message: err.message
             })
         } else {
             if (user) {
                 return res.json({
-                    code: 1,
+                    code: 200,
                     message: '获取用户信息成功~',
                     results: user[0]
                 })
             } else {
                 return res.json({
-                    code: 0,
+                    code: 400,
                     message: '获取用户信息失败~'
                 })
             }
