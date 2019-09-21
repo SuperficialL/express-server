@@ -2,7 +2,7 @@
  * @Description: 配置文件
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2019-09-20 18:11:51
+ * @LastEditTime: 2019-09-21 15:20:43
  */
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     security: {
         // 密钥
         secretKey: "secretKey",
-        // 过期时间 1小时
+        // 过期时间 单位 s
         expiresIn: 60 * 60 * 24
     }
 };

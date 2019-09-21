@@ -24,8 +24,7 @@ POST {{url}}/admin/register
 ### 请求当前用户信息
 ### params:{token}
 GET {{url}}/admin/profile
-Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNmJhNTVkN2FiYWQyNDNlM2E0OGJjZCIsImlhdCI6MTU2NzYxNTI0NSwiZXhwIjoxNTY3NjE1MjQ4fQ.Ax2sljK5qPulQqkCIV1NgBkQ5IzwvkDAx1e-xBx1uQo
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNmJhNTVkN2FiYWQyNDNlM2E0OGJjZCIsImlhdCI6MTU2NzkxNjUxOCwiZXhwIjoxNTY3OTIwMTE4fQ.9pCH227jRcesgzphtOXNfUTm4Z1ub6yPqm2qHtKvQ08
 
 
 
