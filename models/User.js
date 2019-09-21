@@ -2,29 +2,34 @@
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
  * @LastEditTime: 2019-08-27 21:46:24
- * @Description: 管理员模型
+ * @Description: 用户模型
  */
 
-const {mongoose} = require('../core/mongodb')
+const bcrypt = require('bcrypt');
+const {mongoose} = require('../core/mongodb');
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     // 用户名
-    username: { type: String },
+    username: { type: String, required: true },
+
     // 密码
-    password: { 
+    password: {
         type: String,
+        required: true,
         select: true,
         set(val) {
-            // 加密用户输入的密码
-            return require('bcrypt').hashSync(val,10)
+           return bcrypt.hashSync(val,10);
         }
     },
-    // email
+
+    // 邮箱
     email: { type: String },
+
     // 头像
     avatar: { type: String },
-},{
-    timestamps: true
-})
 
-module.exports = mongoose.model('User', userSchema)
+    // 版本号
+    __v: { type: Number, select: false }
+});
+
+module.exports = mongoose.model('User', UserSchema);

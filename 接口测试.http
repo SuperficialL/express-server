@@ -16,16 +16,40 @@ POST {{url}}/admin/register
 {{json}}
 
 {
-    "username": " test 1",
+    "username": "test 1",
     "password": "123456",
-    "password2": "123456",
-    "email": "347106739@qq.com"
+    "password2": "123456"
 }
 
 ### 请求当前用户信息
 ### params:{token}
 GET {{url}}/admin/profile
 Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNmJhNTVkN2FiYWQyNDNlM2E0OGJjZCIsImlhdCI6MTU2NzYxNTI0NSwiZXhwIjoxNTY3NjE1MjQ4fQ.Ax2sljK5qPulQqkCIV1NgBkQ5IzwvkDAx1e-xBx1uQo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### 查询所有分类

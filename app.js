@@ -1,20 +1,19 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-09-07 13:11:29
+ * @LastEditTime: 2019-09-20 18:09:25
  * @Description: 入口文件
  */
 
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
-const consola = require('consola');
+const {ready} = require('consola');
 const jwt = require('express-jwt');
 const config = require('./config/config');
 const mongodb = require('./core/mongodb');
-const authMiddleware = require('./middleware/auth');
 const admin_route = require('./routes/admin');
-// const web_route = require('./routes/web');
+const system_route = require('./routes/dev');
 
 const app = express();
 
@@ -31,28 +30,44 @@ app.use('/admin',
     jwt({secret: config.security.secretKey}).unless({
         path: ['/admin/login','/admin/register']
     })
-)
+);
+
+app.use('/System',
+    jwt({secret: config.security.secretKey}).unless({
+        path: ['/admin/login','/admin/register']
+    })
+);
 
 // 静态文件托管
-// app.use('/uploads', express.static(__dirname + '/uploads'));
-// app.use('/admin',express.static(__dirname + '/admin'));
-
-// 错误处理
-app.use((err, req, res, next) => {
-    res.status(err.status || 500).json({
-        'code': 0,
-        'message': err.message
-    });
-    next();
-});
+app.use('/views',express.static(__dirname + '/admin'));
 
 // 连接数据库
 mongodb.connect();
 
 // 路由
 admin_route(app);
-// web_route(app);
+
+// 公司路由
+system_route(app);
+
+
+// 错误处理
+app.use((req, res) => {
+    return res.status(404).json({
+        code: 0,
+        message: '页面不存在~',
+        // errUrl: req.originalUrl
+    });
+});
+
+// // 错误处理
+app.use((err, req, res, next) => {
+    return res.status(err.status || 500).json({
+        code: 0,
+        message: err.message
+    });
+});
 
 app.listen(config.port,() => {
-    consola.ready(`服务运行在 http://127.0.0.1:${config.port}`)
+    ready(`服务运行在 http://127.0.0.1:${config.port}`)
 });

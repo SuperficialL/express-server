@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "express后端接口",
   "main": "app.js",
   "scripts": {
     "serve": "nodemon app.js",
@@ -22,7 +22,8 @@
     "marked": "^0.7.0",
     "mongoose": "^5.6.13",
     "morgan": "^1.9.1",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "nodemon": "^1.19.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0"

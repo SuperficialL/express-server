@@ -5,9 +5,9 @@
  * @Description: 分类模型
  */
 
-const {mongoose} = require('../core/mongodb')
+const {mongoose} = require('../core/mongodb');
 
-const categorySchema = new mongoose.Schema({
+const CategorySchema = new mongoose.Schema({
     name: {
         type: String 
     },
@@ -25,6 +25,9 @@ const categorySchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+
+    // 版本号
+    __v: { type: Number, select: false }
 });
 
-module.exports = mongoose.model('Category',categorySchema)
+module.exports = mongoose.model('Category',CategorySchema);

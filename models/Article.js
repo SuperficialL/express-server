@@ -7,9 +7,9 @@
 
 const { mongoose } = require('../core/mongodb');
 
-const articleSchema = new mongoose.Schema({
+const ArticleSchema = new mongoose.Schema({
     // 标题
-    title: { type: String },
+    title: { type: String,required: true },
     
     // 分类
     category: {
@@ -32,30 +32,31 @@ const articleSchema = new mongoose.Schema({
     // 正文
     body: { type: String },
 
-    // 字数
-    numbers: { type: Number,default: 0 },
-
     // 文章发布状态 => 0:草稿 1:发布
     status: { type: Number, default: 1 },
 
-    format_content: { type: String },
     // 标签
     tags: [{
         type:mongoose.SchemaTypes.ObjectId,
         ref: 'Tag'
     }],
+
     // 评论
     // comments:[{
     //     type: mongoose.SchemaTypes.ObjectId,
     //     ref: 'Comment'
     // }],
+
     // 其他元信息
     meta: {
         // 访问量
         views: { type: Number,default:0 },
         likes: { type: Number,default:0 },
         comments: { type: Number,default:0 },
-    }
+    },
+
+    // 版本号
+    __v: { type: Number, select: false }
 });
 
-module.exports = mongoose.model('Article',articleSchema);
+module.exports = mongoose.model('Article',ArticleSchema);

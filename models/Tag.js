@@ -17,6 +17,9 @@ const tagSchema = new mongoose.Schema({
 
 	// 最后修改日期
 	update_time: { type: Date, default: Date.now },
+
+	// 版本号
+	__v: { type: Number, select: false }
 });
 
 

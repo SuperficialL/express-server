@@ -49,7 +49,7 @@ password2 | 确认密码 | 是
 
 ## 登录
 
-```javascript
+`javascript
   POST    /admin/login
 ```
 

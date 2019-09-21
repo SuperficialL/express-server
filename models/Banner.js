@@ -5,15 +5,15 @@
  * @Description: 轮播模型
  */
 
-const {mongoose} = require('../core/mongodb')
+const {mongoose} = require('../core/mongodb');
 
-const schema = new mongoose.Schema({
+const Bannerschema = new mongoose.Schema({
     // 标题
     name: { type: String },
     items:[{
         image: { type: String },
         url: { type: String }
     }]
-})
+});
 
-module.exports = mongoose.model('Banner',schema,'Banner')
+module.exports = mongoose.model('Banner',Bannerschema)
