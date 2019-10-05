@@ -1,3 +1,3 @@
-# 服务端(node-server)
+# 服务端(koa-server)
 
-> server 使用nodejs中的框架 -> express,实现的接口
+> server 使用 nodejs 中的框架 -> koa,实现的接口

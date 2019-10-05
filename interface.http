@@ -1,0 +1,21 @@
+@url  = http://127.0.0.1:3000
+@json = Content-Type: application/json
+
+POST {{url}}/admin/login
+{{json}}
+
+{
+    "username":  "",
+    "password": "123456"
+}
+
+### 
+
+POST {{url}}/admin/register
+{{json}}
+
+{
+    "username":  "Superficial",
+    "password": "123456",
+    "password2": "123456"
+}

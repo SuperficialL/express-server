@@ -1,31 +1,23 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "express后端接口",
-  "main": "app.js",
-  "scripts": {
-    "serve": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "Superficial",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^3.0.6",
-    "consola": "^2.9.0",
-    "cors": "^2.8.5",
-    "express": "^5.0.0-alpha.7",
-    "express-jwt": "^5.3.1",
-    "http-assert": "^1.4.1",
-    "inflection": "^1.12.0",
-    "jsonwebtoken": "^8.5.1",
-    "marked": "^0.7.0",
-    "mongoose": "^5.6.13",
-    "morgan": "^1.9.1",
-    "multer": "^1.4.1",
-    "nodemon": "^1.19.2"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0"
-  }
+	"name": "node-server",
+	"version": "1.0.0",
+	"description": "一个后端api接口",
+	"main": "app.js",
+	"author": "SuperficialL",
+	"license": "MIT",
+	"scripts": {
+		"serve": "nodemon app"
+	},
+	"dependencies": {
+		"@koa/cors": "^3.0.0",
+		"bcrypt": "^3.0.6",
+		"consola": "^2.10.1",
+		"gravatar": "^1.8.0",
+		"jsonwebtoken": "^8.5.1",
+		"koa": "^2.8.2",
+		"koa-body": "^4.1.1",
+		"koa-router": "^7.4.0",
+		"mongoose": "^5.7.1",
+		"require-directory": "^2.1.1"
+	}
 }

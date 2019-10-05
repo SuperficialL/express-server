@@ -5,7 +5,7 @@
  * @Description: 评论模型
  */
 
-const { mongoose } = require('../core/mongodb');
+const { mongoose } = require("../core/db");
 
 // 评论模型
 const tagSchema = new mongoose.Schema({
@@ -19,6 +19,5 @@ const tagSchema = new mongoose.Schema({
 	update_time: { type: Date, default: Date.now },
 });
 
-
 // 标签模型
-module.exports = mongoose.model('Comment', tagSchema);
+module.exports = mongoose.model("Comment", tagSchema);
