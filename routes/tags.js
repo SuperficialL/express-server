@@ -9,7 +9,7 @@ const Router = require("koa-router");
 const TagController = require("../controllers/tags");
 
 const router = new Router({
-	prefix: "/admin/tags"
+    prefix: "/admin/tags"
 });
 
 router.get("/", TagController.getTags);

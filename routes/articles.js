@@ -9,7 +9,7 @@ const Router = require("koa-router");
 const ArticleController = require("../controllers/article");
 
 const router = new Router({
-	prefix: "/admin/articles"
+    prefix: "/admin/articles"
 });
 
 router.get("/", ArticleController.getArticles);

@@ -9,36 +9,36 @@ const bcrypt = require("bcrypt");
 const { mongoose } = require("../core/db");
 
 const UserSchema = new mongoose.Schema({
-	// 用户名
-	username: { type: String, required: true },
+    // 用户名
+    username: { type: String, required: true },
 
-	// 密码
-	password: {
-		type: String,
-		required: true,
-		select: false,
-		set(val) {
-			return bcrypt.hashSync(val, 10);
-		}
-	},
+    // 密码
+    password: {
+        type: String,
+        required: true,
+        select: false,
+        set(val) {
+            return bcrypt.hashSync(val, 10);
+        }
+    },
 
-	// 邮箱
-	email: { type: String, required: true },
+    // 邮箱
+    email: { type: String, required: true },
 
-	// 创建时间
-	created_time: {
-		type: Date,
-		default: Date.now
-	},
+    // 创建时间
+    created_time: {
+        type: Date,
+        default: Date.now
+    },
 
-	// 修改日期
-	updated_time: {
-		type: Date,
-		default: Date.now
-	},
+    // 修改日期
+    updated_time: {
+        type: Date,
+        default: Date.now
+    },
 
-	// 版本号
-	__v: { type: Number, select: false }
+    // 版本号
+    __v: { type: Number, select: false }
 });
 
 module.exports = mongoose.model("User", UserSchema);

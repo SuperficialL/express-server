@@ -9,17 +9,17 @@ const { mongoose } = require("../core/db");
 
 // 标签模型
 const tagSchema = new mongoose.Schema({
-	// 标签名称
-	title: { type: String, required: true },
+    // 标签名称
+    title: { type: String, required: true },
 
-	// 创建日期
-	created_time: { type: Date, default: Date.now },
+    // 创建日期
+    created_time: { type: Date, default: Date.now },
 
-	// 最后修改日期
-	updated_time: { type: Date, default: Date.now },
+    // 最后修改日期
+    updated_time: { type: Date, default: Date.now },
 
-	// 版本号
-	__v: { type: Number, select: false }
+    // 版本号
+    __v: { type: Number, select: false }
 });
 
 // 标签模型
