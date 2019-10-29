@@ -8,7 +8,8 @@
 const { mongoose } = require("../core/db");
 
 // 评论模型
-const CommentSchema = new mongoose.Schema({
+const CommentSchema = new mongoose.Schema(
+  {
     // 评论作者
     name: { type: String, required: true },
 
@@ -23,7 +24,14 @@ const CommentSchema = new mongoose.Schema({
 
     // 版本号
     __v: { type: Number, select: false }
-});
+  },
+  {
+    timestamps: {
+      createdAt: "created_time",
+      updatedAt: "updated_time"
+    }
+  }
+);
 
 // 标签模型
 module.exports = mongoose.model("Comment", CommentSchema);

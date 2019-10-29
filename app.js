@@ -16,10 +16,10 @@ const auth = require("./middleware/auth");
 const app = new Koa();
 
 app.use(async (ctx, next) => {
-    const start = new Date();
-    await next();
-    const ms = new Date() - start;
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+  const start = new Date();
+  await next();
+  const ms = new Date() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
 app.use(catchError);
@@ -37,5 +37,5 @@ app.use(koaBody());
 InitManager.init(app);
 
 app.listen(3000, () => {
-    console.log(" App 运行在 http://127.0.0.1:3000");
+  console.log(" App 运行在 http://127.0.0.1:3000");
 });

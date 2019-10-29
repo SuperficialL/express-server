@@ -7,15 +7,23 @@
 
 const { mongoose } = require("../core/db");
 
-const Bannerschema = new mongoose.Schema({
+const Bannerschema = new mongoose.Schema(
+  {
     // 标题
     name: { type: String },
     items: [
-        {
-            image: { type: String },
-            url: { type: String }
-        }
+      {
+        image: { type: String },
+        url: { type: String }
+      }
     ]
-});
+  },
+  {
+    timestamps: {
+      createdAt: "created_time",
+      updatedAt: "updated_time"
+    }
+  }
+);
 
 module.exports = mongoose.model("Banner", Bannerschema);

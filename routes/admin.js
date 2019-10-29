@@ -9,7 +9,7 @@ const Router = require("koa-router");
 const AdminController = require("../controllers/admin");
 
 const router = new Router({
-    prefix: "/admin"
+  prefix: "/admin"
 });
 
 router.post("/login", AdminController.login);

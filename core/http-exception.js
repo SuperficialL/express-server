@@ -6,14 +6,14 @@
  */
 
 class HttpException extends Error {
-    constructor(errorCode, message = "服务器内部异常~", code = 200) {
-        super();
-        this.errorCode = errorCode;
-        this.message = message;
-        this.code = code;
-    }
+  constructor(errorCode, message = "服务器内部异常~", code = 200) {
+    super();
+    this.errorCode = errorCode;
+    this.message = message;
+    this.code = code;
+  }
 }
 
 module.exports = {
-    HttpException
+  HttpException
 };

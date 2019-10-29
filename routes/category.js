@@ -8,7 +8,7 @@ const Router = require("koa-router");
 const CategoryController = require("../controllers/category");
 
 const router = new Router({
-    prefix: "/admin/categories"
+  prefix: "/admin/categories"
 });
 
 router.get("/", CategoryController.getCategories);

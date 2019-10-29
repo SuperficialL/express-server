@@ -9,23 +9,23 @@ const requireDirectory = require("require-directory");
 const Router = require("koa-router");
 
 class InitManager {
-    static init(app) {
-        InitManager.app = app;
-        InitManager.loadRouters();
-    }
+  static init(app) {
+    InitManager.app = app;
+    InitManager.loadRouters();
+  }
 
-    static loadRouters() {
-        const apiDirectory = `${process.cwd()}/routes`;
-        requireDirectory(module, apiDirectory, {
-            visit: loadRouter
-        });
-        function loadRouter(router) {
-            if (router instanceof Router) {
-                InitManager.app.use(router.routes());
-                InitManager.app.use(router.allowedMethods());
-            }
-        }
+  static loadRouters() {
+    const apiDirectory = `${process.cwd()}/routes`;
+    requireDirectory(module, apiDirectory, {
+      visit: loadRouter
+    });
+    function loadRouter(router) {
+      if (router instanceof Router) {
+        InitManager.app.use(router.routes());
+        InitManager.app.use(router.allowedMethods());
+      }
     }
+  }
 }
 
 module.exports = InitManager;
