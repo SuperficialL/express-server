@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:51:23
- * @LastEditTime: 2019-10-04 12:50:21
+ * @LastEditTime: 2019-10-30 21:50:28
  * @Description: 全局异常处理
  */
 const { HttpException } = require("../core/http-exception");
@@ -33,12 +33,17 @@ const test = async (ctx, next) => {
           message: error.message
         };
         ctx.status = 422;
+      } else if (error.name === "ValidationError") {
+        ctx.status = 400;
+        ctx.body = {
+          code: 400,
+          message: error.message
+        };
       } else {
         ctx.status = 500;
         ctx.body = {
           code: 500,
-          message: "服务器内部错误",
-          stack: error
+          message: "服务器内部错误"
         };
       }
     }

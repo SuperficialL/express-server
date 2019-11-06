@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-15 22:44:43
+ * @LastEditTime: 2019-10-30 21:51:29
  * @Description: 文章控制器
  */
 
@@ -46,7 +46,6 @@ class ArticleController {
 
   // 增加文章
   async createArticle(ctx) {
-    console.log(1);
     const {
       title,
       category,
@@ -55,7 +54,6 @@ class ArticleController {
       content,
       ...others
     } = ctx.request.body;
-    console.log(title, category, author, tags, content, others);
     await new Article({
       title,
       category,

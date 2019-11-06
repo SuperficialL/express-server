@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-15 21:49:27
+ * @LastEditTime: 2019-11-06 21:27:09
  * @Description: 分类路由控制器
  */
 const Category = require("../models/Category");
@@ -19,6 +19,7 @@ class CategoryController {
   // 获取分类详情
   async getCategory(ctx) {
     const { id } = ctx.params;
+    console.log(id);
     const category = await Category.findById(id).populate({
       path: "parent"
     });

@@ -6,30 +6,30 @@
  */
 
 class Response {
-    success(message = "响应成功~", errorCode = 0, code = 200) {
-        return {
-            code,
-            errorCode,
-            message
-        };
-    }
+  success(message = "响应成功~", errorCode = 0, code = 200) {
+    return {
+      code,
+      errorCode,
+      message
+    };
+  }
 
-    error(message = "响应成功~", errorCode = 0, code = 200) {
-        return {
-            code,
-            errorCode,
-            message
-        };
-    }
+  error(message = "响应成功~", errorCode = 0, code = 200) {
+    return {
+      code,
+      errorCode,
+      message
+    };
+  }
 
-    json(data, message = "响应成功~", errorCode = 0, code = 200) {
-        return {
-            code,
-            errorCode,
-            message,
-            data
-        };
-    }
+  json(data, message = "响应成功~", errorCode = 0, code = 200) {
+    return {
+      code,
+      errorCode,
+      message,
+      data
+    };
+  }
 }
 
 module.exports = Response;
