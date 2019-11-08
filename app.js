@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime: 2019-11-06 23:28:44
+ * @LastEditTime: 2019-11-09 00:50:04
  * @Description: App入口文件
  */
 
@@ -18,7 +18,7 @@ const { checkDirExist, getUploadDirName } = require("./utils/tools");
 
 const app = new Koa();
 
-app.use(koaStatic(path.join(__dirname, "public")));
+app.use(koaStatic(path.join(__dirname, "/public")));
 
 app.use(async (ctx, next) => {
   const start = new Date();
@@ -62,5 +62,5 @@ app.use(
 InitManager.init(app);
 
 app.listen(3000, () => {
-  console.log(" App 运行在 http://127.0.0.1:3000");
+  console.log("App 运行在 http://127.0.0.1:3000");
 });

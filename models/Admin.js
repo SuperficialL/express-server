@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-28 18:02:18
+ * @LastEditTime: 2019-11-07 23:53:56
  * @Description: 用户模型
  */
 
@@ -13,6 +13,38 @@ const UserSchema = new mongoose.Schema(
     // 用户名
     username: { type: String, required: true },
 
+    // 性别
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+      default: "male",
+      required: true
+    },
+
+    // 一句话介绍
+    headline: { type: String },
+
+    // 职业 公司 工作
+    employments: {
+      type: [{ company: { type: String }, job: { type: String } }]
+    },
+
+    // 教育经历
+    educations: {
+      type: [
+        {
+          // 学校
+          school: { type: String },
+          // 专业
+          major: { type: String },
+          // 学历  高中及以下， 大专，本科 ，硕士，博士及以上
+          diploma: { type: Number, enum: [1, 2, 3, 4, 5] },
+          // 入学年份
+          entrance_year: { type: Number }
+        }
+      ]
+    },
+
     // 密码
     password: {
       type: String,
@@ -22,7 +54,10 @@ const UserSchema = new mongoose.Schema(
         return bcrypt.hashSync(val, 10);
       }
     },
+
+    // 头像
     avatar: { type: String },
+
     // 邮箱
     email: { type: String, required: true },
 

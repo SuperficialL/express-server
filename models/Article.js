@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-11-06 22:14:28
+ * @LastEditTime: 2019-11-08 21:30:11
  * @Description: 文章模型
  */
 
@@ -42,10 +42,12 @@ const ArticleSchema = new mongoose.Schema(
     ],
 
     // 评论
-    // comments:[{
-    //     type: mongoose.SchemaTypes.ObjectId,
-    //     ref: 'Comment'
-    // }],
+    comments: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "Comment"
+      }
+    ],
 
     // 访问量
     views: { type: Number, default: 0 },
