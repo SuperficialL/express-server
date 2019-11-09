@@ -6,7 +6,8 @@
   "author": "SuperficialL",
   "license": "MIT",
   "scripts": {
-    "serve": "nodemon app"
+    "dev": "nodemon app",
+    "serve": "node app"
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",
