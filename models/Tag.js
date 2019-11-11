@@ -1,14 +1,14 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-28 17:51:03
+ * @LastEditTime: 2019-11-10 14:24:49
  * @Description: 标签模型
  */
 
 const { mongoose } = require("../core/db");
 
 // 标签模型
-const tagSchema = new mongoose.Schema(
+const TagSchema = new mongoose.Schema(
   {
     // 标签名称
     title: { type: String, required: true },
@@ -31,4 +31,4 @@ const tagSchema = new mongoose.Schema(
 );
 
 // 标签模型
-module.exports = mongoose.model("Tag", tagSchema);
+module.exports = mongoose.model("Tag", TagSchema);

@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:35:58
- * @LastEditTime: 2019-11-05 22:39:20
+ * @LastEditTime: 2019-11-10 15:24:13
  * @Description: 评论路由
  */
 
@@ -12,9 +12,9 @@ const router = new Router({
 });
 
 router.get("/", CommentController.getComments);
+router.post("/", CommentController.createComment);
 router.get("/:id", CommentController.getComment);
-router.post("/:id", CommentController.createComment);
-router.put("/:id", CommentController.updateComment);
+router.patch("/:id", CommentController.updateComment);
 router.delete("/:id", CommentController.delComment);
 
 module.exports = router;

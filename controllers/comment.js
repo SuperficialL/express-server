@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime: 2019-11-08 21:28:37
+ * @LastEditTime: 2019-11-10 16:00:23
  * @Description: 评论控制器
  */
 
@@ -16,15 +16,17 @@ class CommentController {
   }
 
   async getComment(ctx) {
-    const total = await Comment.countDocuments();
-    const comments = await Comment.find();
-    ctx.body = new Response().json({ comments, total });
+    const { id } = ctx.params;
+    const comment = await Comment.findById(id);
+    ctx.body = comment
+      ? new Response().json({ comment })
+      : new Response().success("分类不存在~");
   }
 
   async createComment(ctx) {
-    const total = await Comment.countDocuments();
-    const comments = await Comment.find();
-    ctx.body = new Response().json({ comments, total });
+    const { username, article_id, email, content } = ctx.request.body;
+    await new Comment({ username, article_id, email, content }).save();
+    ctx.body = new Response().success();
   }
 
   async updateComment(ctx) {

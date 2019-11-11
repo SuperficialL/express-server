@@ -30,7 +30,7 @@
 
 ## 运行服务
 
-\$ yarn or npm server
+\$ yarn serve or npm run server
 
 ## 打开浏览器输入回车`http://localhost:3000`
 

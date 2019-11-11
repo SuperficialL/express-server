@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:51:23
- * @LastEditTime: 2019-10-30 21:50:28
+ * @LastEditTime: 2019-11-09 23:35:45
  * @Description: 全局异常处理
  */
 const { HttpException } = require("../core/http-exception");
@@ -26,20 +26,30 @@ const test = async (ctx, next) => {
         errorCode: error.errorCode
       };
     } else {
-      // 处理未知错误
+      // token 签名过期
       if (error.name === "TokenExpiredError") {
+        ctx.status = 401;
         ctx.body = {
-          code: 422,
+          code: 401,
           message: error.message
         };
-        ctx.status = 422;
+      } else if (error.name === "JsonWebTokenError") {
+        // token 无效
+        ctx.status = 401;
+        ctx.body = {
+          code: 401,
+          message: error.message
+        };
       } else if (error.name === "ValidationError") {
+        // 参数验证失败
         ctx.status = 400;
         ctx.body = {
           code: 400,
           message: error.message
         };
       } else {
+        // 服务器内部错误
+        console.log(error);
         ctx.status = 500;
         ctx.body = {
           code: 500,

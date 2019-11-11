@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime: 2019-11-09 00:50:04
+ * @LastEditTime: 2019-11-11 21:05:51
  * @Description: App入口文件
  */
 
@@ -18,8 +18,13 @@ const { checkDirExist, getUploadDirName } = require("./utils/tools");
 
 const app = new Koa();
 
-app.use(koaStatic(path.join(__dirname, "/public")));
+// 连接数据库
+mongodb.connect();
 
+// 跨域
+app.use(cors());
+
+// 日志中间件
 app.use(async (ctx, next) => {
   const start = new Date();
   await next();
@@ -27,16 +32,17 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
-app.use(catchError);
+// 静态服务中间件
+app.use(koaStatic(path.join(__dirname, "/public")));
+// app.use(koaStatic(path.join(__dirname, "/public/admin")));
+
 // 全局异常处理
+app.use(catchError);
 
-app.use(cors());
-
+// 认证
 app.use(auth);
 
-// 连接数据库
-mongodb.connect();
-
+// 设置文件上传处理路径
 app.use(
   koaBody({
     // 支持文件
