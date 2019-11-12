@@ -1,20 +1,20 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:35:58
- * @LastEditTime: 2019-11-10 15:24:13
+ * @LastEditTime: 2019-11-12 21:43:10
  * @Description: 评论路由
  */
 
 const Router = require("koa-router");
 const CommentController = require("../controllers/comment");
 const router = new Router({
-  prefix: "/admin/comments"
+  prefix: "/api/comments"
 });
 
-router.get("/", CommentController.getComments);
-router.post("/", CommentController.createComment);
-router.get("/:id", CommentController.getComment);
-router.patch("/:id", CommentController.updateComment);
-router.delete("/:id", CommentController.delComment);
+router.get("/comments", CommentController.getComments);
+router.post("/comments", CommentController.createComment);
+router.get("/comments/:id", CommentController.getComment);
+router.patch("/comments/:id", CommentController.updateComment);
+router.delete("/comments/:id", CommentController.delComment);
 
 module.exports = router;

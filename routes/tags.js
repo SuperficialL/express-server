@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-10-02 14:54:19
- * @LastEditTime: 2019-10-02 14:56:35
+ * @LastEditTime: 2019-11-12 21:43:20
  * @Description: 标签路由
  */
 
@@ -9,7 +9,7 @@ const Router = require("koa-router");
 const TagController = require("../controllers/tags");
 
 const router = new Router({
-  prefix: "/admin/tags"
+  prefix: "/api/admin/tags"
 });
 
 router.get("/", TagController.getTags);

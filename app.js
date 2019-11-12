@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime: 2019-11-11 21:05:51
+ * @LastEditTime: 2019-11-12 22:33:14
  * @Description: App入口文件
  */
 
@@ -34,7 +34,6 @@ app.use(async (ctx, next) => {
 
 // 静态服务中间件
 app.use(koaStatic(path.join(__dirname, "/public")));
-// app.use(koaStatic(path.join(__dirname, "/public/admin")));
 
 // 全局异常处理
 app.use(catchError);

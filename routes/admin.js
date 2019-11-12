@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2019-10-09 22:23:29
+ * @LastEditTime: 2019-11-12 21:42:43
  * @Description: 用户相关路由
  */
 
@@ -9,7 +9,7 @@ const Router = require("koa-router");
 const AdminController = require("../controllers/admin");
 
 const router = new Router({
-  prefix: "/admin"
+  prefix: "/api/admin"
 });
 
 router.post("/login", AdminController.login);
