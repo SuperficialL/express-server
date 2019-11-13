@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-28 18:14:45
+ * @LastEditTime: 2019-11-13 22:40:47
  * @Description:  用户控制器
  */
 
@@ -74,7 +74,8 @@ class UserController {
   // 获取所有用户
   async getUsers(ctx) {
     const users = await Admin.find();
-    ctx.body = new Response().json({ users });
+    const total = await Admin.countDocuments();
+    ctx.body = new Response().json({ users, total });
   }
 
   // 获取单个用户
