@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-15 21:10:49
+ * @LastEditTime: 2019-11-20 22:52:06
  * @Description:  标签控制器
  */
 
@@ -38,8 +38,8 @@ class TagController {
     const { ...update } = ctx.request.body;
     const tag = await Tag.findByIdAndUpdate(id, update);
     ctx.body = tag
-      ? new Response().success("標籤修改成功~")
-      : new Response().error("標籤修改失敗~");
+      ? new Response().success("标签修改成功~")
+      : new Response().error("标签修改失败~");
   }
 
   // 删除标签
@@ -47,8 +47,8 @@ class TagController {
     const { id } = ctx.params;
     const tag = await Tag.findByIdAndRemove(id);
     ctx.body = tag
-      ? new Response().success("標籤刪除成功~")
-      : new Response().error("標籤刪除失敗~");
+      ? new Response().success("标签刪除成功~")
+      : new Response().error("标签刪除失败~");
   }
 }
 

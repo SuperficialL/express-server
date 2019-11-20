@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-11-08 21:30:11
+ * @LastEditTime: 2019-11-15 23:13:23
  * @Description: 文章模型
  */
 
@@ -31,7 +31,7 @@ const ArticleSchema = new mongoose.Schema(
     content: { type: String, required: true },
 
     // 文章发布状态 => 0:草稿 1:发布
-    status: { type: Number, default: 1 },
+    status: { type: Number, default: 0 },
 
     // 标签
     tags: [

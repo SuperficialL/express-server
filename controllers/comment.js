@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime: 2019-11-13 22:26:02
+ * @LastEditTime: 2019-11-15 23:40:43
  * @Description: 评论控制器
  */
 
@@ -33,6 +33,7 @@ class CommentController {
   async updateComment(ctx) {
     const { id } = ctx.params;
     const { ...update } = ctx.request.body;
+    console.log(update);
     const comment = await Comment.findByIdAndUpdate(id, update, {
       new: true
     });
