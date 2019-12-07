@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon app",
-    "serve": "pm2 start app yarn -- serve"
+    "serve": "node app",
+    "start": "pm2 start app yarn -- serve"
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",

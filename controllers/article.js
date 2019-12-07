@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-30 21:51:29
+ * @LastEditTime: 2019-12-07 14:28:48
  * @Description: 文章控制器
  */
 
@@ -11,10 +11,10 @@ const Response = require("../utils/helper");
 class ArticleController {
   // 根据查询条件查询文章
   async getArticles(ctx) {
-    let { page = 1, per_page = 10 } = ctx.request.query;
+    let { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Article.countDocuments();
-    const articles = await Article.find()
+    const articles = await Article.find(query)
       .populate([
         {
           path: "category"
@@ -52,6 +52,7 @@ class ArticleController {
       author,
       tags,
       content,
+      renderContent,
       ...others
     } = ctx.request.body;
     await new Article({
@@ -60,7 +61,8 @@ class ArticleController {
       author,
       tags,
       content,
-      others
+      renderContent,
+      ...others
     }).save();
     ctx.body = new Response().success("文章创建成功~");
   }
