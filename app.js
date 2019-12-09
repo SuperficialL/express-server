@@ -1,11 +1,12 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime: 2019-11-12 22:33:14
+ * @LastEditTime: 2019-12-09 23:12:38
  * @Description: App入口文件
  */
 
 const Koa = require("koa");
+const compress = require("koa-compress");
 const path = require("path");
 const koaBody = require("koa-body");
 const koaStatic = require("koa-static");
@@ -17,6 +18,8 @@ const auth = require("./middleware/auth");
 const { checkDirExist, getUploadDirName } = require("./utils/tools");
 
 const app = new Koa();
+const options = { threshold: 2048 };
+app.use(compress(options));
 
 // 连接数据库
 mongodb.connect();
