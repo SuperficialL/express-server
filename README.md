@@ -34,3 +34,5 @@
 ## 想和后台管理界面结合请访问`https://github.com/SuperficialL/blog-admin.git`
 
 ## 想和前端界面结合请访问`https://github.com/SuperficialL/blog-web.git`
+
+> 如果 windows 安装`"bcrypt": "^3.0.7"`失败,请使用`"bcrypt-nodejs": "^0.0.3"`
