@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-11-06 21:27:09
+ * @LastEditTime : 2019-12-18 15:52:57
  * @Description: 分类路由控制器
  */
 const Category = require("../models/Category");
@@ -11,8 +11,10 @@ const HttpException = require("../core/http-exception");
 class CategoryController {
   // 获取所有分类
   async getCategories(ctx) {
+    const { page = 1, per_page = 10, ...query } = ctx.query;
+    let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Category.countDocuments();
-    const categories = await Category.find();
+    const categories = await Category.find(query).skip(skip).limit(Number(per_page));
     ctx.body = new Response().json({ categories, total });
   }
 

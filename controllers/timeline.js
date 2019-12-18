@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-10-28 17:46:31
- * @LastEditTime: 2019-11-20 22:52:43
+ * @LastEditTime : 2019-12-18 15:56:44
  * @Description: 文件上传
  */
 const TimeLine = require("../models/TimeLine");
@@ -9,8 +9,11 @@ const Response = require("../utils/helper");
 
 class TimeLineController {
   async getTimeLines(ctx) {
-    const timelines = await TimeLine.find();
-    ctx.body = new Response().json(timelines);
+    const { page = 1, per_page = 10, ...query } = ctx.query;
+    let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
+    const total = await TimeLine.countDocuments();
+    const timelines = await TimeLine.find(query).skip(skip).limit(Number(per_page));
+    ctx.body = new Response().json({ timelines, total });
   }
 
   async getTimeLine(ctx) {

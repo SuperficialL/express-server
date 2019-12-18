@@ -1,11 +1,11 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-12-15 22:06:42
+ * @LastEditTime : 2019-12-18 15:29:44
  * @Description: 用户模型
  */
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { mongoose } = require("../core/db");
 
 const UserSchema = new mongoose.Schema(
@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
     },
 
     // 一句话介绍
-    headline: { type: String },
+    headline: { type: String, default: "" },
 
     // 职业 公司 工作
     employments: {

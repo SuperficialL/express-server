@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-12-04 20:59:57
+ * @LastEditTime : 2019-12-18 15:56:06
  * @Description:  标签控制器
  */
 
@@ -11,8 +11,10 @@ const Response = require("../utils/helper");
 class FriendLinkController {
   // 获取所有标签
   async getFriendLinks(ctx) {
-    const friendLinks = await FriendLink.find();
+    const { page = 1, per_page = 10, ...query } = ctx.query;
+    let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await FriendLink.countDocuments();
+    const friendLinks = await FriendLink.find(query).skip(skip).limit(Number(per_page));
     ctx.body = new Response().json({ friendLinks, total });
   }
 

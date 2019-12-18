@@ -35,4 +35,13 @@
 
 ## 想和前端界面结合请访问`https://github.com/SuperficialL/blog-web.git`
 
-> 如果 windows 安装`"bcrypt": "^3.0.7"`失败,请使用`"bcrypt-nodejs": "^0.0.3"`
+
+> 如果 windows 安装`bcrypt`可能会失败,请安装`bcryptjs`,linux下安装`bcrypt`或者`bcryptjs`都可以
+
+```bash
+# windows系统下
+yarn add bcryptjs
+
+# linux系统下
+yarn add bcrypt
+```

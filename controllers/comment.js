@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime: 2019-11-15 23:40:43
+ * @LastEditTime : 2019-12-18 15:55:15
  * @Description: 评论控制器
  */
 
@@ -10,14 +10,15 @@ const Response = require("../utils/helper");
 
 class CommentController {
   async getComments(ctx) {
+    const { page = 1, per_page = 10, ...query } = ctx.query;
+    let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Comment.countDocuments();
-    const comments = await Comment.find();
+    const comments = await Comment.find(query).skip(skip).limit(Number(per_page));
     ctx.body = new Response().json({ comments, total });
   }
 
   async getComment(ctx) {
     const { id } = ctx.params;
-    console.log(id, "id");
     const comment = await Comment.findById(id);
     ctx.body = comment
       ? new Response().json({ comment })

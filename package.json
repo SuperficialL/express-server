@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@koa/cors": "^3.0.0",
-    "bcrypt": "^3.0.7",
+    "bcryptjs": "^2.4.3",
     "consola": "^2.10.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",

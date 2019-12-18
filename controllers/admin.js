@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-12-15 22:06:34
+ * @LastEditTime : 2019-12-18 15:29:36
  * @Description:  用户控制器
  */
 
@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const config = require("../config/config");
 const Admin = require("../models/Admin");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { HttpException } = require("../core/http-exception");
 const Response = require("../utils/helper");
 
@@ -73,8 +73,10 @@ class UserController {
 
   // 获取所有用户
   async getUsers(ctx) {
-    const users = await Admin.find();
+    const { page = 1, per_page = 10, ...query } = ctx.query;
+    let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Admin.countDocuments();
+    const users = await Admin.find(query).skip(skip).limit(Number(per_page));
     ctx.body = new Response().json({ users, total });
   }
 
