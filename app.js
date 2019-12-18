@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime: 2019-12-09 23:12:38
+ * @LastEditTime : 2019-12-18 19:28:15
  * @Description: App入口文件
  */
 
@@ -54,14 +54,18 @@ app.use(
       uploadDir: path.join(__dirname, "/public/uploads"),
       // 保留上传文件后缀名
       keepExtensions: true,
-      onFileBegin: () => {
+      onFileBegin: (name, file) => {
         // 最终要保存到的文件夹目录
+        const dirName = getUploadDirName();
         const dir = path.join(
           __dirname,
-          `public/uploads/${getUploadDirName()}`
+          `public/uploads/${dirName}`
         );
         // 检查文件夹是否存在如果不存在则新建文件夹
         checkDirExist(dir);
+        // 重新覆盖file.path属性
+        file.path = `${dir}/${file.name}`;
+        file.filePath = `${getUploadDirName()}/${file.name}`;
       }
     }
   })
