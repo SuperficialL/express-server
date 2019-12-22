@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-11-10 14:24:49
+ * @LastEditTime : 2019-12-22 15:39:56
  * @Description: 标签模型
  */
 
@@ -12,6 +12,9 @@ const TagSchema = new mongoose.Schema(
   {
     // 标签名称
     title: { type: String, required: true },
+
+    // 文章id
+    article_id: { type: String, required: true },
 
     // 创建日期
     created_time: { type: Date, default: Date.now },

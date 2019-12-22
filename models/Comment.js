@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-11-15 23:37:05
+ * @LastEditTime : 2019-12-22 16:33:50
  * @Description: 评论模型
  */
 
@@ -16,11 +16,17 @@ const CommentSchema = new mongoose.Schema(
     // 邮箱
     email: { type: String, required: true },
 
+    // 头像
+    avatar: { type: String },
+
     // 评论内容
     content: { type: String, required: true },
 
     // 审核状态 0 待审核  1 审核完毕
     status: { type: Number, default: 0 },
+
+    // 评论者站点
+    site: { type: String },
 
     // 文章id
     article_id: { type: String, required: true },

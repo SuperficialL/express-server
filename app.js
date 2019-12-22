@@ -57,10 +57,7 @@ app.use(
       onFileBegin: (name, file) => {
         // 最终要保存到的文件夹目录
         const dirName = getUploadDirName();
-        const dir = path.join(
-          __dirname,
-          `public/uploads/${dirName}`
-        );
+        const dir = path.join(__dirname, `public/uploads/${dirName}`);
         // 检查文件夹是否存在如果不存在则新建文件夹
         checkDirExist(dir);
         // 重新覆盖file.path属性
