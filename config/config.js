@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2019-10-02 14:24:48
+ * @LastEditTime : 2019-12-24 22:02:52
  * @Description: 配置文件
  */
 
@@ -19,5 +19,11 @@ module.exports = {
     secretKey: "secretKey",
     // 过期单位  s
     expiresIn: 60 * 60 * 24
+  },
+  // 微信公众号
+  wechat: {
+    appID: "appID",
+    appsecret: "appsecret",
+    token: "token"
   }
 };
