@@ -13,15 +13,15 @@
   "dependencies": {
     "@koa/cors": "^3.0.0",
     "bcryptjs": "^2.4.3",
-    "consola": "^2.10.1",
+    "consola": "^2.11.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "koa": "^2.8.2",
+    "koa": "^2.11.00",
     "koa-body": "^4.1.1",
     "koa-compress": "^3.0.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "mongoose": "^5.7.5",
+    "mongoose": "^5.8.3",
     "require-directory": "^2.1.1",
     "sha1": "^1.1.1"
   }

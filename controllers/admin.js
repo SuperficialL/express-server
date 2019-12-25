@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-18 15:29:36
+ * @LastEditTime : 2019-12-25 16:51:16
  * @Description:  用户控制器
  */
 
@@ -28,7 +28,7 @@ class UserController {
 
     const isValid = user && bcrypt.compareSync(password, user.password);
 
-    if (!isValid) throw new HttpException(20003, "密码验证不正确~");
+    if (!isValid) throw new HttpException(20003, "账号或密码验证不正确~");
 
     const token =
       isValid &&

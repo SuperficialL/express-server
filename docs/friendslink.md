@@ -1,4 +1,4 @@
-# 评论接口文档
+# 友链接口文档
 
 ## 接口请求返回格式说明
 
@@ -19,10 +19,10 @@
 |      |      |
 |      |      |
 
-## 获取所有评论
+## 获取所有友链
 
 ```bash
-  POST    http://localhost:3000/api/admin/comments
+  POST    http://localhost:3000/api/admin/friendslink
 ```
 
 ### 参数说明
@@ -41,7 +41,7 @@
   "errorCode": 0,
   "message": "响应成功~",
   "data": {
-    "comments": [],
+    "friendslink": [],
     "total": 0
   }
 }
@@ -55,16 +55,16 @@
   "errorCode": 0,
   "message": "响应成功~",
   "data": {
-    "comments": [],
+    "friendslink": [],
     "total": 0
   }
 }
 ```
 
-## 通过 id 获取指定评论
+## 通过 id 获取指定友链
 
 ```javascript
-POST http://localhost:3000/api/admin/comments/:id
+POST http://localhost:3000/api/admin/friendslink/:id
 
 ```
 
@@ -72,7 +72,7 @@ POST http://localhost:3000/api/admin/comments/:id
 
 | 参数 |  说明   | 是否必填 |
 | :--: | :-----: | :------: |
-|  id  | 评论 id |    是    |
+|  id  | 友链 id |    是    |
 
 > 成功操作返回
 
@@ -91,6 +91,6 @@ POST http://localhost:3000/api/admin/comments/:id
 {
   "code": 200,
   "errorCode": 0,
-  "message": "评论不存在~"
+  "message": "友链不存在~"
 }
 ```

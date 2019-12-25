@@ -1,4 +1,4 @@
-# 评论接口文档
+# 留言板接口文档
 
 ## 接口请求返回格式说明
 
@@ -19,10 +19,10 @@
 |      |      |
 |      |      |
 
-## 获取所有评论
+## 获取所有留言板
 
 ```bash
-  POST    http://localhost:3000/api/admin/comments
+  POST    http://localhost:3000/api/admin/messages
 ```
 
 ### 参数说明
@@ -41,7 +41,7 @@
   "errorCode": 0,
   "message": "响应成功~",
   "data": {
-    "comments": [],
+    "messages": [],
     "total": 0
   }
 }
@@ -55,24 +55,24 @@
   "errorCode": 0,
   "message": "响应成功~",
   "data": {
-    "comments": [],
+    "messages": [],
     "total": 0
   }
 }
 ```
 
-## 通过 id 获取指定评论
+## 通过 id 获取指定留言板
 
 ```javascript
-POST http://localhost:3000/api/admin/comments/:id
+POST http://localhost:3000/api/admin/messages/:id
 
 ```
 
 ### 参数说明
 
-| 参数 |  说明   | 是否必填 |
-| :--: | :-----: | :------: |
-|  id  | 评论 id |    是    |
+| 参数 |   说明    | 是否必填 |
+| :--: | :-------: | :------: |
+|  id  | 留言板 id |    是    |
 
 > 成功操作返回
 
@@ -91,6 +91,6 @@ POST http://localhost:3000/api/admin/comments/:id
 {
   "code": 200,
   "errorCode": 0,
-  "message": "评论不存在~"
+  "message": "留言板不存在~"
 }
 ```
