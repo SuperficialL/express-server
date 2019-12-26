@@ -13,6 +13,7 @@ class MessageController {
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Message.countDocuments();
     const messages = await Message.find(query)
+      .sort({ _id: -1 })
       .skip(skip)
       .limit(Number(per_page));
     ctx.body = new Response().json({ messages, total });

@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime : 2019-12-22 16:33:58
+ * @LastEditTime : 2019-12-27 00:28:31
  * @Description: 评论控制器
  */
 const gravatar = require("gravatar");
@@ -14,6 +14,7 @@ class CommentController {
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Comment.countDocuments();
     const comments = await Comment.find(query)
+      .sort({ _id: -1 })
       .skip(skip)
       .limit(Number(per_page));
     ctx.body = new Response().json({ comments, total });

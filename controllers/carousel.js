@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-25 11:57:13
+ * @LastEditTime : 2019-12-27 00:29:05
  * @Description: 文章控制器
  */
 
@@ -11,7 +11,7 @@ const Response = require("../utils/helper");
 class CarouselController {
   // 查询所有轮播
   async getCarousels(ctx) {
-    const carousels = await Carousel.find();
+    const carousels = await Carousel.find().sort({ _id: -1 });
     ctx.body = new Response().json(carousels);
   }
 
@@ -26,7 +26,9 @@ class CarouselController {
   async updateCarousel(ctx) {
     const { id } = ctx.params;
     const { ...update } = ctx.request.body;
-    const carousel = await Carousel.findByIdAndUpdate(id, update, { new: true });
+    const carousel = await Carousel.findByIdAndUpdate(id, update, {
+      new: true
+    });
     ctx.body = carousel
       ? new Response().success("轮播更新成功~")
       : new Response().success("轮播不存在~");
@@ -36,7 +38,9 @@ class CarouselController {
   async delCarousel(ctx) {
     const { id } = ctx.params;
     const { ...update } = ctx.request.body;
-    const carousel = await Carousel.findByIdAndUpdate(id, update, { new: true });
+    const carousel = await Carousel.findByIdAndUpdate(id, update, {
+      new: true
+    });
     ctx.body = carousel
       ? new Response().success("轮播删除成功~")
       : new Response().success("轮播不存在~");

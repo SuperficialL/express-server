@@ -12,7 +12,10 @@ class TimeLineController {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await TimeLine.countDocuments();
-    const timelines = await TimeLine.find(query).skip(skip).limit(Number(per_page));
+    const timelines = await TimeLine.find(query)
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(Number(per_page));
     ctx.body = new Response().json({ timelines, total });
   }
 

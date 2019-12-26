@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-22 15:41:00
+ * @LastEditTime : 2019-12-27 00:29:52
  * @Description:  标签控制器
  */
 
@@ -15,6 +15,7 @@ class TagController {
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Tag.countDocuments();
     const tags = await Tag.find(query)
+      .sort({ _id: -1 })
       .skip(skip)
       .limit(Number(per_page));
     ctx.body = new Response().json({ tags, total });

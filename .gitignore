@@ -64,3 +64,5 @@ typings/
 .next
 
 routes/dev.js
+
+config/config.js

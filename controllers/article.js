@@ -15,6 +15,7 @@ class ArticleController {
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Article.countDocuments();
     const articles = await Article.find(query)
+      .sort({ _id: -1 })
       .populate([
         {
           path: "category"

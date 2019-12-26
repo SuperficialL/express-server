@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-25 16:51:16
+ * @LastEditTime : 2019-12-27 00:29:21
  * @Description:  用户控制器
  */
 
@@ -76,7 +76,10 @@ class UserController {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Admin.countDocuments();
-    const users = await Admin.find(query).skip(skip).limit(Number(per_page));
+    const users = await Admin.find(query)
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(Number(per_page));
     ctx.body = new Response().json({ users, total });
   }
 
