@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-28 13:58:54
+ * @LastEditTime : 2019-12-28 21:12:41
  * @Description: 分类路由控制器
  */
 const Category = require("../models/Category");
@@ -33,15 +33,18 @@ class CategoryController {
 
   // 创建分类
   async createCategory(ctx) {
-    const { name, parent } = ctx.request.body;
+    const { name, parent, ...others } = ctx.request.body;
+    console.log(others);
     if (!name) throw new HttpException(20005, "分类名不可为空~");
     const data = parent
       ? {
         name,
-        parent
+        parent,
+        others
       }
       : {
-        name
+        name,
+        others
       };
 
     await new Category(data).save();
@@ -52,6 +55,7 @@ class CategoryController {
   async updateCategory(ctx) {
     const { id } = ctx.params;
     const { ...update } = ctx.request.body;
+    console.log(update);
     const category = await Category.findByIdAndUpdate(id, update, {
       new: true
     });

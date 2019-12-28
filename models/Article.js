@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-12-07 11:06:53
+ * @LastEditTime : 2019-12-28 23:28:05
  * @Description: 文章模型
  */
 
@@ -44,17 +44,13 @@ const ArticleSchema = new mongoose.Schema(
       }
     ],
 
-    // 评论
-    comments: [
-      {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: "Comment"
-      }
-    ],
+    // 评论数据
+    comments: { type: Number, default: 0 },
 
     // 访问量
     views: { type: Number, default: 0 },
 
+    // 点赞数
     likes: { type: Number, default: 0 },
 
     // 创建时间
@@ -79,5 +75,10 @@ const ArticleSchema = new mongoose.Schema(
     }
   }
 );
+
+// ArticleSchema.pre("find", function (next) {
+//   this.views++;
+//   next();
+// });
 
 module.exports = mongoose.model("Article", ArticleSchema);

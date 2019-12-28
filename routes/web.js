@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-09 22:38:39
- * @LastEditTime : 2019-12-25 23:05:25
+ * @LastEditTime : 2019-12-28 19:11:41
  * @Description: 前台路由
  */
 
@@ -20,15 +20,22 @@ const router = new Router({
 });
 
 router.get("/categories", CategoryController.getCategories);
+
 router.get("/articles", ArticleController.getArticles);
 router.get("/articles/:id", ArticleController.getArticle);
+
 router.get("/friendslink", FriendLinkController.getFriendLinks);
+
 router.get("/timelines", TimeLineController.getTimeLines);
+
 router.get("/comments", CommentController.getComments);
 router.post("/comments", CommentController.createComment);
+
 router.get("/tags", TagController.getTags);
 router.get("/tags/:id", TagController.getTags);
+
 router.get("/siteinfo", SiteController.getSiteInfo);
+
 router.get("/carousels", CarouselsController.getCarousels);
 
 module.exports = router;
