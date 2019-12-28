@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d22a0ea"],{dfa3:function(e,r,a){"use strict";a.r(r);a("a481");var n,t,u={beforeCreate:function(){var e=this.$route,r=e.params,a=e.query,n=r.path;this.$router.replace({path:"/"+n,query:a})},render:function(e){return e()}},o=u,p=a("2877"),c=Object(p["a"])(o,n,t,!1,null,null,null);r["default"]=c.exports}}]);

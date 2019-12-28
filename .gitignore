@@ -66,3 +66,5 @@ typings/
 routes/dev.js
 
 config/config.js
+
+public/uploads

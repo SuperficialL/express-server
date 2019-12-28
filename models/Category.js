@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-10-28 17:50:51
+ * @LastEditTime : 2019-12-27 23:08:44
  * @Description: 分类模型
  */
 
@@ -32,6 +32,9 @@ const CategorySchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
+
+    // 排序
+    ordering: { type: Number },
 
     // 修改日期
     updated_time: {

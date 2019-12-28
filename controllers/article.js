@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2019-12-07 14:28:48
+ * @LastEditTime : 2019-12-28 12:10:48
  * @Description: 文章控制器
  */
 
@@ -40,6 +40,8 @@ class ArticleController {
       { path: "tags" },
       { path: "author" }
     ]);
+    article.views++;
+    article.save();
     ctx.body = article
       ? new Response().json(article)
       : new Response().error("文章不存在~");

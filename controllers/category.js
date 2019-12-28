@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-27 00:29:31
+ * @LastEditTime : 2019-12-28 13:58:54
  * @Description: 分类路由控制器
  */
 const Category = require("../models/Category");
@@ -15,7 +15,6 @@ class CategoryController {
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Category.countDocuments();
     const categories = await Category.find(query)
-      .sort({ _id: -1 })
       .skip(skip)
       .limit(Number(per_page));
     ctx.body = new Response().json({ categories, total });
@@ -24,7 +23,6 @@ class CategoryController {
   // 获取分类详情
   async getCategory(ctx) {
     const { id } = ctx.params;
-    console.log(id);
     const category = await Category.findById(id).populate({
       path: "parent"
     });
@@ -39,12 +37,12 @@ class CategoryController {
     if (!name) throw new HttpException(20005, "分类名不可为空~");
     const data = parent
       ? {
-          name,
-          parent
-        }
+        name,
+        parent
+      }
       : {
-          name
-        };
+        name
+      };
 
     await new Category(data).save();
     ctx.body = new Response().success();
