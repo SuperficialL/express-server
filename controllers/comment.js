@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime : 2019-12-29 00:04:38
+ * @LastEditTime : 2019-12-30 21:16:25
  * @Description: 评论控制器
  */
 const gravatar = require("gravatar");
@@ -42,9 +42,16 @@ class CommentController {
   }
 
   async createComment(ctx) {
-    const { username, article_id, email, content } = ctx.request.body;
+    const { username, article_id, email, content, ua } = ctx.request.body;
     const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
-    await new Comment({ username, article_id, email, avatar, content }).save();
+    await new Comment({
+      username,
+      article_id,
+      email,
+      avatar,
+      content,
+      ua
+    }).save();
     // 更新文章数量
     updateArticleCommentCount([article_id]);
     ctx.body = new Response().success("评论创建成功");

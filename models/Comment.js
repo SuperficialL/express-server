@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-28 23:28:16
+ * @LastEditTime : 2019-12-30 21:14:28
  * @Description: 评论模型
  */
 
@@ -30,6 +30,9 @@ const CommentSchema = new mongoose.Schema(
 
     // 文章id
     article_id: { type: String, required: true },
+
+    // 用户代理
+    ua: { type: String },
 
     // 评论日期
     created_time: { type: Date, default: Date.now },
