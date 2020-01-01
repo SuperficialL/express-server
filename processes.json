@@ -33,11 +33,11 @@
   ],
   "deploy": {
     "production": {
-      "user": "root",
-      "host": "49.233.165.116",
+      "user": "username",
+      "host": "your host id",
       "ref": "origin/master",
       "repo": "git@github.com:SuperficialL/node-server.git",
-      "path": "/srv/test",
+      "path": "/srv/koa-server",
       "post-deploy": "yarn && pm2 start processes.json --env production"
     }
   }
