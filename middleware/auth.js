@@ -1,11 +1,12 @@
 /*
  * @Author: Superficial
  * @Date: 2019-10-02 02:04:35
- * @LastEditTime : 2020-01-22 10:06:44
+ * @LastEditTime : 2020-02-05 09:29:01
  * @Description: 认证中间件
  */
 
 const jwt = require("jsonwebtoken");
+const sha1 = require("sha1");
 const config = require("../config/config");
 
 const auth = async (ctx, next) => {
@@ -25,4 +26,19 @@ const auth = async (ctx, next) => {
   await next();
 };
 
-module.exports = auth;
+const chatAuth = async (ctx, next) => {
+  const { signature, nonce, timestamp, echostr } = ctx.query;
+  let str = [config.wechat.token, timestamp, nonce].sort().join("");
+  const sha = sha1(str);
+  if (sha === signature) {
+    ctx.body = echostr;
+  } else {
+    ctx.body = {
+      message: "微信认证失败",
+      code: 500
+    };
+  }
+  await next();
+};
+
+module.exports = { auth, chatAuth };

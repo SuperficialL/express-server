@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime : 2019-12-18 19:28:15
+ * @LastEditTime : 2020-02-05 09:26:28
  * @Description: App入口文件
  */
 
@@ -14,7 +14,7 @@ const cors = require("@koa/cors");
 const mongodb = require("./core/db");
 const catchError = require("./middleware/catchError");
 const InitManager = require("./core/init");
-const auth = require("./middleware/auth");
+const { auth } = require("./middleware/auth");
 const { checkDirExist, getUploadDirName } = require("./utils/tools");
 
 const app = new Koa();

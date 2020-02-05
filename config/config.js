@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime : 2019-12-24 22:02:52
+ * @LastEditTime : 2020-02-04 20:26:20
  * @Description: 配置文件
  */
 
@@ -22,8 +22,8 @@ module.exports = {
   },
   // 微信公众号
   wechat: {
-    appID: "appID",
-    appsecret: "appsecret",
-    token: "token"
+    appID: "wx6fea9efb92e74fa7",
+    appsecret: "c91f3e210177118685a56fda4b8e41a5",
+    token: "wx6fea9efb92e74fa7"
   }
 };

@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-12-23 23:26:20
- * @LastEditTime : 2019-12-25 17:13:24
+ * @LastEditTime : 2020-02-04 18:44:57
  * @Description: 微信公众号路由
  */
 
@@ -12,6 +12,6 @@ const router = new Router({
   prefix: "/api/wechat"
 });
 
-router.get("/", WeChatController.getToken);
+router.get("/", WeChatController.validateServer);
 
 module.exports = router;
