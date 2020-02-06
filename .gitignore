@@ -69,4 +69,4 @@ config/
 
 public/uploads
 
-processes.json
+ecology.json
