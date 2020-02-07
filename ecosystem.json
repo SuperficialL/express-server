@@ -7,10 +7,7 @@
       "watch": false,
       "max_memory_restart": "500M",
       "exec_mode": "fork",
-      "log_date_format": "YYYY-MM-DD HH:mm Z",
-      "error_file": "./logs/app-err.log",
-      "out_file": "./logs/app-out.log",
-      "ignore_watch": ["node_modules", "logs"],
+      "ignore_watch": ["node_modules"],
       "env": {
         "COMMON_ENV_VAR": "true"
       },
