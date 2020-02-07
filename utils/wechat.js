@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2020-02-05 09:48:49
- * @LastEditTime : 2020-02-05 10:42:37
+ * @LastEditTime : 2020-02-06 23:56:43
  * @Description: Do not edit
  */
 
@@ -74,6 +74,7 @@ class WeChat {
           }
         })
         .catch(async err => {
+          global.log(err);
           const res = await this.getAccessToken();
           await this.saveAccessToken(res);
           resolve(res);
