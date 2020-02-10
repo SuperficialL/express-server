@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-27 00:29:39
+ * @LastEditTime : 2020-02-10 16:28:23
  * @Description:  标签控制器
  */
 
@@ -13,7 +13,7 @@ class FriendLinkController {
   async getFriendLinks(ctx) {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await FriendLink.countDocuments();
+    const total = await FriendLink.countDocuments(query);
     const friendLinks = await FriendLink.find(query)
       .sort({ _id: -1 })
       .skip(skip)

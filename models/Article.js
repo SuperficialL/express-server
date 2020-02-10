@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-28 23:28:05
+ * @LastEditTime : 2020-02-10 20:20:29
  * @Description: 文章模型
  */
 
@@ -76,8 +76,12 @@ const ArticleSchema = new mongoose.Schema(
   }
 );
 
-// ArticleSchema.pre("find", function (next) {
-//   this.views++;
+ArticleSchema.post("findOne", function (res) {
+});
+// ArticleSchema.pre("findOne", async (err, res, next) => {
+//   console.log(err, res, next);
+//   const docs = await this.model.findOne(this.getQuery());
+//   console.log(docs);
 //   next();
 // });
 

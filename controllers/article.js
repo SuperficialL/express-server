@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-28 23:29:36
+ * @LastEditTime : 2020-02-10 19:59:43
  * @Description: 文章控制器
  */
 
@@ -13,7 +13,7 @@ class ArticleController {
   async getArticles(ctx) {
     let { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * Number(per_page);
-    const total = await Article.countDocuments();
+    const total = await Article.countDocuments(query);
     const articles = await Article.find(query)
       .sort({ _id: -1 })
       .populate("category", "name")
@@ -28,13 +28,18 @@ class ArticleController {
   // 查询文章详情
   async getArticle(ctx) {
     const { id } = ctx.params;
-    const article = await Article.findById(id).populate([
+    const article = await Article.findOne({ _id: id }).populate([
       { path: "category" },
       { path: "tags" },
       { path: "author" }
     ]);
-    article.views++;
+    // article.views++;
     article.save();
+    // const prev_article = await Article.findOne({ _id: { "$lt": id } }).sort({ _id: -1 }).limit(1);
+    // const next_article = await Article.findOne({ _id: { "$gt": id } }).sort({ _id: 1 }).limit(1);
+    // article.prev = prev_article ? { _id: prev_article._id, title: prev_article.title } : { message: "已是第一条文章" };
+    // article.next = next_article ? { _id: next_article._id, title: next_article.title } : { message: "已是最后一条文章" };
+    // console.log(article, "articles", typeof article);
     ctx.body = article
       ? new Response().json(article)
       : new Response().error("文章不存在~");

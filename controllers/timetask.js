@@ -11,7 +11,7 @@ class TimeTaskController {
   async getTimeTasks(ctx) {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await TimeTask.countDocuments();
+    const total = await TimeTask.countDocuments(query);
     const timetasks = await TimeTask.find(query)
       .sort({ _id: -1 })
       .skip(skip)

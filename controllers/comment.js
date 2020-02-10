@@ -25,7 +25,7 @@ class CommentController {
   async getComments(ctx) {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await Comment.countDocuments();
+    const total = await Comment.countDocuments(query);
     const comments = await Comment.find(query)
       .sort({ _id: -1 })
       .skip(skip)

@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime : 2019-12-25 17:23:12
+ * @LastEditTime : 2020-02-10 16:28:29
  * @Description: 留言控制器
  */
 const Message = require("../models/Message");
@@ -11,7 +11,7 @@ class MessageController {
   async getMessages(ctx) {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await Message.countDocuments();
+    const total = await Message.countDocuments(query);
     const messages = await Message.find(query)
       .sort({ _id: -1 })
       .skip(skip)

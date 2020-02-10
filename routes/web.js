@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-09 22:38:39
- * @LastEditTime : 2019-12-28 19:11:41
+ * @LastEditTime : 2020-02-10 14:41:29
  * @Description: 前台路由
  */
 
@@ -14,6 +14,7 @@ const CommentController = require("../controllers/comment");
 const TagController = require("../controllers/tags");
 const SiteController = require("../controllers/statistics");
 const CarouselsController = require("../controllers/carousel");
+const LikeController = require("../controllers/like");
 
 const router = new Router({
   prefix: "/api/web"
@@ -23,6 +24,8 @@ router.get("/categories", CategoryController.getCategories);
 
 router.get("/articles", ArticleController.getArticles);
 router.get("/articles/:id", ArticleController.getArticle);
+
+router.post("/like", LikeController.isLike);
 
 router.get("/friendslink", FriendLinkController.getFriendLinks);
 

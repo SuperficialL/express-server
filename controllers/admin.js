@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2020-01-09 23:58:00
+ * @LastEditTime : 2020-02-10 16:27:55
  * @Description:  用户控制器
  */
 
@@ -75,7 +75,7 @@ class UserController {
   async getUsers(ctx) {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await Admin.countDocuments();
+    const total = await Admin.countDocuments(query);
     const users = await Admin.find(query)
       .sort({ _id: -1 })
       .skip(skip)

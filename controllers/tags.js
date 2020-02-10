@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-27 00:29:52
+ * @LastEditTime : 2020-02-10 16:28:37
  * @Description:  标签控制器
  */
 
@@ -13,7 +13,7 @@ class TagController {
   async getTags(ctx) {
     const { page = 1, per_page = 10, ...query } = ctx.query;
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await Tag.countDocuments();
+    const total = await Tag.countDocuments(query);
     const tags = await Tag.find(query)
       .sort({ _id: -1 })
       .skip(skip)
