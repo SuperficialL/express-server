@@ -1,14 +1,14 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime : 2020-01-23 20:46:25
+ * @LastEditTime: 2020-02-27 09:08:59
  * @Description: 评论控制器
  */
 const gravatar = require("gravatar");
 const Comment = require("../models/Comment");
 const Article = require("../models/Article");
 const Response = require("../utils/helper");
-const { SendMail } = require("../utils/sendMail");
+const { SendMailToAuthor, SendMailToComment } = require("../utils/sendMail");
 
 // 更新当前所受影响的文章的评论聚合数据
 const updateArticleCommentCount = async (article_ids = []) => {
@@ -42,7 +42,7 @@ class CommentController {
   }
 
   async createComment(ctx) {
-    const { username, article_id, email, content, ua } = ctx.request.body;
+    const { username, article_id, email, content, ua, others } = ctx.request.body;
     const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
     await new Comment({
       username,
@@ -50,9 +50,10 @@ class CommentController {
       email,
       avatar,
       content,
-      ua
+      ua,
+      ...others
     }).save();
-    SendMail(email, (err) => {
+    SendMailToAuthor({ content }, (err) => {
       console.log(err, "err");
     });
     // 更新文章数量

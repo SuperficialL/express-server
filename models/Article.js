@@ -1,13 +1,13 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2020-02-10 20:20:29
+ * @LastEditTime: 2020-02-28 18:57:37
  * @Description: 文章模型
  */
 
 const { mongoose } = require("../core/db");
 
-const ArticleSchema = new mongoose.Schema(
+const articleSchema = new mongoose.Schema(
   {
     // 标题
     title: { type: String, required: true },
@@ -76,13 +76,20 @@ const ArticleSchema = new mongoose.Schema(
   }
 );
 
-ArticleSchema.post("findOne", function (res) {
-});
-// ArticleSchema.pre("findOne", async (err, res, next) => {
+// articleSchema.virtual("prev").get(function () {
+//   // const prev_article = this.model.find();
+//   // const prev_article = this.model.findOne({ _id: { "$lt": this._id } }).sort({ _id: -1 }).limit(1);
+//   console.log(this);
+//   return this._id;
+// });
+
+// articleSchema.set("toJSON", { getters: true, virtual: true });
+
+// articleSchema.pre("findOne", async (err, res, next) => {
 //   console.log(err, res, next);
 //   const docs = await this.model.findOne(this.getQuery());
 //   console.log(docs);
 //   next();
 // });
 
-module.exports = mongoose.model("Article", ArticleSchema);
+module.exports = mongoose.model("Article", articleSchema);

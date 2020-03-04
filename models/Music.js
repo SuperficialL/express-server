@@ -1,19 +1,25 @@
 /*
  * @Author: Superficial
- * @Date: 2019-12-25 16:08:01
- * @LastEditTime: 2020-02-28 18:57:24
- * @Description: 留言板模型
+ * @Date: 2020-02-28 16:25:35
+ * @LastEditTime: 2020-02-28 18:59:51
+ * @Description: 媒体库
  */
 
 const { mongoose } = require("../core/db");
 
-const MessageSchema = new mongoose.Schema(
+const musicSchema = new mongoose.Schema(
   {
-    // 留言作者
+    // 音乐名称
+    title: { type: String, required: true },
+
+    // 音乐作者
     author: { type: String, required: true },
 
-    // 留言内容
-    content: { type: String, required: true },
+    // 音乐封面
+    cover: { type: String },
+
+    // 音乐地址
+    url: { type: String, require: true },
 
     // 创建日期
     created_time: { type: Date, default: Date.now },
@@ -32,4 +38,4 @@ const MessageSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Message", MessageSchema);
+module.exports = mongoose.model("Music", musicSchema);

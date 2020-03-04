@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2020-02-10 19:59:43
+ * @LastEditTime: 2020-02-28 15:11:46
  * @Description: 文章控制器
  */
 
@@ -33,13 +33,12 @@ class ArticleController {
       { path: "tags" },
       { path: "author" }
     ]);
-    // article.views++;
+    article.views++;
     article.save();
     // const prev_article = await Article.findOne({ _id: { "$lt": id } }).sort({ _id: -1 }).limit(1);
     // const next_article = await Article.findOne({ _id: { "$gt": id } }).sort({ _id: 1 }).limit(1);
     // article.prev = prev_article ? { _id: prev_article._id, title: prev_article.title } : { message: "已是第一条文章" };
     // article.next = next_article ? { _id: next_article._id, title: next_article.title } : { message: "已是最后一条文章" };
-    // console.log(article, "articles", typeof article);
     ctx.body = article
       ? new Response().json(article)
       : new Response().error("文章不存在~");
