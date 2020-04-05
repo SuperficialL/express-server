@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2020-02-10 16:28:37
+ * @LastEditTime: 2020-03-13 19:37:07
  * @Description:  标签控制器
  */
 
@@ -33,8 +33,8 @@ class TagController {
   // 创建标签
   async createTag(ctx) {
     const { ...data } = ctx.request.body;
-    await new Tag(data).save();
-    ctx.body = new Response().success("标签创建成功~");
+    const tag = await new Tag(data).save();
+    ctx.body = new Response().json(tag, "标签创建成功~");
   }
 
   // 修改标签

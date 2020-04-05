@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-02-28 18:57:37
+ * @LastEditTime: 2020-03-25 17:34:25
  * @Description: 文章模型
  */
 
@@ -85,11 +85,16 @@ const articleSchema = new mongoose.Schema(
 
 // articleSchema.set("toJSON", { getters: true, virtual: true });
 
-// articleSchema.pre("findOne", async (err, res, next) => {
-//   console.log(err, res, next);
-//   const docs = await this.model.findOne(this.getQuery());
-//   console.log(docs);
-//   next();
-// });
+articleSchema.post("findOne", async (doc) => {
+  // this.views = this.views++;
+  // console.log(doc.views);
+  // console.log(this);
+  // console.log(doc, "doc");
+  // if (doc) {
+  // doc.views++;
+  // }
+  // console.log(next);
+  // this.findOne({}, { $set: { views: this.views++ } });
+});
 
 module.exports = mongoose.model("Article", articleSchema);

@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2020-02-10 16:28:10
+ * @LastEditTime: 2020-03-25 18:16:13
  * @Description: 分类路由控制器
  */
 const Category = require("../models/Category");
@@ -45,7 +45,6 @@ class CategoryController {
         name,
         ...others
       };
-
     await new Category(data).save();
     ctx.body = new Response().success("分类创建成功~");
   }

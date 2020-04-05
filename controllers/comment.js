@@ -1,12 +1,13 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-05 22:32:54
- * @LastEditTime: 2020-02-27 09:08:59
+ * @LastEditTime: 2020-03-13 20:21:05
  * @Description: 评论控制器
  */
 const gravatar = require("gravatar");
 const Comment = require("../models/Comment");
 const Article = require("../models/Article");
+const User = require("../models/User");
 const Response = require("../utils/helper");
 const { SendMailToAuthor, SendMailToComment } = require("../utils/sendMail");
 
@@ -52,6 +53,11 @@ class CommentController {
       content,
       ua,
       ...others
+    }).save();
+    await new User({
+      username,
+      email,
+      avatar
     }).save();
     SendMailToAuthor({ content }, (err) => {
       console.log(err, "err");

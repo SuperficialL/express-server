@@ -1,14 +1,14 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-18 15:29:44
- * @Description: 用户模型
+ * @LastEditTime: 2020-03-25 19:05:14
+ * @Description: 管理员模型
  */
 
 const bcrypt = require("bcryptjs");
 const { mongoose } = require("../core/db");
 
-const UserSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     // 用户名
     username: { type: String, required: true },
@@ -16,34 +16,22 @@ const UserSchema = new mongoose.Schema(
     // 性别
     gender: {
       type: String,
-      enum: ["male", "female"],
-      default: "male",
+      enum: ["male", "female", "unknown"],
+      default: "unknown"
+    },
+
+    // 邮箱
+    email: { type: String, required: true },
+
+    // 激活
+    active: {
+      type: Boolean,
+      default: false,
       required: true
     },
 
     // 一句话介绍
     headline: { type: String, default: "" },
-
-    // 职业 公司 工作
-    employments: {
-      type: [{ company: { type: String }, job: { type: String } }]
-    },
-
-    // 教育经历
-    educations: {
-      type: [
-        {
-          // 学校
-          school: { type: String },
-          // 专业
-          major: { type: String },
-          // 学历  高中及以下， 大专，本科 ，硕士，博士及以上
-          diploma: { type: Number, enum: [1, 2, 3, 4, 5] },
-          // 入学年份
-          entrance_year: { type: Number }
-        }
-      ]
-    },
 
     // 密码
     password: {
@@ -55,11 +43,11 @@ const UserSchema = new mongoose.Schema(
       }
     },
 
+    // 角色
+    roles: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Role" }],
+
     // 头像
     avatar: { type: String },
-
-    // 邮箱
-    email: { type: String, required: true },
 
     // 创建时间
     created_time: {
@@ -84,4 +72,4 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Admin", adminSchema);

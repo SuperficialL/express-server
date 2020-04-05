@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-10-28 17:46:31
- * @LastEditTime: 2020-03-04 16:57:23
+ * @LastEditTime: 2020-03-05 10:08:55
  * @Description: 文件上传
  */
 const qiniu = require("qiniu");
@@ -20,12 +20,13 @@ class FileController {
     let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
     let options = {
       scope: bucket,
-      returnBody: "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsize\":\"$(fsize)\",\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}",
-      callbackUrl: "http://admin.zhangwurui.net/api/admin/saveQiNiuUrl",
-      callbackBodyType: "application/json",
-      callbackBody: "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsize\":\"$(fsize)\",\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}",
+      // returnBody: "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsize\":\"$(fsize)\",\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}"
+
     };
     let putPolicy = new qiniu.rs.PutPolicy(options);
+    putPolicy.callbackUrl = "http://chat.free.idcfengye.com/api/admin/saveQiNiuUrl";
+    putPolicy.callbackBody = "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsize\":\"$(fsize)\",\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}";
+    putPolicy.callbackBodyType = "application/json";
     let uploadToken = putPolicy.uploadToken(mac);
     if (uploadToken) {
       ctx.body = {

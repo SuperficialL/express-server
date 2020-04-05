@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-10-02 02:04:35
- * @LastEditTime : 2020-02-05 09:29:01
+ * @LastEditTime: 2020-03-04 17:38:07
  * @Description: 认证中间件
  */
 
@@ -12,7 +12,7 @@ const config = require("../config/config");
 const auth = async (ctx, next) => {
   // 设置白名单
   if (ctx.url.match(/^\/api\/admin\/(.*)/)) {
-    const whiteList = ["/api/admin/login", "/api/admin/register", "/api/admin/captcha"];
+    const whiteList = ["/api/admin/login", "/api/admin/register", "/api/admin/captcha", "/api/admin/saveQiNiuUrl"];
     if (!whiteList.includes(ctx.url)) {
       const token = String(ctx.headers.authorization || "")
         .split(" ")

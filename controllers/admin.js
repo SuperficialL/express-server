@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2020-02-10 16:27:55
+ * @LastEditTime: 2020-03-25 16:21:22
  * @Description:  用户控制器
  */
 
@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const config = require("../config/config");
 const Admin = require("../models/Admin");
+// const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const { HttpException } = require("../core/http-exception");
 const Response = require("../utils/helper");
@@ -22,8 +23,7 @@ class UserController {
     if (!username) throw new HttpException(20001, "账号不可为空~");
     if (!password) throw new HttpException(20002, "密码不可为空~");
 
-    const user = await Admin.findOne({ username }).select("+password");
-
+    const user = await Admin.findOne({ username, active: true }).select("+password");
     if (!user) throw new HttpException(40003, "用户不存在~");
 
     const isValid = user && bcrypt.compareSync(password, user.password);
@@ -38,7 +38,7 @@ class UserController {
     ctx.body = new Response().json({ token }, "用户登录成功~");
   }
 
-  // 注册
+  // 注册管理员
   async register(ctx) {
     const { username, email, password, password2 } = ctx.request.body;
     if (!username) throw new HttpException(20001, "账号不可为空~");
@@ -46,7 +46,6 @@ class UserController {
       throw new HttpException(200, "两次密码输入不正确~");
 
     const user = await Admin.findOne({ email });
-
     if (user) throw new HttpException(40004, "用户已存在~");
     const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
     await new Admin({ username, email, password, avatar }).save();
@@ -77,7 +76,7 @@ class UserController {
     let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
     const total = await Admin.countDocuments(query);
     const users = await Admin.find(query)
-      .sort({ _id: -1 })
+      .sort({ _id: 1 })
       .skip(skip)
       .limit(Number(per_page));
     ctx.body = new Response().json({ users, total });
@@ -88,6 +87,17 @@ class UserController {
     const { id } = ctx.params;
     const user = await Admin.findById(id);
     ctx.body = new Response().json({ user });
+  }
+
+  // 获取单个用户
+  async updateUser(ctx) {
+    const { id } = ctx.params;
+    const { ...data } = ctx.request.body;
+    await Admin.findByIdAndUpdate(id, data, {
+      new: true,
+      fields: { password: 0 }
+    });
+    ctx.body = new Response().success("用户信息修改成功~");
   }
 
   // 删除用户
