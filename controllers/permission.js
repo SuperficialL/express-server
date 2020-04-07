@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2020-03-25 17:54:32
- * @LastEditTime: 2020-03-25 18:17:31
+ * @LastEditTime: 2020-04-07 17:58:30
  * @Description: 权限控制器
  */
 
@@ -17,7 +17,9 @@ class PermissionController {
       .sort({ _id: -1 })
       .skip(skip)
       .limit(Number(per_page));
-    ctx.body = new Response().json({ permissions, total });
+    let permissionList = [];
+    permissions.forEach(permission => permissionList.push(permission._id));
+    ctx.body = new Response().json({ permissions, total, permissionList });
   }
 
   async getPermission(ctx) {
@@ -40,11 +42,11 @@ class PermissionController {
         name,
         method
       };
-    const exist = await Permission.findOne({name});
+    const exist = await Permission.findOne({ name });
     if (!exist) {
       await new Permission(data).save();
     }
-    const message = exist?"权限已存在~" : "权限创建成功~";
+    const message = exist ? "权限已存在~" : "权限创建成功~";
     ctx.body = new Response().success(message);
   }
 

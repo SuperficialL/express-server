@@ -1,14 +1,14 @@
 /*
  * @Author: Superficial
  * @Date: 2020-03-25 17:39:41
- * @LastEditTime: 2020-03-25 18:53:03
+ * @LastEditTime: 2020-04-07 17:22:56
  * @Description: 权限列表
  */
 
 const { mongoose } = require("../core/db");
 
 // 友链模型
-const permmissionSchema = new mongoose.Schema(
+const permissionSchema = new mongoose.Schema(
   {
     // 权限名称
     name: { type: String, unique: true },
@@ -24,7 +24,7 @@ const permmissionSchema = new mongoose.Schema(
   }
 );
 
-permmissionSchema.virtual("children", {
+permissionSchema.virtual("children", {
   localField: "_id",
   foreignField: "parent",
   justOne: false,
@@ -32,4 +32,4 @@ permmissionSchema.virtual("children", {
 });
 
 // 友链模型
-module.exports = mongoose.model("Permission", permmissionSchema);
+module.exports = mongoose.model("Permission", permissionSchema);

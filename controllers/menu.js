@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-03-27 19:23:01
+ * @LastEditTime: 2020-04-07 17:56:19
  * @Description: 菜单路由控制器
  */
 const Menu = require("../models/Menu");
@@ -17,7 +17,9 @@ class MenuController {
     const menus = await Menu.find(query)
       .skip(skip)
       .limit(Number(per_page));
-    ctx.body = new Response().json({ menus, total });
+    let menuList = [];
+    menus.forEach(menu => menuList.push(menu._id));
+    ctx.body = new Response().json({ menus, total, menuList });
   }
 
   // 获取菜单详情

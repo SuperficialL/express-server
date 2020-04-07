@@ -1,15 +1,15 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-03-25 16:21:22
+ * @LastEditTime: 2020-04-07 19:40:44
  * @Description:  用户控制器
  */
 
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const config = require("../config/config");
-const Admin = require("../models/Admin");
-// const User = require("../models/User");
+const Admin = require("../models/User");
+const UserRole = require("../models/UserRole");
 const bcrypt = require("bcryptjs");
 const { HttpException } = require("../core/http-exception");
 const Response = require("../utils/helper");
@@ -56,7 +56,9 @@ class UserController {
   // 获取管理员信息
   async profile(ctx) {
     const user = await Admin.findById(ctx.id, { password: 0 });
-    ctx.body = new Response().json({ user }, "用户信息获取成功~");
+    const roles = await UserRole.find({ _id: ctx.id });
+    console.log(roles, "roles");
+    ctx.body = new Response().json({ user, roles }, "用户信息获取成功~");
   }
 
   // 修改管理员信息

@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2020-02-05 09:48:49
- * @LastEditTime : 2020-02-06 23:56:43
+ * @LastEditTime: 2020-04-06 10:13:46
  * @Description: Do not edit
  */
 
@@ -77,7 +77,7 @@ class WeChat {
           global.log(err);
           const res = await this.getAccessToken();
           await this.saveAccessToken(res);
-          resolve(res);
+          reject(res);
         })
         .then(res => {
           this.access_token = res.access_token;

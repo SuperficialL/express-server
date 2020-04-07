@@ -1,24 +1,54 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-03-25 18:52:15
- * @Description: 用户模型
+ * @LastEditTime: 2020-04-07 19:42:42
+ * @Description: 管理员模型
  */
 
+const bcrypt = require("bcryptjs");
 const { mongoose } = require("../core/db");
 
-const userSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     // 用户名
     username: { type: String, required: true },
 
-    // 头像
-    avatar: { type: String },
+    // 性别
+    gender: {
+      type: String,
+      enum: ["male", "female", "unknown"],
+      default: "unknown"
+    },
 
     // 邮箱
     email: { type: String, required: true },
 
-    role: { type: mongoose.SchemaTypes.ObjectId, ref: "Role" },
+    isAdmin: { type: Boolean, default: false },
+
+    // 激活
+    active: {
+      type: Boolean,
+      default: false
+    },
+
+    // 一句话介绍
+    headline: { type: String, default: "" },
+
+    // 密码
+    password: {
+      type: String,
+      required: true,
+      select: false,
+      set(val) {
+        return bcrypt.hashSync(val, 10);
+      }
+    },
+
+    // 角色
+    userRoles: { type: mongoose.SchemaTypes.ObjectId, ref: "UserRole" },
+
+    // 头像
+    avatar: { type: String },
 
     // 创建时间
     created_time: {
@@ -43,4 +73,4 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Admin", adminSchema);
