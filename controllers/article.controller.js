@@ -29,10 +29,9 @@ class ArticleController {
     const options = {
       page,
       populate: ["category", "tags"],
-      select: '-password -content -renderContent',
+      select: '-password -content',
       sort: { _id: SORT_TYPE.desc }
     }
-
     if (!numberIsInvalid(per_page)) {
       options.limit = per_page;
     }
@@ -53,8 +52,8 @@ class ArticleController {
     // 热评查询
     if (hot) {
       options.sort = {
-        'meta.comments': SORT_TYPE.desc,
-        'meta.likes': SORT_TYPE.desc
+        'comments': SORT_TYPE.desc,
+        'likes': SORT_TYPE.desc
       }
     }
 
@@ -96,8 +95,8 @@ class ArticleController {
 
     // 如果是前台请求，则重置公开状态和发布状态
     if (!authIsVerified(ctx)) {
-      query.state = PUBLISH_STATE.published;
-      query.public = PUBLIC_STATE.public;
+      query.status = PUBLISH_STATE.published;
+      // query.public = PUBLIC_STATE.public;
     }
 
     // 分类别名查询 - 根据别名查询到 id，然后根据 id 查询
@@ -106,12 +105,11 @@ class ArticleController {
       if (category)  query.category = category._id;
     }
     
-    // 标签别名查询 - 根据别名查询到 id，然后根据 id 查询
+    // // 标签别名查询 - 根据别名查询到 id，然后根据 id 查询
     if (tag_slug) {
       const { tag = [] } = await Tag.find({ slug: tag_slug });
-      if (tag) query.tag = tag._id;
+      if (tag) query.tags = tag._id;
     }
-
     const articles = await Article.paginate(query, options);
     ctx.body = handleSuccess({ 
       result:handlePaginateData(articles),
