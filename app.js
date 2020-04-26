@@ -6,20 +6,25 @@
  */
 
 const Koa = require("koa");
-const compress = require("koa-compress");
-const path = require("path");
-const koaBody = require("koa-body");
+const session = require("koa-session");
 const koaStatic = require("koa-static");
+const compress = require("koa-compress");
+const koaBody = require("koa-body");
 const cors = require("@koa/cors");
+const path = require("path");
 const mongodb = require("./core/db");
 const catchError = require("./middleware/catchError");
-const InitManager = require("./core/init");
-const { auth } = require("./middleware/auth");
+const { hasAuth } = require("./middleware/auth");
 const { checkDirExist, getUploadDirName } = require("./utils/tools");
+const { SESSION_CONFIG, SECURITY: { secretKey } } = require("./app.config");
 
 const app = new Koa();
 const options = { threshold: 2048 };
+
 app.use(compress(options));
+
+app.keys = [secretKey];
+app.use(session(SESSION_CONFIG, app));
 
 // 连接数据库
 mongodb.connect();
@@ -42,7 +47,7 @@ app.use(koaStatic(path.join(__dirname, "/public")));
 app.use(catchError);
 
 // 认证
-app.use(auth);
+app.use(hasAuth);
 
 // 设置文件上传处理路径
 app.use(
@@ -68,7 +73,10 @@ app.use(
   })
 );
 
-InitManager.init(app);
+const router = require("./core/routes");
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.listen(3000, () => {
   console.log("App 运行在 http://127.0.0.1:3000");

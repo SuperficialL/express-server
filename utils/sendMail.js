@@ -6,7 +6,7 @@
  */
 
 const nodemailer = require("nodemailer");
-const { host, sender, pass } = require("../config/config").mail;
+const { host, sender, pass } = require("../app.config").mail;
 
 const transporter = nodemailer.createTransport({
   host,

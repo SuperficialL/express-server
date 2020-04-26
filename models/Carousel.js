@@ -30,10 +30,7 @@ const CarouselSchema = new mongoose.Schema(
     updated_time: {
       type: Date,
       default: Date.now
-    },
-
-    // 版本号
-    __v: { type: Number, select: false }
+    }
   },
   {
     timestamps: {

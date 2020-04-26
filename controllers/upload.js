@@ -5,7 +5,7 @@
  * @Description: 文件上传
  */
 const qiniu = require("qiniu");
-const { accessKey, secretKey, bucket } = require("../config/config").qiniu;
+const { accessKey, secretKey, bucket } = require("../app.config").qiniu;
 
 class FileController {
   async uploadImg(ctx) {

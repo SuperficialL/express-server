@@ -4,25 +4,24 @@
  * @LastEditTime : 2019-12-28 22:25:02
  * @Description: 分类模型
  */
-
+const mongoosePaginate = require('mongoose-paginate');
+const autoIncrement = require('mongoose-auto-increment');
 const { mongoose } = require("../core/db");
 
-const CategorySchema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     // 分类名
-    name: {
-      type: String,
-      required: true
-    },
+    name: { type: String, required: true, validate: /\S+/ },
+
+    // 别名
+	  slug: { type: String, required: true, validate: /\S+/ },
 
     // 父级分类
     parent: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "Category"
+      ref: "Category",
+      default: null
     },
-
-    // 路径
-    path: { type: String },
 
     // 图标
     icon: { type: String },
@@ -41,9 +40,6 @@ const CategorySchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
-
-    // 版本号
-    __v: { type: Number, select: false }
   },
   {
     timestamps: {
@@ -53,4 +49,13 @@ const CategorySchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Category", CategorySchema);
+// 翻页 + 自增 ID 插件配置
+categorySchema.plugin(mongoosePaginate);
+categorySchema.plugin(autoIncrement.plugin, {
+	model: 'Category',
+	field: 'id',
+	startAt: 1,
+	incrementBy: 1
+});
+
+module.exports = mongoose.model("Category", categorySchema);

@@ -40,8 +40,32 @@ function getUploadFileExt(name) {
   return ext[ext.length - 1];
 }
 
+
+const isArray = array => Array.isArray(array);
+
+const isString = string => typeof string === 'string';
+
+// 数组是否无效
+const arrayIsInvalid = array => !array || !array.length;
+
+// 检查数字是否无效
+const numberIsInvalid = number => number === null || number === undefined || isNaN(number);
+
+// 数组去重
+const arrayUniq = (a, b = []) => [...new Set([...a, ...b])];
+
+// 获取对象值数组
+const objectValues = object => Object.keys(object).map(key => object[key]);
+
+
 module.exports = {
   getUploadDirName,
   checkDirExist,
-  getUploadFileExt
+  getUploadFileExt,
+  isArray,
+  isString,
+  arrayUniq,
+  objectValues,
+  arrayIsInvalid,
+  numberIsInvalid
 };

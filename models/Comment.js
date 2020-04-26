@@ -5,10 +5,12 @@
  * @Description: 评论模型
  */
 
+const mongoosePaginate = require('mongoose-paginate');
+const autoIncrement = require('mongoose-auto-increment');
 const { mongoose } = require("../core/db");
 
 // 评论模型
-const CommentSchema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema(
   {
     // 评论作者
     username: { type: String, required: true },
@@ -41,10 +43,7 @@ const CommentSchema = new mongoose.Schema(
     created_time: { type: Date, default: Date.now },
 
     // 最后修改日期
-    updated_time: { type: Date, default: Date.now },
-
-    // 版本号
-    __v: { type: Number, select: false }
+    updated_time: { type: Date, default: Date.now }
   },
   {
     timestamps: {
@@ -54,5 +53,14 @@ const CommentSchema = new mongoose.Schema(
   }
 );
 
+// 翻页 + 自增 ID 插件配置
+commentSchema.plugin(mongoosePaginate);
+commentSchema.plugin(autoIncrement.plugin, {
+	model: 'Comment',
+	field: 'id',
+	startAt: 1,
+	incrementBy: 1
+});
+
 // 标签模型
-module.exports = mongoose.model("Comment", CommentSchema);
+module.exports = mongoose.model("Comment", commentSchema);

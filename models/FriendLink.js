@@ -20,10 +20,7 @@ const FriendLinkSchema = new mongoose.Schema(
     created_time: { type: Date, default: Date.now },
 
     // 最后修改日期
-    updated_time: { type: Date, default: Date.now },
-
-    // 版本号
-    __v: { type: Number, select: false }
+    updated_time: { type: Date, default: Date.now }
   },
   {
     timestamps: {

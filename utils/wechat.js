@@ -7,7 +7,7 @@
 
 const { writeFile, readFile } = require("fs");
 const request = require("request-promise-native");
-const { appID, appsecret } = require("../config/config").wechat;
+const { appID, appsecret } = require("../app.config").wechat;
 
 class WeChat {
   constructor() { }
