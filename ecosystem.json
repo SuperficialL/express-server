@@ -21,7 +21,7 @@
   "deploy": {
     "production": {
       "user": "root",
-      "host": ["49.233.165.116"],
+      "host": ["zhangwurui.net"],
       "port": "22",
       "repo": "git@github.com:SuperficialL/koa-server.git",
       "ref": "origin/master",
