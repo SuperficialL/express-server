@@ -25,6 +25,7 @@ function getUploadDirName() {
  * @return null
  */
 function checkDirExist(dir) {
+  console.log(fs.existsSync(dir),'ss');
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }

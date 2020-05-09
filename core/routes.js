@@ -13,6 +13,7 @@ const CommentCtrl = require("../controllers/comment.controller");
 const TagCtrl = require("../controllers/tag.controller");
 const LinkCtrl = require("../controllers/link.controller");
 const LikeCtrl = require("../controllers/like.controller");
+const UploadCtrl = require("../controllers/upload.controller");
 
 const router = new Router({
   prefix: "/api"
@@ -66,5 +67,10 @@ router.delete("/tags/:tag_id", TagCtrl.delTag);
 
 // // 友链
 // router.get("/links", LinkCtrl.getFriendLinks);
+
+// 图片上传
+router.post("/uploads", UploadCtrl.uploadImg);
+router.get("/qiNiuToken", UploadCtrl.uploadQiNiu);
+router.post("/saveQiNiuUrl", UploadCtrl.saveQiNiuUrl);
 
 module.exports = router;

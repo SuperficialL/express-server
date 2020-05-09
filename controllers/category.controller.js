@@ -80,8 +80,9 @@ class CategoryController {
   // 修改分类
   async updateCategory(ctx) {
     const { category_id } = ctx.params;
-    const { ...other } = ctx.request.body;
-    const res = await Category.findByIdAndUpdate(category_id, other, { new: true });
+    const { name, slug, parent, icon, ordering } = ctx.request.body;
+    console.log(icon,"sss");
+    const res = await Category.findByIdAndUpdate(category_id, {name, slug, parent, icon, ordering }, { new: true });
     ctx.body = res
       ? handleSuccess({message: "分类修改成功~"})
       : handleError({message: "分类修改失败~"});

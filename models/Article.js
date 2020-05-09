@@ -14,6 +14,12 @@ const articleSchema = new mongoose.Schema(
     // 标题
     title: { type: String, required: true },
 
+    // 文章关键字 (SEO)
+    keywords: [{ type: String, }],
+
+    // 描述
+    description: { type: String },
+
     // 分类
     category: {
       type: mongoose.SchemaTypes.ObjectId,
