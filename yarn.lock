@@ -3,9 +3,9 @@
 
 
 "@types/node@*", "@types/node@^14.0.5":
-  version "14.0.9"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.0.9.tgz?cache=0&sync_timestamp=1591055014942&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.0.9.tgz#43896ab87fc82bda1dfd600cdf44a0c8a64e11d2"
-  integrity sha1-Q4lquH/IK9od/WAM30SgyKZOEdI=
+  version "14.0.10"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.0.10.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.0.10.tgz#dbfaa170bd9eafccccb6d7060743a761b0844afd"
+  integrity sha1-2/qhcL2er8zMttcGB0OnYbCESv0=
 
 "@types/sax@^1.2.1":
   version "1.2.1"
@@ -428,9 +428,9 @@ escape-html@^1.0.3, escape-html@~1.0.3:
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
 escodegen@1.x.x:
-  version "1.14.1"
-  resolved "https://registry.npm.taobao.org/escodegen/download/escodegen-1.14.1.tgz#ba01d0c8278b5e95a9a45350142026659027a457"
-  integrity sha1-ugHQyCeLXpWppFNQFCAmZZAnpFc=
+  version "1.14.2"
+  resolved "https://registry.npm.taobao.org/escodegen/download/escodegen-1.14.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fescodegen%2Fdownload%2Fescodegen-1.14.2.tgz#14ab71bf5026c2aa08173afba22c6f3173284a84"
+  integrity sha1-FKtxv1AmwqoIFzr7oixvMXMoSoQ=
   dependencies:
     esprima "^4.0.1"
     estraverse "^4.2.0"
