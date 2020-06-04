@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-03-02 13:17:38
+ * @LastEditTime: 2020-06-03 21:37:33
  * @Description: 配置文件
  */
 const package = require("./package.json");
@@ -24,23 +24,13 @@ module.exports = {
     powered: ["Vue", "Nuxt.js", "Bootstrap", "Nodejs", "MongoDB", "Express", "Nginx"]
   },
 
-  SESSION_CONFIG: {
-    key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
-    /** (number || 'session') maxAge in ms (default is 1 days) */
-    /** 'session' will result in a cookie that expires when session/browser is closed */
-    /** Warning: If a session cookie is stolen, this cookie will never expire */
-    maxAge: 86400000,
-    autoCommit: true, /** (boolean) automatically commit headers (default true) */
-    overwrite: false, /** (boolean) can overwrite or not (default true) */
-    httpOnly: true, /** (boolean) httpOnly or not (default true) */
-    signed: true, /** (boolean) signed or not (default true) */
-    rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
-    renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
-    sameSite: null, /** (string) session cookie sameSite options (default null, don't set it) */
-  },
+  APP: {
+    NAME: "个人博客",
+    URL: "http://127.0.0.1:8080",
+    // 端口
+    PORT: 3000,
 
-  // 端口
-  port: 3000,
+  },
 
   // mongo数据库
   MONGODB: {
@@ -56,7 +46,7 @@ module.exports = {
     allowedOrigins: ["http://zhangwurui.net", "http://cdn.zhangwurui.net", "http://admin.zhangwurui.net"],
     allowedReferer: "zhangwurui.net"
   },
-  
+
   // 安全相关配置
   SECURITY: {
     // 密钥
@@ -64,21 +54,21 @@ module.exports = {
     // 过期单位  s
     expiresIn: 60 * 60 * 24
   },
-  // 微信公众号
-  wechat: {
-    appID: "wx6fea9efb92e74fa7",
-    appsecret: "c91f3e210177118685a56fda4b8e41a5",
-    token: "wx6fea9efb92e74fa7"
-  },
+
   // 邮件发送者
-  mail: {
+  EMAIL: {
     host: "smtp.163.com",
     sender: "15871930413@163.com",
-    pass: "zrui950312"
+    user: "347106739@qq.com",
+    password: "zrui950312"
   },
   qiniu: {
     accessKey: "6lEYwVPcfmNGYBMWqgKZXl-isn80eojd1x7squfm",
     secretKey: "Wol1jwZwhIW8qx4dJHlG3ctJJbVV9Ek6w0TMfu3t",
-    bucket: "periodical"
+    media_bucket: "periodical",
+    pic_bucket: "statices"
+  },
+  JHApi: {
+    key: "8d3aff4ed1531e65c3ba3414309dd843"
   }
 };

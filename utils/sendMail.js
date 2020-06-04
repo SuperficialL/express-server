@@ -1,55 +1,55 @@
 /*
  * @Author: Superficial
  * @Date: 2020-01-23 16:44:06
- * @LastEditTime: 2020-02-27 10:46:46
+ * @LastEditTime: 2020-06-03 22:44:54
  * @Description: 邮件发送
  */
 
+const consola = require("consola");
 const nodemailer = require("nodemailer");
-const { host, sender, pass } = require("../app.config").mail;
+const CONFIG = require("../app.config");
+
+
+let clientIsValid = false;
 
 const transporter = nodemailer.createTransport({
-  host,
+  host: CONFIG.EMAIL.host,
   secure: true,
+  port: 465,
   auth: {
-    user: sender,
-    pass
+    user: CONFIG.EMAIL.sender,
+    pass: CONFIG.EMAIL.password
   }
 });
 
-
-function SendMailToAuthor(opts, callback) {
-  let mailOptions = {
-    from: "15871930413@163.com",
-    to: "347106739@qq.com",
-    subject: "欢迎评论SuperficialL Blog",
-    text: opts.content,
-    html: ""
-  };
-  transporter.sendMail(mailOptions, (err) => {
-    if (err) {
-      callback(false);
+const verifyClient = () => {
+  transporter.verify((error, success) => {
+    if (error) {
+      clientIsValid = false;
+      consola.warn("邮件客户端初始化连接失败，将在一小时后重试");
+      setTimeout(verifyClient, 1000 * 60 * 60)
     } else {
-      callback(true);
+      clientIsValid = true;
+      consola.ready("邮件客户端初始化连接成功，随时可发送邮件")
     }
-  });
-}
+  })
+};
 
-function SendMailToComment(opts, callback) {
-  let mailOptions = {
-    from: "15871930413@163.com",
-    to: opts.email,
-    subject: "欢迎评论SuperficialL Blog",
-    text: opts.content,
-    html: ""
-  };
-  transporter.sendMail(mailOptions, (err) => {
-    if (err) {
-      callback(false);
+verifyClient();
+
+const sendMail = mailOptions => {
+  if (!clientIsValid) {
+    consola.warn("由于未初始化成功，邮件客户端发送被拒绝");
+    return false
+  }
+  mailOptions.from = CONFIG.EMAIL.sender;
+  transporter.sendMail(mailOptions, (error, info) => { 
+    if (error) {
+      consola.warn("邮件发送失败", error)
     } else {
-      callback(true);
+      consola.success("邮件发送成功", info.messageId, info.response)
     }
-  });
-}
+  })
+};
 
-module.exports = { SendMailToAuthor, SendMailToComment };
+module.exports = { sendMail };

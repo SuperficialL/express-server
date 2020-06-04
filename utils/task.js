@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2020-01-03 17:35:22
- * @LastEditTime : 2020-01-04 20:49:03
+ * @LastEditTime: 2020-05-31 12:08:52
  * @Description: 定时任务工具函数
  */
 
@@ -15,7 +15,6 @@ const schedule = require("node-schedule");
 
 const setTask = function (date) {
   schedule.scheduleJob(date, function () {
-    console.log("执行任务！！！");
   });
 };
 

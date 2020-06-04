@@ -31,7 +31,6 @@ class WeChat {
     return new Promise((resolve, reject) => {
       readFile("../config/access_token.txt", (err, data) => {
         if (!err) {
-          console.log("文件读取成功~");
           JSON.parse(data);
           resolve(data);
         } else {
@@ -45,7 +44,6 @@ class WeChat {
     return new Promise((resolve, reject) => {
       writeFile("../config/access_token.txt", JSON.stringify(accessToken), err => {
         if (!err) {
-          console.log("文件保存成功~");
           resolve();
         } else {
           reject("saveAccessToken" + err);

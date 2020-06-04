@@ -1,12 +1,12 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:51:23
- * @LastEditTime: 2019-11-09 23:35:45
+ * @LastEditTime: 2020-05-14 10:52:42
  * @Description: 全局异常处理
  */
 const { HttpException } = require("../core/http-exception");
 
-const test = async (ctx, next) => {
+const catchError = async (ctx, next) => {
   try {
     await next();
     // 处理 404 页面
@@ -21,4 +21,4 @@ const test = async (ctx, next) => {
   }
 };
 
-module.exports = test;
+module.exports = catchError;

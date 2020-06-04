@@ -1,0 +1,28 @@
+@url = http://127.0.0.1:3000
+@contentType = Content-Type: application/json
+
+### 获取用户信息
+GET {{url}}/api/auth
+
+### 获取登录令牌
+POST {{url}}/api/auth
+{{contentType}}
+
+{
+    "username":"SuperficialL",
+    "password":".zrui.950312"
+}
+
+### 检查令牌有效性
+PATCH {{url}}/api/auth
+{{contentType}}
+
+{
+    "username":"SuperficialL",
+    "password":".zrui.950312"
+}
+
+
+### 获取文章列表
+GET {{url}}/api/articles
+{{contentType}}

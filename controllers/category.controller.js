@@ -1,131 +1,233 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-03-25 18:16:13
+ * @LastEditTime: 2020-05-31 12:06:01
  * @Description: 分类路由控制器
  */
+
+const CONFIG = require("../app.config");
 const Category = require("../models/Category");
 const Article = require("../models/Article");
-const { Response,handlePaginateData,handleSuccess,handleError } = require("../utils/helper");
-const HttpException = require("../core/http-exception");
-const { authIsVerified } = require("../middleware/auth");
-const { numberIsInvalid, arrayIsInvalid, objectValues } = require("../utils/tools")
+const authIsVerified = require("../middleware/auth");
 const { PUBLISH_STATE, PUBLIC_STATE, ORIGIN_STATE, SORT_TYPE, REDIS_CACHE_FIELDS } = require("../core/constants");
+const { arrayIsInvalid } = require("../utils/validate");
+const {
+  handleError,
+  handleSuccess,
+  humanizedHandleError,
+  handlePaginateData,
+  buildController,
+  initController
+} = require("../core/processor");
 
-class CategoryController {
-  // 获取所有分类
-  async getCategories(ctx) {
-    const [ page, per_page ] = [ ctx.query.page || 1, ctx.query.per_page ].map(k => Number(k))
+// controller
+const CategoryCtrl = initController(["list", "item"]);
 
-    // 过滤条件
-    const options = {
-      page,
-      sort: { _id: SORT_TYPE.desc },
-      lean: true,
-      leanWithId:false
-    }
-    
-    if (!isNaN(per_page)) {
-      options.limit = per_page;
-    }
+// 获取分类列表
+CategoryCtrl.list.GET = (req, res) => {
 
-    const categories = await Category.paginate({}, options);
-    const $match = authIsVerified(ctx) 
+  const [page, per_page] = [req.query.page || 1, req.query.per_page].map(k => Number(k));
+
+  // 过滤条件
+  const options = {
+    page,
+    sort: { _id: SORT_TYPE.desc }
+  };
+
+  if (!isNaN(per_page)) {
+    options.limit = per_page;
+  }
+
+  const querySuccess = categories => {
+    handleSuccess({
+      res,
+      message: "分类列表获取成功",
+      result: handlePaginateData(categories)
+    })
+  };
+
+  // 查询 article-category 的 count 聚合数据
+  const getCatrgoriesCount = categories => {
+    const $match = authIsVerified(req)
       ? {}
       : { state: PUBLISH_STATE.published, public: PUBLIC_STATE.public };
-    const counts = await Article.aggregate([
+    Article.aggregate([
       { $match },
-      { $unwind: '$category' },
-      { $group: {
-        _id: '$category',
-        num_tutorial: { $sum: 1 }}
+      { $unwind: "$category" },
+      {
+        $group: {
+          _id: "$category",
+          num_tutorial: { $sum: 1 }
+        }
       }
-    ]);
-    const newCtefories = categories.docs.map(category => {
-      const finded = counts.find(c => String(c._id) === String(category._id))
-      category.count = finded ? finded.num_tutorial : 0
-      return category;
-    });
-    categories.docs = newCtefories;
-    ctx.body = handleSuccess({
-      result: handlePaginateData(categories),
-      message: "分类获取成功~"
-    });
-  }
-
-  // 获取分类详情
-  async getCategory(ctx) {
-    const { category_id } = ctx.params;
-    let category = await Category.findById(category_id).populate(['parent']);
-    category = category.toObject();
-    ctx.body = category
-      ? new Response().json({category})
-      : new Response().success("分类不存在~");
-  }
-
-  // 创建分类
-  async createCategory(ctx) {
-    const { name, slug, ...other } = ctx.request.body;
-    if (!name) throw new HttpException(20005, "分类名不可为空~");
-    const res = await new Category({
-      name,
-      slug,
-      ...other
-    }).save();
-    ctx.body = res
-      ? handleSuccess({message: "分类创建成功~"})
-      : handleError({message: "分类创建成功~"});
-  }
-
-  // 修改分类
-  async updateCategory(ctx) {
-    const { category_id } = ctx.params;
-    const { name, slug, parent, icon, ordering } = ctx.request.body;
-    console.log(icon,"sss");
-    const res = await Category.findByIdAndUpdate(category_id, {name, slug, parent, icon, ordering }, { new: true });
-    ctx.body = res
-      ? handleSuccess({message: "分类修改成功~"})
-      : handleError({message: "分类修改失败~"});
-  }
-
-  // 删除分类
-  async delCategory(ctx) {
-    const { category_id } = ctx.params;
-    // delete category
-    const deleteCategory = () => {
-      return Category.findByIdAndRemove(category_id)
-    }
-
-    // delete pid
-    const deletePid = category => {
-      return new Promise((resolve, reject) => {
-        Category.find({ parent: category_id })
-          .then(categories => {
-            // 如果没有子分类
-            if (!categories.length) {
-              return resolve(category)
-            }
-            // 否则更改父分类的子分类
-            const targetCategory = Category.collection.initializeOrderedBulkOp()
-            targetCategory
-              .find({ _id: { $in: Array.from(categories, c => c._id) }})
-              .update({ $set: { parent: category.parent || null }})
-            targetCategory
-              .execute((err, data) => {
-                err ? reject(err) : resolve(category)
-              })
-          })
-          .catch(err => reject(err))
+    ])
+      .then(counts => {
+        const newCtefories = categories.docs.map(category => {
+          const finded = counts.find(c => String(c._id) === String(category._id));
+          category.count = finded ? finded.num_tutorial : 0;
+          return category
+        });
+        categories.docs = newCtefories;
+        querySuccess(categories)
       })
-    }
-    try {
-      const category = await deleteCategory()
-      await deletePid(category);
-    } catch (err) {
-      ctx.body = new Response().success("分类删除失败~")
-    }
-    ctx.body = new Response().success("分类删除成功~")
-  }
-}
+      .catch(_ => {
+        querySuccess(categories)
+      })
+  };
 
-module.exports = new CategoryController();
+  // 请求
+  Category.paginate({}, options)
+    .then(categories => getCatrgoriesCount(JSON.parse(JSON.stringify(categories))))
+    .catch(humanizedHandleError(res, "分类列表获取失败"))
+};
+
+// 创建分类
+CategoryCtrl.list.POST = ({ body: category }, res) => {
+  const { slug, parent } = category;
+  // 如果 pid 为 null 或空值
+  if (!parent) {
+    Reflect.deleteProperty(category, "parent")
+  }
+
+  if (category.slug === undefined) {
+    return handleError({ res, message: "缺少slug" })
+  }
+
+  // 保存分类
+  const saveCategory = () => {
+    new Category(category).save()
+      .then(result => {
+        handleSuccess({ res, result, message: "分类发布成功" });
+        // updateAndBuildSiteMap();
+        // baiduSeoPush(`${CONFIG.APP.URL}/category/${result.slug}`)
+      })
+      .catch(humanizedHandleError(res, "分类发布失败"))
+  };
+
+  // 验证 slug 合法性
+  Category.find({ slug })
+    .then(categories => {
+      categories.length
+        ? handleError({ res, message: "slug 已被占用" })
+        : saveCategory()
+    })
+    .catch(humanizedHandleError(res, "分类发布失败"))
+};
+
+// 批量删除分类
+CategoryCtrl.list.DELETE = ({ body: { categories } }, res) => {
+
+  // 验证
+  if (arrayIsInvalid(categories)) {
+    return handleError({ res, message: "缺少有效参数" })
+  }
+
+  // 把所有 pid 为 categories 中任何一个 id 的分类分别提升到自己分类本身的 PID 分类或者 null
+  Category.deleteMany({ _id: { $in: categories } })
+    .then(result => {
+      handleSuccess({ res, result, message: "分类批量删除成功" });
+      updateAndBuildSiteMap()
+    })
+    .catch(humanizedHandleError(res, "分类批量删除失败"))
+};
+
+// 获取单个分类以及自身的父分类
+CategoryCtrl.item.GET = ({ params: { category_id } }, res) => {
+  const categories = []
+    ; ((function findCateItem(_id) {
+      Category.findById(_id)
+        .then(category => {
+          if (!category) {
+            return arrayIsInvalid(categories)
+              ? handleError({ res, message: "分类不存在" })
+              : handleSuccess({ res, result: categories, message: "分类获取成功" })
+          }
+          categories.unshift(category);
+          const pid = category.pid;
+          const hasParent = pid && pid !== category.id;
+          hasParent
+            ? findCateItem(pid)
+            : handleSuccess({ res, result: categories, message: "分类获取成功" })
+        })
+        .catch(humanizedHandleError(res, "分类获取失败"))
+    })(category_id))
+};
+
+// 修改单个分类
+CategoryCtrl.item.PATCH = ({ params: { category_id }, body: category }, res) => {
+  // 校验
+  const { slug, parent } = category;
+  if (!slug) {
+    return handleError({ res, message: "slug 不合法" })
+  }
+
+  // 修改
+  const patchCategory = () => {
+    if (["", "0", "null", "false"].includes(parent) || !parent || parent === category_id) {
+      category.parent = null
+    }
+    Category.findByIdAndUpdate(category_id, category, { new: true })
+      .then(result => {
+        handleSuccess({ res, result, message: "分类修改成功" });
+        // updateAndBuildSiteMap();
+        // baiduSeoUpdate(`${CONFIG.APP.URL}/category/${result.slug}`)
+      })
+      .catch(humanizedHandleError(res, "分类修改失败"))
+  };
+
+  // 修改前判断 slug 的唯一性，是否被占用
+  Category.find({ slug })
+    .then(([existed_category]) => {
+      const hasExisted = existed_category && (String(existed_category._id) !== category_id);
+      hasExisted
+        ? handleError({ res, message: "slug 已存在" })
+        : patchCategory()
+    })
+    .catch(humanizedHandleError(res, "分类修改失败"))
+};
+
+// 删除单个分类
+CategoryCtrl.item.DELETE = ({ params: { category_id } }, res) => {
+
+  // delete category
+  const deleteCategory = () => {
+    return Category.findByIdAndRemove(category_id)
+  };
+
+  // delete pid
+  const deletePid = category => {
+    return new Promise((resolve, reject) => {
+      Category.find({ pid: category_id })
+        .then(categories => {
+          // 如果没有子分类
+          if (!categories.length) {
+            return resolve(category)
+          }
+          // 否则更改父分类的子分类
+          const targetCategory = Category.collection.initializeOrderedBulkOp();
+          targetCategory
+            .find({ _id: { $in: Array.from(categories, c => c._id) } })
+            .update({ $set: { pid: category.pid || null } });
+          targetCategory
+            .execute((err, data) => {
+              err ? reject(err) : resolve(category)
+            })
+        })
+        .catch(err => reject(err))
+    })
+  };
+
+  (async () => {
+    const category = await deleteCategory();
+    return await deletePid(category)
+  })()
+    .then((result) => {
+      handleSuccess({ res, result, message: "分类删除成功" });
+      updateAndBuildSiteMap()
+    })
+    .catch(humanizedHandleError(res, "分类删除失败"))
+};
+
+exports.list = buildController(CategoryCtrl.list);
+exports.item = buildController(CategoryCtrl.item);
+

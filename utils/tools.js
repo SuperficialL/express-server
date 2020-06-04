@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-06 23:12:10
- * @LastEditTime: 2019-11-06 23:29:24
+ * @LastEditTime: 2020-05-31 12:06:23
  * @Description: 工具函数
  */
 const fs = require("fs");
@@ -25,7 +25,6 @@ function getUploadDirName() {
  * @return null
  */
 function checkDirExist(dir) {
-  console.log(fs.existsSync(dir),'ss');
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }

@@ -1,57 +1,122 @@
-/*
- * @Author: Superficial
- * @Date: 2020-02-28 18:44:14
- * @LastEditTime: 2020-02-28 18:51:16
+ /*
+ * @author: SuperficialL
+ * @Date: 2019-08-24 12:35:32
+ * @LastEditTime: 2020-05-14 18:10:55
  * @Description: 音乐控制器
  */
 
-const Music = require("../models/Music");
-const Response = require("../utils/helper");
+const redis = require('np-core/np-redis')
+const NeteseMusic = require('simple-netease-cloud-music')
+const { REDIS_CACHE_FIELDS } = require('np-core/np-constants')
+const { numberIsInvalid } = require('np-helper/np-data-validate')
+const {
+	handleError,
+	handleSuccess,
+	humanizedHandleError,
+	humanizedHandleSuccess,
+	buildController,
+	initController
+} = require('np-core/np-processor')
 
-class MusicController {
-  async getMusics(ctx) {
-    const { page = 1, per_page = 10, ...query } = ctx.query;
-    let skip = Number(page - 1) < 0 ? 0 : Number(page - 1) * per_page;
-    const total = await Music.countDocuments(query);
-    const musics = await Music.find(query)
-      .sort({ _id: -1 })
-      .skip(skip)
-      .limit(Number(per_page));
-    ctx.body = new Response().json({ musics, total });
-  }
+const neteseMusic = new NeteseMusic()
+const musicCtrl = initController(['lrc', 'list', 'song', 'url', 'pic'])
 
-  async getMusic(ctx) {
-    const { id } = ctx.params;
-    const music = await Music.findById(id);
-    ctx.body = music
-      ? new Response().json({ music })
-      : new Response().success("音乐不存在~");
-  }
+// 默认参数
+const defaultListLimit = 30
+const defaultListId = '638949385'
 
-  async createMusic(ctx) {
-    const { author, content } = ctx.request.body;
-    await new Music({ author, content }).save();
-    ctx.body = new Response().success("音乐创建成功");
-  }
-
-  async updateMusic(ctx) {
-    const { id } = ctx.params;
-    const { ...update } = ctx.request.body;
-    const music = await Music.findByIdAndUpdate(id, update, {
-      new: true
-    });
-    ctx.body = music
-      ? new Response().success("音乐更新成功~")
-      : new Response().success("音乐不存在~");
-  }
-
-  async delMusic(ctx) {
-    const { id } = ctx.params;
-    const music = await Music.findByIdAndRemove(id);
-    ctx.body = music
-      ? new Response().success("音乐删除成功~")
-      : new Response().success("音乐不存在~");
-  }
+// 获取歌单列表
+const getMusicList = (list_id, list_limit) => {
+	return neteseMusic._playlist(list_id)
+		.then(({ playlist }) => {
+			Reflect.deleteProperty(playlist, 'trackIds')
+			playlist.tracks = playlist.tracks.slice(0, list_limit)
+			return playlist
+		})
 }
 
-module.exports = new MusicController();
+// 歌单缓存器
+const redisMusicListCache = redis.interval({
+	timeout: {
+		// 成功后 30分钟 获取数据
+		success: 1000 * 60 * 30,
+		// 失败后 5分钟 获取数据
+		error: 1000 * 60 * 5
+	},
+	key: REDIS_CACHE_FIELDS.musicList + defaultListId,
+	promise: () => getMusicList(defaultListId, defaultListLimit)
+})
+
+// 获取某歌单列表
+musicCtrl.list.GET = (req, res) => {
+
+	const list_limit = req.query.limit || defaultListLimit
+	const list_id = req.params.list_id || defaultListId
+
+	if (numberIsInvalid(list_id)) {
+		return handleError({ res, message: '参数无效' })
+	}
+
+	// 是否命中缓存请求
+	const hitCacheRequest = list_limit == defaultListLimit && list_id == defaultListId
+	const musicListRequest = hitCacheRequest
+										? redisMusicListCache()
+										: getMusicList(list_id, list_limit)
+	musicListRequest
+		.then(humanizedHandleSuccess(res, '歌单列表获取成功'))
+		.catch(humanizedHandleError(res, '歌单列表获取失败'))
+}
+
+// 获取歌曲详情
+musicCtrl.song.GET = (req, res) => {
+	const song_id = req.params.song_id
+
+	if (numberIsInvalid(song_id)) {
+		return handleError({ res, message: '参数无效' })
+	}
+	neteseMusic.song(song_id)
+		.then(humanizedHandleSuccess(res, '歌曲详情获取成功'))
+		.catch(humanizedHandleError(res, '歌曲详情获取失败'))
+}
+
+// 获取歌曲地址
+musicCtrl.url.GET = (req, res) => {
+	const song_id = req.params.song_id
+
+	if (numberIsInvalid(song_id)) {
+		return handleError({ res, message: '参数无效' })
+	}
+	neteseMusic.url(song_id, 128)
+		.then(humanizedHandleSuccess(res, '歌曲地址获取成功'))
+		.catch(humanizedHandleError(res, '歌曲地址获取失败'))
+}
+
+// 获取歌词
+musicCtrl.lrc.GET = (req, res) => {
+	const song_id = req.params.song_id
+
+	if (numberIsInvalid(song_id)) {
+		return handleError({ res, message: '参数无效' })
+	}
+	neteseMusic.lyric(song_id)
+		.then(humanizedHandleSuccess(res, '歌词获取成功'))
+		.catch(humanizedHandleError(res, '歌词获取失败'))
+}
+
+// 获取图片封面
+musicCtrl.pic.GET = (req, res) => {
+	const pic_id = req.params.pic_id
+
+	if (numberIsInvalid(pic_id)) {
+		handleError({ res, message: '参数无效' })
+	}
+	neteseMusic.picture(pic_id, 700)
+		.then(humanizedHandleSuccess(res, '封面获取成功'))
+		.catch(humanizedHandleError(res, '封面获取失败'))
+}
+
+exports.pic = buildController(musicCtrl.pic)
+exports.url = buildController(musicCtrl.url)
+exports.lrc = buildController(musicCtrl.lrc)
+exports.list = buildController(musicCtrl.list)
+exports.song = buildController(musicCtrl.song)

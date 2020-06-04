@@ -2,7 +2,7 @@
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
  * @LastEditTime : 2020-02-10 16:28:23
- * @Description:  标签控制器
+ * @Description:  友链控制器
  */
 
 const FriendLink = require("../models/FriendLink");

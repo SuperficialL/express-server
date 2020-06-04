@@ -1,12 +1,12 @@
 /*
 * @Author: SuperficialL
 * @Date: 2019-09-04 21:49:02
-* @LastEditTime: 2019-09-07 12:17:19
+ * @LastEditTime: 2020-05-18 14:28:49
 * @Description: 数据库模块
  */
 
 const mongoose = require("mongoose");
-const autoIncrement = require('mongoose-auto-increment')
+const autoIncrement = require('mongoose-auto-increment');
 const { success, error } = require("consola");
 const { MONGODB } = require("../app.config");
 
@@ -39,7 +39,7 @@ exports.connect = () => {
   });
 
   // 自增 ID 初始化
-	autoIncrement.initialize(mongoose.connection)
+  autoIncrement.initialize(mongoose.connection);
 
   // 返回实例
   return mongoose;
