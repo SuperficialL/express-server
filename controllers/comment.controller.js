@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-06-03 21:38:40
+ * @LastEditTime: 2020-06-10 23:01:10
  * @Description: 评论控制器
  */
 
@@ -166,9 +166,8 @@ const handleCommentsStateChange = (state, comments, referrer) => {
 
 // 获取评论列表
 CommentCtrl.list.GET = (req, res) => {
-
   // 初始参数
-  const { keyword, post_id } = req.query;
+  const { keyword, article_id } = req.query;
   const [status, page, per_page, sort] = [
     req.query.status,
     req.query.page || 1,
@@ -204,8 +203,8 @@ CommentCtrl.list.GET = (req, res) => {
   }
 
   // 通过 post-id 过滤
-  if (post_id !== undefined) {
-    query.post_id = post_id;
+  if (article_id !== undefined) {
+    query.article_id = article_id;
   }
 
   // 关键词查询

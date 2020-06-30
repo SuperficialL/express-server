@@ -5,7 +5,7 @@
  * @Description: 轮播模型
  */
 
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 const CarouselSchema = new mongoose.Schema(
   {

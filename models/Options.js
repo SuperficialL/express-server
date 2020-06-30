@@ -6,7 +6,7 @@
  */
 
 
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 const optionSchema = new mongoose.Schema({
 

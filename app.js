@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 12:46:53
- * @LastEditTime: 2020-05-14 15:38:03
+ * @LastEditTime: 2020-06-29 22:46:39
  * @Description: App入口文件
  */
 
@@ -9,9 +9,8 @@ const express = require("express");
 const helmet = require('helmet');
 const bodyParser = require("body-parser");
 const { ready } = require("consola");
-
 const { APP } = require("./app.config");
-const mongodb = require("./core/db");
+const mongodb = require("./core/mongodb");
 
 // mongodb server connect
 mongodb.connect();
@@ -25,7 +24,7 @@ app.set("port", APP.PORT);
 app.use(helmet());
 app.use(bodyParser.json({ limit: "1mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.static('public'));
 // app routes
 routes(app);
 

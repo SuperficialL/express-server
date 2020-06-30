@@ -4,7 +4,7 @@
  * @Description: 日志模型
  */
 
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 // 日志模型
 const logSchema = new mongoose.Schema(

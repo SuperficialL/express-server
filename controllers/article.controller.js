@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-05-31 12:03:24
+ * @LastEditTime: 2020-06-20 02:08:05
  * @Description: 文章控制器
  */
 
@@ -230,11 +230,10 @@ ArticleCtrl.list.DELETE = ({ body: { articles } }, res) => {
 ArticleCtrl.item.GET = ({ params: { article_id } }, res) => {
   // 判断来源
   const isFindById = isNaN(Number(article_id));
-
   // 获取相关文章
   const getRelatedArticles = result => {
     Article.find(
-      { status: PUBLISH_STATE.published, tags: { $in: result.tag.map(t => t._id) } },
+      { status: PUBLISH_STATE.published, tags: { $in: result.tags.map(t => t._id) } },
       "id title description thumbnail -_id",
       (err, articles) => {
         result.related = err ? [] : articles;
@@ -248,7 +247,6 @@ ArticleCtrl.item.GET = ({ params: { article_id } }, res) => {
     : Article.findOne({ id: article_id, status: PUBLISH_STATE.published }).populate("category tags").exec()
   )
     .then(result => {
-
       // 每请求一次，浏览次数都要增加
       if (!isFindById) {
         result.views++;

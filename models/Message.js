@@ -5,7 +5,7 @@
  * @Description: 留言板模型
  */
 
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 const MessageSchema = new mongoose.Schema(
   {

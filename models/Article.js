@@ -6,7 +6,7 @@
  */
 const mongoosePaginate = require('mongoose-paginate');
 const autoIncrement = require('mongoose-auto-increment');
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 const { PUBLISH_STATE, PUBLIC_STATE, ORIGIN_STATE } = require("../core/constants");
 
 const articleSchema = new mongoose.Schema(

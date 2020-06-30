@@ -1,12 +1,12 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-04-07 19:42:42
+ * @LastEditTime: 2020-06-29 21:37:44
  * @Description: 管理员模型
  */
 
 const bcrypt = require("bcryptjs");
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 const adminSchema = new mongoose.Schema(
   {

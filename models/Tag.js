@@ -6,7 +6,7 @@
  */
 const mongoosePaginate = require('mongoose-paginate');
 const autoIncrement = require('mongoose-auto-increment');
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 // 标签模型
 const tagSchema = new mongoose.Schema(

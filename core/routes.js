@@ -1,14 +1,26 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-05-31 17:40:03
+ * @LastEditTime: 2020-06-29 22:35:39
  * @Description: 路由
  */
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
 const { INFO, CROSS_DOMAIN, isProdMode, isDevMode } = require("../app.config");
 const authIsVerified = require("../middleware/auth");
 const controller = require("../controllers");
-const express = require("express");
-const router = express.Router();
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+  })
+});
 
 const routes = app => {
   // 入口中间件
@@ -53,8 +65,9 @@ const routes = app => {
     // 拦截（所有非管路员的非 get 请求，或文件上传请求）
     const notGetRequest = req.method !== "GET";
     const isFileRequest = req.url === "/qiniu";
+    const isUploadRequest = req.url === "/uploads";
     const isGuestRequest = !authIsVerified(req);
-    if (isGuestRequest && (notGetRequest || isFileRequest)) {
+    if (isGuestRequest && (notGetRequest || isFileRequest || isUploadRequest)) {
       return res.status(403).jsonp({ code: 0, message: "来者何人！" });
     }
 
@@ -84,7 +97,11 @@ const routes = app => {
   router.get("/statistic", controller.statistic);
 
   // like
-  router.post("/like",controller.like);
+  router.post("/like", controller.like);
+
+  // 文件上传
+  router.post("/uploads", upload.single("file"), controller.upload);
+
   // 验证码
   // router.get("/captcha", AuthCtrl.generateVerifCode);
 
@@ -93,42 +110,6 @@ const routes = app => {
   // router.post("/register", AuthCtrl.register);
   // router.get("/profile", AuthCtrl.profile);
   // // router.patch("/profile", AuthCtrl.updateAuth);
-
-
-  // 文章
-  // router.post("/articles", ArticleCtrl.createArticle);
-  // router.get("/articles", ArticleCtrl.getArticles);
-  // router.get("/articles/:article_id", ArticleCtrl.getArticle);
-  // router.patch("/articles/:article_id", ArticleCtrl.updateArticle);
-  // router.delete("/articles/:article_id", ArticleCtrl.delArticle);
-
-
-  // // 分类
-  // router.post("/categories", CategoryCtrl.createCategory);
-  // router.get("/categories", CategoryCtrl.getCategories);
-  // router.get("/categories/:category_id", CategoryCtrl.getCategory);
-  // router.patch("/categories/:category_id", CategoryCtrl.updateCategory);
-  // router.delete("/categories/:category_id", CategoryCtrl.delCategory);
-
-
-  // // 评论
-  // router.post("/comments", CommentCtrl.createComment);
-  // router.get("/comments", CommentCtrl.getComments);
-  // router.get("/comments/:comment_id", CommentCtrl.getComment);
-  // router.patch("/comments/:comment_id", CommentCtrl.updateComment);
-  // router.delete("/comments/:comment_id", CommentCtrl.delComment);
-
-
-  // // 标签
-  // router.post("/tags", TagCtrl.createTag);
-  // router.get("/tags", TagCtrl.getTags);
-  // router.get("/tags/:tag_id", TagCtrl.getTag);
-  // router.patch("/tags/:tag_id", TagCtrl.updateTag);
-  // router.delete("/tags/:tag_id", TagCtrl.delTag);
-
-
-  // // 点赞
-  // // router.post("/like", LikeCtrl.isLike);
 
   // // 友链
   // // router.get("/links", LinkCtrl.getFriendLinks);

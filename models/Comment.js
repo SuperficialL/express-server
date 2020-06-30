@@ -7,7 +7,7 @@
 
 const mongoosePaginate = require('mongoose-paginate');
 const autoIncrement = require('mongoose-auto-increment');
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 const { COMMENT_STATE, COMMENT_PARENT_TYPE } = require('../core/constants')
 
 // 评论模型

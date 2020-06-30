@@ -5,7 +5,7 @@
  * @Description: 媒体库
  */
 
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 const musicSchema = new mongoose.Schema(
   {

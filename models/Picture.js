@@ -6,7 +6,7 @@
  */
 const mongoosePaginate = require('mongoose-paginate');
 const autoIncrement = require('mongoose-auto-increment');
-const { mongoose } = require("../core/db");
+const { mongoose } = require("../core/mongodb");
 
 const pictureSchema = new mongoose.Schema(
   {
