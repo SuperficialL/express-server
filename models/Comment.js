@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-06-03 21:18:31
+ * @LastEditTime: 2020-07-06 00:00:20
  * @Description: 评论模型
  */
 
@@ -25,7 +25,7 @@ const commentSchema = new mongoose.Schema(
     // 评论内容
     content: { type: String, required: true },
 
-    // 是否置顶
+    // 状态 => 0 待审核 / 1 通过正常 / -1 已删除 / -2 垃圾评论
     is_top: { type: Boolean, default: false },
 
     // 被赞数

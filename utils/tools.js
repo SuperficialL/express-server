@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-11-06 23:12:10
- * @LastEditTime: 2020-05-31 12:06:23
+ * @LastEditTime: 2020-07-05 23:45:32
  * @Description: 工具函数
  */
 const fs = require("fs");
@@ -56,7 +56,6 @@ const arrayUniq = (a, b = []) => [...new Set([...a, ...b])];
 
 // 获取对象值数组
 const objectValues = object => Object.keys(object).map(key => object[key]);
-
 
 module.exports = {
   getUploadDirName,
