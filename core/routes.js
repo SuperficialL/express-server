@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-07-04 01:07:41
+ * @LastEditTime: 2020-07-07 00:29:38
  * @Description: 路由
  */
 const express = require("express");
@@ -76,9 +76,9 @@ const routes = app => {
     next();
   });
   // 接口信息
-  app.get("/", (_, res) => {
-    res.jsonp(INFO);
-  });
+  // app.get("/", (_, res) => {
+  //   res.jsonp(INFO);
+  // });
 
   router.all("/auth", controller.auth);
 
