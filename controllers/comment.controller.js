@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-06 01:09:41
+ * @LastEditTime: 2020-07-11 18:12:57
  * @Description: 评论控制器
  */
 
@@ -55,6 +55,7 @@ const CommentCtrl = initController(["list", "item"]);
 
 // 更新当前所受影响的文章的评论聚合数据
 const updateArticleCommentCount = (article_ids = []) => {
+  console.log(article_ids);
   article_ids = arrayUniq(article_ids).filter((id) => !!id);
   if (arrayIsInvalid(article_ids)) {
     return false;
@@ -62,7 +63,7 @@ const updateArticleCommentCount = (article_ids = []) => {
   Comment.aggregate([
     {
       $match: {
-        state: COMMENT_STATE.published,
+        status: COMMENT_STATE.published,
         article_id: { $in: article_ids },
       },
     },
@@ -208,11 +209,10 @@ CommentCtrl.list.GET = (req, res) => {
   const [status, page, per_page, sort, is_top] = [
     req.query.status,
     req.query.page || 1,
-    req.query.per_page || 8,
+    req.query.per_page || 10,
     req.query.sort || SORT_TYPE.desc,
     req.query.is_top || 0,
   ].map((k) => Number(k));
-
   // 过滤条件
   const options = {
     page,
@@ -232,7 +232,7 @@ CommentCtrl.list.GET = (req, res) => {
   if (objectValues(COMMENT_STATE).includes(status)) {
     query.status = status;
   }
-  
+
   if (objectValues(SORT_TYPE).includes(is_top)) {
     query.is_top = true;
   }
@@ -302,7 +302,7 @@ CommentCtrl.list.POST = (req, res) => {
     const pageLink =
       comment.article_id === COMMENT_POST_TYPE.guestbook
         ? "guestbook"
-        : `detail/${comment.article_id}`;
+        : `article/${comment.article_id}`;
     const permalink = CONFIG.APP.URL + "/" + pageLink;
     // 发布评论
     const saveComment = () => {
@@ -313,7 +313,7 @@ CommentCtrl.list.POST = (req, res) => {
 
           // 发布成功后，向网站主及被回复者发送邮件提醒，并更新网站聚合
           sendMailToAdminAndTargetUser(comment, permalink);
-          // updateArticleCommentCount([comment.article_id])
+          updateArticleCommentCount([comment.article_id]);
         })
         .catch(humanizedHandleError(res, "评论发布失败"));
     };

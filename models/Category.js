@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime : 2019-12-28 22:25:02
+ * @LastEditTime: 2020-07-08 18:12:55
  * @Description: 分类模型
  */
 const mongoosePaginate = require('mongoose-paginate');
@@ -14,7 +14,7 @@ const categorySchema = new mongoose.Schema(
     name: { type: String, required: true, validate: /\S+/ },
 
     // 别名
-	  slug: { type: String, required: true, validate: /\S+/ },
+    slug: { type: String, required: true, validate: /\S+/ },
 
     // 父级分类
     parent: {
@@ -25,6 +25,9 @@ const categorySchema = new mongoose.Schema(
 
     // 图标
     icon: { type: String },
+
+    // 排序
+    sort: { type: Number, default: 100 },
 
     // 创建时间
     created_time: {
@@ -52,10 +55,10 @@ const categorySchema = new mongoose.Schema(
 // 翻页 + 自增 ID 插件配置
 categorySchema.plugin(mongoosePaginate);
 categorySchema.plugin(autoIncrement.plugin, {
-	model: 'Category',
-	field: 'id',
-	startAt: 1,
-	incrementBy: 1
+  model: 'Category',
+  field: 'id',
+  startAt: 1,
+  incrementBy: 1
 });
 
 module.exports = mongoose.model("Category", categorySchema);

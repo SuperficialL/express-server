@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-05-31 12:06:01
+ * @LastEditTime: 2020-07-08 18:16:13
  * @Description: 分类路由控制器
  */
 
@@ -31,7 +31,7 @@ CategoryCtrl.list.GET = (req, res) => {
   // 过滤条件
   const options = {
     page,
-    sort: { _id: SORT_TYPE.desc }
+    sort: { srot: SORT_TYPE.desc }
   };
 
   if (!isNaN(per_page)) {

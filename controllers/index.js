@@ -12,6 +12,7 @@ exports.category = require("./category.controller");
 exports.statistic = require("./statistic.controller");
 exports.like = require("./like.controller");
 exports.upload = require("./upload.controller");
+exports.link = require("./link.controller");
 
 // exports.music = require("./music.controller");
 // exports.qiniu = require("./qiniu.controller");
