@@ -1,7 +1,7 @@
 /*
- * @author: SuperficialL
+ * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-11 18:12:57
+ * @LastEditTime: 2020-07-22 14:43:11
  * @Description: 评论控制器
  */
 
@@ -407,7 +407,7 @@ CommentCtrl.list.PATCH = (
 };
 
 // 批量删除评论
-CommentCtrl.list.DELETE = ({ body: { comments, post_ids } }, res) => {
+CommentCtrl.list.DELETE = ({ body: { comments, article_ids } }, res) => {
   // 验证
   if (arrayIsInvalid(comments)) {
     return handleError({ res, message: "缺少有效参数" });
@@ -418,8 +418,8 @@ CommentCtrl.list.DELETE = ({ body: { comments, post_ids } }, res) => {
       handleSuccess({ res, result, message: "评论批量删除成功" });
 
       // 如果处理的评论有超过包含一篇文章评论以上的状态，则更新所相关文章的聚合数据
-      if (!arrayIsInvalid(post_ids)) {
-        updateArticleCommentCount(post_ids);
+      if (!arrayIsInvalid(article_ids)) {
+        updateArticleCommentCount(article_ids);
       }
     })
     .catch(humanizedHandleError(res, "评论批量删除失败"));

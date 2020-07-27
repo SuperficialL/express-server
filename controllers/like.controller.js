@@ -1,5 +1,5 @@
 /*
- * @author: SuperficialL
+ * @author: Superficial
  * @Date: 2019-08-24 12:35:32
  * @LastEditTime: 2020-07-10 14:49:49
  * @Description: 点赞控制器

@@ -1,7 +1,7 @@
 /*
- * @author: SuperficialL
+ * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-11 17:59:41
+ * @LastEditTime: 2020-07-27 14:26:17
  * @Description:  友链控制器
  */
 

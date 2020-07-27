@@ -1,7 +1,7 @@
 /*
- * @author: SuperficialL
+ * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-11 17:06:24
+ * @LastEditTime: 2020-07-27 14:25:50
  * @Description: 文章控制器
  */
 
@@ -44,7 +44,6 @@ ArticleCtrl.list.GET = (req, res) => {
     req.query.origin,
     req.query.hot,
   ].map((k) => Number(k));
-
   // 过滤条件
   const options = {
     page,
@@ -151,7 +150,7 @@ ArticleCtrl.list.GET = (req, res) => {
     return Tag.find({ slug: tag_slug })
       .then(([tag] = []) => {
         if (tag) {
-          query.tag = tag._id;
+          query.tags = tag._id;
           getArticles();
         } else {
           handleError({ res, message: "标签不存在" });
