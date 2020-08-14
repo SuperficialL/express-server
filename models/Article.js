@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-03-25 17:34:25
+ * @LastEditTime: 2020-08-13 15:33:55
  * @Description: 文章模型
  */
 const mongoosePaginate = require('mongoose-paginate');
@@ -43,6 +43,12 @@ const articleSchema = new mongoose.Schema(
         ref: "Tag"
       }
     ],
+
+    // 是否置顶 => 0 首页不展示，1 首页展示
+    is_top: {
+      type:Number,
+      default:0
+    },
 
     // 评论数据
     comments: { type: Number, default: 0 },

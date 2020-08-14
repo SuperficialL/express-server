@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-05 23:13:19
+ * @LastEditTime: 2020-08-12 22:50:19
  * @Description: 标签模型
  */
 const mongoosePaginate = require("mongoose-paginate");
@@ -12,7 +12,7 @@ const { mongoose } = require("../core/mongodb");
 const tagSchema = new mongoose.Schema(
   {
     // 标签名称
-    title: { type: String, required: true, validate: /\S+/ },
+    name: { type: String, required: true, validate: /\S+/ },
 
     // 别名
     slug: { type: String, required: true, validate: /\S+/ },
