@@ -25,7 +25,8 @@
     "node-schedule": "^1.3.2",
     "nodemailer": "^6.4.6",
     "qiniu": "^7.3.0",
-    "sitemap": "^6.1.4",
+    "request": "^2.88.2",
+    "sitemap": "^6.2.0",
     "superagent": "^5.2.2",
     "svg-captcha": "^1.4.0"
   }

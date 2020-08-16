@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-07-11 17:55:40
+ * @LastEditTime: 2020-08-16 12:17:18
  * @Description: 路由
  */
 const express = require("express");
@@ -115,6 +115,10 @@ const routes = (app) => {
   // 文件上传
   router.post("/uploads", upload.single("file"), controller.upload);
 
+
+  // 站点地图
+	app.get('/sitemap.xml', controller.sitemap)
+
   // 验证码
   // router.get("/captcha", AuthCtrl.generateVerifCode);
 
@@ -138,6 +142,7 @@ const routes = (app) => {
   // router.get("/pictures", PicCtrl.getPictures);
   // router.patch("/pictures/:pic_id", PicCtrl.updatePicture);
   // router.delete("/pictures/:pic_id", PicCtrl.delPicture);
+  
   app.use("/api", router);
 
   app.use("*", (_, res) => {

@@ -13,12 +13,13 @@ exports.statistic = require("./statistic.controller");
 exports.like = require("./like.controller");
 exports.upload = require("./upload.controller");
 exports.link = require("./link.controller");
+exports.sitemap = require("./sitemap.controller");
+
 
 // exports.music = require("./music.controller");
 // exports.qiniu = require("./qiniu.controller");
 // exports.github = require("./github.controller");
 // exports.option = require("./option.controller");
-// exports.sitemap = require("./sitemap.controller");
 // exports.constants = require("./constants.controller");
 // exports.wallpaper = require("./wallpaper.controller");
 // exports.announcement = require("./announcement.controller");
