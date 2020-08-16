@@ -1,29 +1,32 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-16 19:21:40
+ * @LastEditTime: 2020-08-17 00:33:02
  * @Description: 站点地图
  */
-const fs = require("fs");
+const { createWriteStream } = require("fs");
 const path = require("path");
-const { SitemapStream, streamToPromise } = require("sitemap");
-const { createGzip } = require("zlib");
+const { SitemapStream } = require("sitemap");
 const consola = require("consola");
 const CONFIG = require("../app.config");
 const Tag = require("../models/Tag");
 const Article = require("../models/Article");
 const Category = require("../models/Carousel");
 const { PUBLISH_STATE, PUBLIC_STATE, SORT_TYPE } = require("../core/constants");
-const { pipeline } = require("stream");
 
-let sitemap = null;
+const xmlFilePath = path.format({
+  dir: path.join(CONFIG.APP.FRONT_END_PATH, "static"),
+  name: "sitemap",
+  ext: ".xml",
+});
 
-// 获取数据
-const getDatas = (success) => {
+// 获取地图
+const updateAndBuildSiteMap = () => {
   // sitemap
 
-  const smStream = new SitemapStream({ hostname: CONFIG.APP.URL });
-  const pipeline = smStream.pipe(createGzip());
+  smStream = new SitemapStream({ hostname: CONFIG.APP.URL });
+  const writeStream = createWriteStream(xmlFilePath);
+  smStream.pipe(writeStream);
 
   // page
   const pages = [
@@ -77,26 +80,11 @@ const getDatas = (success) => {
 
   Promise.all([addTags, addCategories, addArticles])
     .then(() => {
-      streamToPromise(pipeline).then((sm) => {
-        sitemap = sm;
-        success && success();
-      });
       smStream.end();
     })
     .catch((err) => {
-      success && success();
-      consola.warn("生成地图前获取数据库发生错误", err);
+      consola.warn("生成地图前获取数据库发生错误~", err);
     });
-};
-
-// 获取地图
-const updateAndBuildSiteMap = () => {
-  return new Promise((resolve, reject) => {
-    getDatas(() => {
-      resolve(sitemap);
-      sitemap = null;
-    });
-  });
 };
 
 module.exports = updateAndBuildSiteMap;

@@ -23,7 +23,7 @@
       "user": "root",
       "host": ["49.233.165.116"],
       "port": "22",
-      "repo": "git@github.com:SuperficialL/koa-server.git",
+      "repo": "git@github.com:SuperficialL/nuxt-web.git",
       "ref": "origin/master",
       "path": "/srv/koa-server",
       "post-deploy": "yarn && pm2 startOrRestart ecosystem.json --env production",
