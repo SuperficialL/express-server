@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-16 19:22:32
+ * @LastEditTime: 2020-08-17 00:37:18
  * @Description: 文章控制器
  */
 
@@ -29,6 +29,7 @@ const {
   buildController,
   initController,
 } = require("../core/processor");
+const updateAndBuildSiteMap = require("../utils/sitemap");
 const {
   baiduSeoPush,
   baiduSeoUpdate,
@@ -182,6 +183,7 @@ ArticleCtrl.list.POST = ({ body: article }, res) => {
     .then((result = article) => {
       handleSuccess({ res, result, message: "文章发布成功" });
       // TagCtrl.redisTagsCache.update();
+      updateAndBuildSiteMap();
       baiduSeoPush(`${CONFIG.APP.URL}/article/${result.id}`);
     })
     .catch(humanizedHandleError(res, "文章发布失败"));
@@ -214,6 +216,7 @@ ArticleCtrl.list.PATCH = ({ body: { articles, action } }, res) => {
     .then((result) => {
       handleSuccess({ res, result, message: "文章批量操作成功" });
       // TagCtrl.redisTagsCache.update();
+      updateAndBuildSiteMap();
     })
     .catch(humanizedHandleError(res, "文章批量操作失败"));
 };
@@ -230,6 +233,7 @@ ArticleCtrl.list.DELETE = ({ body: { articles } }, res) => {
     Article.deleteMany({ _id: { $in: articles } })
       .then((result) => {
         handleSuccess({ res, result, message: "文章批量删除成功" });
+        updateAndBuildSiteMap();
       })
       .catch(humanizedHandleError(res, "文章批量删除失败"));
   };
@@ -238,8 +242,10 @@ ArticleCtrl.list.DELETE = ({ body: { articles } }, res) => {
   Article.find({ _id: { $in: articles } }, "id")
     .then((articles) => {
       if (articles && articles.length) {
-        const urls = articles.map(article => `${CONFIG.APP.URL}/article/${article.id}`).join("\n")
-        baiduSeoDelete(urls)
+        const urls = articles
+          .map((article) => `${CONFIG.APP.URL}/article/${article.id}`)
+          .join("\n");
+        baiduSeoDelete(urls);
       }
       deleteArticls();
     })
@@ -308,6 +314,7 @@ ArticleCtrl.item.PATCH = ({ params: { article_id }, body: article }, res) => {
     .then((result) => {
       handleSuccess({ res, result, message: "文章修改成功" });
       // TagCtrl.redisTagsCache.update()
+      updateAndBuildSiteMap();
       baiduSeoUpdate(`${CONFIG.APP.URL}/article/${result.id}`);
     })
     .catch(humanizedHandleError(res, "文章修改失败"));
@@ -319,7 +326,8 @@ ArticleCtrl.item.DELETE = ({ params: { article_id } }, res) => {
     .then((result) => {
       handleSuccess({ res, result, message: "文章删除成功" });
       // TagCtrl.redisTagsCache.update()
-      baiduSeoDelete(`${CONFIG.APP.URL}/article/${result.id}`)
+      updateAndBuildSiteMap();
+      baiduSeoDelete(`${CONFIG.APP.URL}/article/${result.id}`);
     })
     .catch(humanizedHandleError(res, "文章删除失败"));
 };
