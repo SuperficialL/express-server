@@ -4,7 +4,7 @@
       "name": "app",
       "script": "./app.js",
       "autorestart": true,
-      "watch": false,
+      "watch": true,
       "max_memory_restart": "500M",
       "exec_mode": "fork",
       "error_file": "./logs/app-err.log",
