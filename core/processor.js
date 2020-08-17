@@ -51,19 +51,20 @@ exports.humanizedHandleSuccess = (res, message) => {
 
 // 更友好的错误处理
 exports.humanizedHandleError = (res, message, code) => {
-  console.log(message);
   return (err) => {
     return exports.handleError({ res, err, message, code });
   };
 };
 
 // 处理翻页数据
-exports.handlePaginateData = (data) => ({
-  data: data.docs,
-  pagination: {
-    total: data.total,
-    page: data.page,
-    total_page: data.pages,
-    per_page: data.limit,
-  },
-});
+exports.handlePaginateData = (data) => {
+  return {
+    data: data.docs,
+    pagination: {
+      total: data.total,
+      page: data.page,
+      total_page: data.pages,
+      per_page: data.limit,
+    },
+  };
+};

@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-17 00:37:18
+ * @LastEditTime: 2020-08-17 20:21:52
  * @Description: 文章控制器
  */
 
@@ -127,15 +127,16 @@ ArticleCtrl.list.GET = (req, res) => {
 
   // 请求对应文章
   const getArticles = () => {
+
     Article.paginate(query, options)
       .then((articles) => {
         handleSuccess({
           res,
-          message: "文章列表获取成功",
           result: handlePaginateData(articles),
+          message: "文章列表获取成功",
         });
       })
-      .catch(humanizedHandleError(res, "文章列表获取失败"));
+      .catch(humanizedHandleError(res, "文章列表获取失败~"));
   };
 
   // 分类别名查询 - 根据别名查询到 id，然后根据 id 查询
