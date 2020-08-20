@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-08-17 20:09:59
+ * @LastEditTime: 2020-08-18 20:57:41
  * @Description: 配置文件
  */
 const path = require("path");
@@ -38,7 +38,7 @@ module.exports = {
     URL: "http://www.zhangwurui.net",
     // 端口
     PORT: 3000,
-    FRONT_END_PATH: isProdMode
+    FRONT_END_PATH: isDevMode
       ? path.join(__dirname, "..", "nuxt-web")
       : path.join(__dirname, "../../", "nuxt-web/current"),
   },
