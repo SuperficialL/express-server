@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-08-31 23:31:50
+ * @LastEditTime: 2020-08-31 23:35:00
  * @Description: 配置文件
  */
 const path = require("path");
@@ -57,7 +57,7 @@ module.exports = {
     allowedOrigins: [
       "https://zhangwurui.net",
       "https://cdn.zhangwurui.net",
-      "https://admin.zhangwurui.net",
+      "http://admin.zhangwurui.net",
     ],
     allowedReferer: "zhangwurui.net",
   },
