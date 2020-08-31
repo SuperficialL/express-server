@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-08-31 10:49:46
+ * @LastEditTime: 2020-08-31 23:31:50
  * @Description: 配置文件
  */
 const path = require("path");
@@ -34,7 +34,7 @@ module.exports = {
 
   APP: {
     NAME: "个人博客",
-    URL: "http://www.zhangwurui.net",
+    URL: "https://www.zhangwurui.net",
     // 端口
     PORT: 3000,
     FRONT_END_PATH: isDevMode
@@ -55,9 +55,9 @@ module.exports = {
   // 跨域
   CROSS_DOMAIN: {
     allowedOrigins: [
-      "http://zhangwurui.net",
-      "http://cdn.zhangwurui.net",
-      "http://admin.zhangwurui.net",
+      "https://zhangwurui.net",
+      "https://cdn.zhangwurui.net",
+      "https://admin.zhangwurui.net",
     ],
     allowedReferer: "zhangwurui.net",
   },
