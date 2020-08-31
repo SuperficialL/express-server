@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-17 20:21:52
+ * @LastEditTime: 2020-08-26 23:42:57
  * @Description: 文章控制器
  */
 
@@ -45,7 +45,7 @@ ArticleCtrl.list.GET = (req, res) => {
   const { keyword, category, category_slug, tag, tag_slug, date } = req.query;
   const [page, per_page, status, publicStatus, origin, hot] = [
     req.query.page || 1,
-    req.query.per_page,
+    req.query.per_page || 8,
     req.query.state,
     req.query.public,
     req.query.origin,
@@ -124,10 +124,9 @@ ArticleCtrl.list.GET = (req, res) => {
     query.status = PUBLISH_STATE.published;
     // query.public = PUBLIC_STATE.public
   }
-
+  
   // 请求对应文章
   const getArticles = () => {
-
     Article.paginate(query, options)
       .then((articles) => {
         handleSuccess({

@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-08-18 20:57:41
+ * @LastEditTime: 2020-08-31 10:49:46
  * @Description: 配置文件
  */
 const path = require("path");
@@ -21,11 +21,10 @@ module.exports = {
     version: package.version,
     author: package.author,
     site: "http://www.zhangwurui.net",
-    github: "https://github.com/surmon-china",
-    powered: [
+    github: "https://github.com/SuperficialL",
+    keywords: [
       "Vue",
       "Nuxt.js",
-      "Bootstrap",
       "Nodejs",
       "MongoDB",
       "Express",

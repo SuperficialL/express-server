@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-05-14 16:51:10
+ * @LastEditTime: 2020-08-26 16:44:28
  * @Description:  用户控制器
  */
 
@@ -35,7 +35,7 @@ AuthCtrl.POST = ({ body: { username, password } }, res) => {
       const isValid = auth && bcrypt.compareSync(password, auth.password);
       if (isValid) {
         const token = jwt.sign({
-          usernme: auth.username,
+          username: auth.username,
           exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7)
         }, SECURITY.secretKey);
         handleSuccess({ res, result: { token }, message: "登陆成功" });
