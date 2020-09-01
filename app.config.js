@@ -1,14 +1,13 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-08-31 23:35:00
+ * @LastEditTime: 2020-09-01 11:49:24
  * @Description: 配置文件
  */
 const path = require("path");
 const package = require("./package.json");
-// const environment = process.env.NODE_ENV;
-const environment = "development";
-const isDevMode = Object.is(environment, "development");
+const environment = process.env.NODE_ENV;
+const isDevMode = Object.is(environment, undefined);
 const isProdMode = Object.is(environment, "production");
 
 module.exports = {
@@ -20,16 +19,9 @@ module.exports = {
     name: package.name,
     version: package.version,
     author: package.author,
-    site: "http://www.zhangwurui.net",
+    site: "https://www.zhangwurui.net",
     github: "https://github.com/SuperficialL",
-    keywords: [
-      "Vue",
-      "Nuxt.js",
-      "Nodejs",
-      "MongoDB",
-      "Express",
-      "Nginx",
-    ],
+    keywords: ["Vue", "Nuxt.js", "Nodejs", "MongoDB", "Express", "Nginx"],
   },
 
   APP: {
@@ -37,7 +29,7 @@ module.exports = {
     URL: "https://www.zhangwurui.net",
     // 端口
     PORT: 3000,
-    FRONT_END_PATH: isDevMode
+    FRONT_END_PATH: environment
       ? path.join(__dirname, "..", "nuxt-web")
       : path.join(__dirname, "../../", "nuxt-web/current"),
   },
@@ -45,7 +37,6 @@ module.exports = {
   // mongo数据库
   MONGODB: {
     limit: 16,
-    // uri: "mongodb://127.0.0.1:27017/website",
     uri:
       "mongodb://Superficial:.zrui.950312@49.233.165.116:27017/website?authSource=admin",
     username: "Superficial",
@@ -54,11 +45,7 @@ module.exports = {
 
   // 跨域
   CROSS_DOMAIN: {
-    allowedOrigins: [
-      "https://zhangwurui.net",
-      "https://cdn.zhangwurui.net",
-      "http://admin.zhangwurui.net",
-    ],
+    allowedOrigins: ["https://zhangwurui.net", "http://admin.zhangwurui.net"],
     allowedReferer: "zhangwurui.net",
   },
 

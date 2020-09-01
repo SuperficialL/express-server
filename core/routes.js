@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-08-26 16:46:13
+ * @LastEditTime: 2020-09-01 12:02:10
  * @Description: 路由
  */
 const express = require("express");
@@ -25,7 +25,6 @@ const upload = multer({
 const routes = (app) => {
   // 入口中间件
   app.all("*", (req, res, next) => {
-    console.log(req.url);
     // set Header
     const origin = req.headers.origin || "";
     const allowedOrigins = [...CROSS_DOMAIN.allowedOrigins];
