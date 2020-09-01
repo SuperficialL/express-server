@@ -1,6 +1,6 @@
-## 服务端 koa-server
+## 服务端 express-server
 
-> 该项目使用 `koa2` 开发,采用 `mongodb` 数据库
+> 该项目使用 `express` 开发,采用 `mongodb` 数据库
 
 ## 接口描述
 
