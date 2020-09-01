@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-09-01 11:49:24
+ * @LastEditTime: 2020-09-01 12:12:02
  * @Description: 配置文件
  */
 const path = require("path");
@@ -29,9 +29,9 @@ module.exports = {
     URL: "https://www.zhangwurui.net",
     // 端口
     PORT: 3000,
-    FRONT_END_PATH: environment
-      ? path.join(__dirname, "..", "nuxt-web")
-      : path.join(__dirname, "../../", "nuxt-web/current"),
+    FRONT_END_PATH: isProdMode
+      ? path.join(__dirname, "../../", "nuxt-web/current")
+      : path.join(__dirname, "..", "nuxt-web"),
   },
 
   // mongo数据库
