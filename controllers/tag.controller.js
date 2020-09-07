@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-27 14:26:40
+ * @LastEditTime: 2020-09-06 23:50:30
  * @Description: 标签控制器
  */
 
@@ -14,7 +14,12 @@ const authIsVerified = require("../middleware/auth");
 // const {REDIS_CACHE_FIELDS} = require("../core/constants");
 // const {baiduSeoPush, baiduSeoUpdate} = require("np-utils/np-baidu-seo-push");
 const { arrayIsInvalid, objectValues } = require("../utils/validate");
-const { PUBLISH_STATE, PUBLIC_STATE, ORIGIN_STATE, SORT_TYPE } = require("../core/constants");
+const {
+  PUBLISH_STATE,
+  PUBLIC_STATE,
+  ORIGIN_STATE,
+  SORT_TYPE,
+} = require("../core/constants");
 const {
   handleError,
   handleSuccess,
@@ -22,7 +27,7 @@ const {
   humanizedHandleSuccess,
   handlePaginateData,
   buildController,
-  initController
+  initController,
 } = require("../core/processor");
 
 // controller
@@ -33,28 +38,26 @@ const getTags = (query, options, isAdmin) => {
   const $match = isAdmin
     ? {}
     : { state: PUBLISH_STATE.published, public: PUBLIC_STATE.public };
-  return Tag.paginate(query, options)
-    .then(tags => {
-      tags = JSON.parse(JSON.stringify(tags));
-      return Article.aggregate([
-        { $match },
-        { $unwind: "$tag" },
-        {
-          $group: {
-            _id: "$tag",
-            num_tutorial: { $sum: 1 }
-          }
-        }
-      ])
-        .then(counts => {
-          tags.docs = tags.docs.map(tag => {
-            const finded = counts.find(c => String(c._id) === String(tag._id));
-            tag.count = finded ? finded.num_tutorial : 0;
-            return tag
-          });
-          return tags
-        })
-    })
+  return Tag.paginate(query, options).then((tags) => {
+    tags = JSON.parse(JSON.stringify(tags));
+    return Article.aggregate([
+      { $match },
+      { $unwind: "$tags" },
+      {
+        $group: {
+          _id: "$tags",
+          num_tutorial: { $sum: 1 },
+        },
+      },
+    ]).then((counts) => {
+      tags.docs = tags.docs.map((tag) => {
+        const finded = counts.find((c) => String(c._id) === String(tag._id));
+        tag.count = finded ? finded.num_tutorial : 0;
+        return tag;
+      });
+      return tags;
+    });
+  });
 };
 
 // 缓存获取标签列表
@@ -73,18 +76,19 @@ const getTags = (query, options, isAdmin) => {
 
 // 获取标签列表
 TagCtrl.list.GET = (req, res) => {
-
   const keyword = req.query.keyword;
-  const [page, per_page] = [req.query.page || 1, req.query.per_page].map(k => Number(k));
+  const [page, per_page] = [req.query.page || 1, req.query.per_page].map((k) =>
+    Number(k)
+  );
 
   // 过滤条件
   const options = {
     page,
-    sort: { _id: SORT_TYPE.desc }
+    sort: { _id: SORT_TYPE.desc },
   };
 
   if (!isNaN(per_page)) {
-    options.limit = per_page
+    options.limit = per_page;
   }
 
   // 查询参数
@@ -94,10 +98,10 @@ TagCtrl.list.GET = (req, res) => {
   if (keyword) {
     const keywordReg = new RegExp(keyword);
     query.$or = [
-      { "name": keywordReg },
-      { "slug": keywordReg },
-      { "description": keywordReg }
-    ]
+      { name: keywordReg },
+      { slug: keywordReg },
+      { description: keywordReg },
+    ];
   }
 
   // 管理员
@@ -114,100 +118,97 @@ TagCtrl.list.GET = (req, res) => {
 
   const tagsRequest = adminQuery();
   tagsRequest
-    .then(tags => {
+    .then((tags) => {
       handleSuccess({
         res,
         message: "标签列表获取成功",
-        result: handlePaginateData(tags)
-      })
+        result: handlePaginateData(tags),
+      });
     })
-    .catch(humanizedHandleError(res, "标签列表获取失败"))
+    .catch(humanizedHandleError(res, "标签列表获取失败"));
 };
 
 // 发布标签
 TagCtrl.list.POST = ({ body: tag, body: { slug } }, res) => {
-
   // 验证
   if (slug === undefined || slug === null) {
-    return handleError({ res, message: "缺少slug" })
+    return handleError({ res, message: "缺少slug" });
   }
 
   // 保存标签
   const saveTag = () => {
-    new Tag(tag).save()
+    new Tag(tag)
+      .save()
       .then((result = tag) => {
         handleSuccess({ res, result, message: "标签发布成功" });
         // redisTagsCache.update();
         // updateAndBuildSiteMap();
         // baiduSeoPush(`${CONFIG.APP.URL}/tag/${result.slug}`)
       })
-      .catch(humanizedHandleError(res, "标签发布失败"))
+      .catch(humanizedHandleError(res, "标签发布失败"));
   };
 
   // 验证Slug合法性
   Tag.find({ slug })
     .then(({ length }) => {
-      length
-        ? handleError({ res, message: "slug已被占用" })
-        : saveTag()
+      length ? handleError({ res, message: "slug已被占用" }) : saveTag();
     })
-    .catch(humanizedHandleError(res, "标签发布失败"))
+    .catch(humanizedHandleError(res, "标签发布失败"));
 };
 
 // 批量删除标签
 TagCtrl.list.DELETE = ({ body: { tags } }, res) => {
-
   // 验证
   if (arrayIsInvalid(tags)) {
-    return handleError({ res, message: "缺少有效参数" })
+    return handleError({ res, message: "缺少有效参数" });
   }
 
   Tag.deleteMany({ _id: { $in: tags } })
-    .then(result => {
+    .then((result) => {
       handleSuccess({ res, result, message: "标签批量删除成功" });
       // redisTagsCache.update();
       // updateAndBuildSiteMap()
     })
-    .catch(humanizedHandleError(res, "标签批量删除失败"))
+    .catch(humanizedHandleError(res, "标签批量删除失败"));
 };
 
 // 修改单个标签
-TagCtrl.item.PATCH = ({ params: { tag_id }, body: tag, }, res) => {
+TagCtrl.item.PATCH = ({ params: { tag_id }, body: tag }, res) => {
   const { slug } = tag;
   if (!slug) {
-    return handleError({ res, message: "slug不合法" })
+    return handleError({ res, message: "slug不合法" });
   }
 
   // 修改
   const putTag = () => {
     Tag.findByIdAndUpdate(tag_id, tag, { new: true })
-      .then(result => {
+      .then((result) => {
         handleSuccess({ res, result, message: "标签修改成功" });
         // redisTagsCache.update();
         // updateAndBuildSiteMap();
         // baiduSeoUpdate(`${CONFIG.APP.URL}/tag/${result.slug}`)
       })
-      .catch(humanizedHandleError(res, "标签修改失败"))
+      .catch(humanizedHandleError(res, "标签修改失败"));
   };
 
   // 修改前判断 slug 的唯一性，是否被占用
   Tag.find({ slug })
     .then(([existed_tag]) => {
-      const hasExisted = (existed_tag && (String(existed_tag._id) !== tag_id));
-      hasExisted ? handleError({ res, message: "slug已存在" }) : putTag()
+      const hasExisted = existed_tag && String(existed_tag._id) !== tag_id;
+      hasExisted ? handleError({ res, message: "slug已存在" }) : putTag();
     })
-    .catch(humanizedHandleError(res, "修改前查询失败"))
+    .catch(humanizedHandleError(res, "修改前查询失败"));
 };
 
 // 删除单个标签
 TagCtrl.item.DELETE = ({ params: { tag_id } }, res) => {
   Tag.findByIdAndRemove(tag_id)
-    .then(result => {
+    .then((result) => {
       handleSuccess({ res, result, message: "标签删除成功" });
       // redisTagsCache.update();
       // updateAndBuildSiteMap()
     })
-    .catch(humanizedHandleError(res, "标签删除失败"))
+    .catch(humanizedHandleError(res, "标签删除失败"));
 };
 
 exports.list = buildController(TagCtrl.list);

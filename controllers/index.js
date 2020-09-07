@@ -14,6 +14,7 @@ exports.like = require("./like.controller");
 exports.upload = require("./upload.controller");
 exports.link = require("./link.controller");
 exports.sitemap = require("./sitemap.controller");
+exports.notice = require("./notice.controller");
 
 
 // exports.music = require("./music.controller");

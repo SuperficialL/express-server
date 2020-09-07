@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-01 12:02:10
+ * @LastEditTime: 2020-09-07 00:16:03
  * @Description: 路由
  */
 const express = require("express");
@@ -100,6 +100,10 @@ const routes = (app) => {
   // 友链
   router.all("/links", controller.link.list);
   // router.all("/links/:link_id", controller.link.item);
+
+  // 公告
+  router.all("/notices", controller.notice.list);
+  router.all("/notices/:notice_id", controller.notice.item);
 
   // statistic
   router.get("/statistic", controller.statistic);

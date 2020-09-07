@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-12 22:50:19
+ * @LastEditTime: 2020-09-06 23:33:19
  * @Description: 标签模型
  */
 const mongoosePaginate = require("mongoose-paginate");
@@ -17,9 +17,11 @@ const tagSchema = new mongoose.Schema(
     // 别名
     slug: { type: String, required: true, validate: /\S+/ },
 
+    // 图标
+    icon: { type: String, default: "" },
+
     // 是否首页展示
     isTop: { type: Boolean, default: false },
-
 
     // 创建日期
     created_time: { type: Date, default: Date.now },

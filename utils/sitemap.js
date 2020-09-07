@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-18 20:57:16
+ * @LastEditTime: 2020-09-03 13:28:39
  * @Description: 站点地图
  */
 const { createWriteStream } = require("fs");
@@ -46,7 +46,7 @@ const updateAndBuildSiteMap = () => {
         smStream.write({
           priority: 0.6,
           changefreq: "daily",
-          url: `/tags/${tag.slug}`,
+          url: `/tag/${tag.slug}`,
         });
       });
     });

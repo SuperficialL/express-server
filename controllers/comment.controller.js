@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-22 14:43:11
+ * @LastEditTime: 2020-09-07 18:49:40
  * @Description: 评论控制器
  */
 
@@ -102,7 +102,7 @@ const updateArticleCommentCount = (article_ids = []) => {
 const sendMailToAdminAndTargetUser = (comment, permalink) => {
   // const commentContent = marked(comment.content);
   const commentType =
-    comment.article_id === COMMENT_POST_TYPE.guestbook ? "评论" : "留言";
+    comment.article_id === COMMENT_POST_TYPE.guestbook ? "留言" : "评论";
   const replyText = (isReply) => (isReply ? "回复" : "");
   const sendMailText = (isReply) =>
     `来自 ${comment.author.name} 的${commentType}${replyText(isReply)}：${
@@ -301,7 +301,7 @@ CommentCtrl.list.POST = (req, res) => {
     // 永久链接
     const pageLink =
       comment.article_id === COMMENT_POST_TYPE.guestbook
-        ? "guestbook"
+        ? "message"
         : `article/${comment.article_id}`;
     const permalink = CONFIG.APP.URL + "/" + pageLink;
     // 发布评论
