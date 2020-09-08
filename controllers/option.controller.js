@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-27 14:15:49
+ * @LastEditTime: 2020-09-08 20:38:30
  * @Description: 设置控制器
  */
 
@@ -25,26 +25,17 @@ OptionCtrl.GET = (req, res) => {
 };
 
 // 修改设置
-OptionCtrl.PUT = ({ body: options, body: { _id } }, res) => {
+OptionCtrl.PATCH = ({ body: option, body: { _id } }, res) => {
+  console.log(option, "option");
   // 如果 _id 是 null 或空值
+  console.log(_id,'id');
   if (!_id) {
-    Reflect.deleteProperty(options, "_id");
+    Reflect.deleteProperty(option, "_id");
   }
 
-  // 置空 Likes 字段
-  Reflect.deleteProperty(options, "meta");
-
-  // 检测黑名单和 ping 地址列表不能存入空元素
-  const checkEmpty = (data) =>
-    data && data.length ? data.filter((t) => !!t) : [];
-  options.ping_sites = checkEmpty(options.ping_sites);
-  options.blacklist.ips = checkEmpty(options.blacklist.ips);
-  options.blacklist.mails = checkEmpty(options.blacklist.mails);
-  options.blacklist.keywords = checkEmpty(options.blacklist.keywords);
-
   const optionService = _id
-    ? Option.findByIdAndUpdate(_id, options, { new: true })
-    : new Option(options).save();
+    ? Option.findByIdAndUpdate(_id, option, { new: true })
+    : new Option(option).save();
   optionService
     .then(humanizedHandleSuccess(res, "配置项修改成功"))
     .catch(humanizedHandleError(res, "配置项修改失败"));

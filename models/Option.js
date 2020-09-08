@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2020-02-10 13:43:33
- * @LastEditTime: 2020-07-27 14:25:37
+ * @LastEditTime: 2020-09-08 20:44:51
  * @Description: 网站设置模型
  */
 
@@ -15,35 +15,22 @@ const optionSchema = new mongoose.Schema({
   sub_title: { type: String, required: true },
 
   // 关键字
-  keywords: [{ type: String }],
+  keywords: { type: String },
 
   // 网站描述
-  description: String,
+  description: { type: String },
 
   // 站点地址
-  site_url: { type: String, required: true },
+  site_url: { type: String },
 
   // 网站官邮
-  site_email: String,
+  site_email: { type: String },
 
   // 备案号
-  site_icp: String,
+  site_icp: { type: String },
 
-  // 搜索引擎 ping
-  ping_sites: [{ type: String, validate: /\S+/ }],
-
-  // 黑名单
-  blacklist: {
-    ips: [{ type: String, validate: /\S+/ }],
-    mails: [{ type: String, validate: /\S+/ }],
-    keywords: [{ type: String, validate: /\S+/ }],
-  },
-
-  // 其他元信息
-  meta: {
-    // 被喜欢次数
-    likes: { type: Number, default: 0 },
-  },
+  // 被喜欢次数
+  likes: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model("Option", optionSchema);

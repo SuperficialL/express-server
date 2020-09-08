@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-07 00:16:03
+ * @LastEditTime: 2020-09-08 20:18:47
  * @Description: 路由
  */
 const express = require("express");
@@ -104,6 +104,9 @@ const routes = (app) => {
   // 公告
   router.all("/notices", controller.notice.list);
   router.all("/notices/:notice_id", controller.notice.item);
+
+  // 站点配置
+  router.all("/option", controller.option);
 
   // statistic
   router.get("/statistic", controller.statistic);

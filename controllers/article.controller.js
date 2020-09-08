@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-26 23:42:57
+ * @LastEditTime: 2020-09-08 14:23:24
  * @Description: 文章控制器
  */
 
@@ -19,7 +19,6 @@ const {
   PUBLIC_STATE,
   ORIGIN_STATE,
   SORT_TYPE,
-  REDIS_CACHE_FIELDS,
 } = require("../core/constants");
 const {
   handleError,

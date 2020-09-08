@@ -1,12 +1,11 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-08-26 16:44:28
+ * @LastEditTime: 2020-09-08 21:11:40
  * @Description:  用户控制器
  */
 
 const jwt = require("jsonwebtoken");
-// const svgCaptcha = require("svg-captcha");
 const { SECURITY } = require("../app.config");
 const Auth = require("../models/Auth");
 const bcrypt = require("bcryptjs");
@@ -21,7 +20,7 @@ const AuthCtrl = initController();
 
 // 获取个人信息
 AuthCtrl.GET = (req, res) => {
-  Auth.find({}, "-_id username avatar email")
+  Auth.find({}, "-_id username avatar email headline")
     .then(([result = {}]) => {
       handleSuccess({ res, result, message: "用户资料获取成功" })
     })

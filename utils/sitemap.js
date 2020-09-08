@@ -1,7 +1,7 @@
 /*
  * @author: SuperficialL
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-09-03 13:28:39
+ * @LastEditTime: 2020-09-08 14:24:23
  * @Description: 站点地图
  */
 const { createWriteStream } = require("fs");
@@ -11,8 +11,8 @@ const consola = require("consola");
 const CONFIG = require("../app.config");
 const Tag = require("../models/Tag");
 const Article = require("../models/Article");
-const Category = require("../models/Carousel");
-const { PUBLISH_STATE, PUBLIC_STATE, SORT_TYPE } = require("../core/constants");
+const Category = require("../models/Category");
+const { PUBLISH_STATE, SORT_TYPE } = require("../core/constants");
 
 const xmlFilePath = path.format({
   dir: path.join(CONFIG.APP.FRONT_END_PATH, "static"),
