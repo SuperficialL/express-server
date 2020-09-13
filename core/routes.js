@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-08 20:18:47
+ * @LastEditTime: 2020-09-13 17:18:09
  * @Description: 路由
  */
 const express = require("express");
@@ -83,6 +83,11 @@ const routes = (app) => {
     next();
   });
 
+  // 接口信息
+  router.get("/", (_, res) => {
+    res.jsonp(INFO);
+  });
+
   router.all("/auth", controller.auth);
 
   router.all("/articles", controller.articles.list);
@@ -120,36 +125,7 @@ const routes = (app) => {
   // 站点地图
   app.get("/sitemap.xml", controller.sitemap);
 
-  // 接口信息
-  app.get("/", (_, res) => {
-    res.jsonp(INFO);
-  });
-
-  // 验证码
-  // router.get("/captcha", AuthCtrl.generateVerifCode);
-
-  // // 用户
-  // router.post("/auth", AuthCtrl.login);
-  // router.post("/register", AuthCtrl.register);
-  // router.get("/profile", AuthCtrl.profile);
-  // // router.patch("/profile", AuthCtrl.updateAuth);
-
-  // // 图片上传
-  // router.post("/uploads", FileCtrl.uploadImg);
-  // router.get("/qiNiuToken", FileCtrl.uploadQiNiu);
-  // router.get("/token", FileCtrl.getQiNiuToken);
-  // router.post("/saveQiNiuUrl", FileCtrl.saveQiNiuUrl);
-
-  // // 音乐
-  // router.get("/musices", FileCtrl.getMusic)
-
-  // // 图片
-  // router.post("/pictures", PicCtrl.createPicture);
-  // router.get("/pictures", PicCtrl.getPictures);
-  // router.patch("/pictures/:pic_id", PicCtrl.updatePicture);
-  // router.delete("/pictures/:pic_id", PicCtrl.delPicture);
-
-  app.use("/api", router);
+  app.use("/", router);
 
   app.use("*", (_, res) => {
     res.status(404).jsonp({ code: 1, message: "404" });

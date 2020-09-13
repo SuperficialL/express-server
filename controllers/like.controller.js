@@ -1,7 +1,7 @@
 /*
  * @author: Superficial
  * @Date: 2019-08-24 12:35:32
- * @LastEditTime: 2020-07-10 14:49:49
+ * @LastEditTime: 2020-09-10 11:34:40
  * @Description: 点赞控制器
  */
 
@@ -18,14 +18,15 @@ const {
 } = require("../core/processor");
 
 module.exports = ({ body: { id, type } }, res) => {
-  console.log(id, type);
   // 验证参数的正确性，1 => 评论，2 => 页面
   if (!objectValues(LIKE_TYPE).includes(type)) {
     return handleError({ res, message: "喜欢失败，没有原因" });
   }
   // like
-  const ModelService = type === LIKE_TYPE.comment ? Comment : Article;
-  ModelService.findOne({ id })
+  const isLikeSite = id === COMMENT_POST_TYPE.guestbook;
+  const ModelService =
+    type === LIKE_TYPE.comment ? Comment : isLikeSite ? Option : Article;
+  ModelService.findOne(isLikeSite ? {} : { id })
     .then((result) => {
       result.likes++;
       result
