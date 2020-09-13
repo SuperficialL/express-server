@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-13 17:18:09
+ * @LastEditTime: 2020-09-13 19:59:53
  * @Description: 路由
  */
 const express = require("express");
@@ -61,11 +61,13 @@ const routes = (app) => {
 
     // 排除 (auth 的 post 请求) & (评论的 post 请求) & (like post 请求)
     const isPostUrl = (req, url) => {
-      return Object.is(req.url, `/api/${url}`) && Object.is(req.method, "POST");
+      console.log(req.url, "req");
+      return Object.is(req.url, `/${url}`) && Object.is(req.method, "POST");
     };
     const isLike = isPostUrl(req, "like");
     const isPostAuth = isPostUrl(req, "auth");
     const isPostComment = isPostUrl(req, "comments");
+    console.log(isPostAuth, "isPostAuth");
     if (isLike || isPostAuth || isPostComment) {
       return next();
     }
