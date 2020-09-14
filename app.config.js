@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 22:59:01
- * @LastEditTime: 2020-09-01 12:12:02
+ * @LastEditTime: 2020-09-14 13:03:30
  * @Description: 配置文件
  */
 const path = require("path");
@@ -45,7 +45,11 @@ module.exports = {
 
   // 跨域
   CROSS_DOMAIN: {
-    allowedOrigins: ["https://zhangwurui.net", "http://admin.zhangwurui.net"],
+    allowedOrigins: [
+      "https://zhangwurui.net",
+      "https://admin.zhangwurui.net",
+      "https://api.zhangwurui.net",
+    ],
     allowedReferer: "zhangwurui.net",
   },
 

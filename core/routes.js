@@ -1,11 +1,9 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-14 12:02:02
+ * @LastEditTime: 2020-09-14 13:03:03
  * @Description: 路由
  */
-const express = require("express");
-const router = express.Router();
 const multer = require("multer");
 const { INFO, CROSS_DOMAIN, isProdMode, isDevMode } = require("../app.config");
 const authIsVerified = require("../middleware/auth");
