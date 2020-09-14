@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-14 13:03:03
+ * @LastEditTime: 2020-09-14 13:29:18
  * @Description: 路由
  */
 const multer = require("multer");
@@ -53,7 +53,7 @@ const routes = (app) => {
       const refererVerified =
         !referer || referer.includes(CROSS_DOMAIN.allowedReferer);
       if (!originVerified && !refererVerified) {
-        return res.status(403).jsonp({ code: 0, message: "来者何人！" });
+        return res.status(403).jsonp({ code: 0, message: "非正常请求,禁止访问！" });
       }
     }
 
