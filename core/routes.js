@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-14 19:37:23
+ * @LastEditTime: 2020-09-14 20:00:11
  * @Description: 路由
  */
 const router = require("express").Router();
@@ -62,7 +62,7 @@ const routes = (app) => {
 
     // 排除 (auth 的 post 请求) & (评论的 post 请求) & (like post 请求)
     const isPostUrl = (req, url) => {
-      return Object.is(req.url, `/api/${url}`) && Object.is(req.method, "POST");
+      return Object.is(req.url, `/api${url}`) && Object.is(req.method, "POST");
     };
     const isLike = isPostUrl(req, "/like");
     const isPostAuth = isPostUrl(req, "/auth");
@@ -127,7 +127,7 @@ const routes = (app) => {
   // 站点地图
   router.get("/sitemap.xml", controller.sitemap);
 
-  app.use("/api/", router);
+  app.use("/api", router);
 
   app.use("*", (_, res) => {
     res.status(404).jsonp({ code: 1, message: "404" });
