@@ -1,7 +1,7 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-14 13:29:18
+ * @LastEditTime: 2020-09-14 13:34:50
  * @Description: 路由
  */
 const multer = require("multer");
@@ -123,8 +123,6 @@ const routes = (app) => {
 
   // 站点地图
   app.get("/sitemap.xml", controller.sitemap);
-
-  // app.use("/", router);
 
   app.use("*", (_, res) => {
     res.status(404).jsonp({ code: 1, message: "404" });
