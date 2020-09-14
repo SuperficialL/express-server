@@ -1,9 +1,10 @@
 /*
  * @Author: Superficial
  * @Date: 2019-09-30 16:35:10
- * @LastEditTime: 2020-09-14 13:34:50
+ * @LastEditTime: 2020-09-14 19:37:23
  * @Description: 路由
  */
+const router = require("express").Router();
 const multer = require("multer");
 const { INFO, CROSS_DOMAIN, isProdMode, isDevMode } = require("../app.config");
 const authIsVerified = require("../middleware/auth");
@@ -53,13 +54,15 @@ const routes = (app) => {
       const refererVerified =
         !referer || referer.includes(CROSS_DOMAIN.allowedReferer);
       if (!originVerified && !refererVerified) {
-        return res.status(403).jsonp({ code: 0, message: "非正常请求,禁止访问！" });
+        return res
+          .status(403)
+          .jsonp({ code: 0, message: "非正常请求,禁止访问！" });
       }
     }
 
     // 排除 (auth 的 post 请求) & (评论的 post 请求) & (like post 请求)
     const isPostUrl = (req, url) => {
-      return Object.is(req.url, url) && Object.is(req.method, "POST");
+      return Object.is(req.url, `/api/${url}`) && Object.is(req.method, "POST");
     };
     const isLike = isPostUrl(req, "/like");
     const isPostAuth = isPostUrl(req, "/auth");
@@ -87,42 +90,44 @@ const routes = (app) => {
     res.jsonp(INFO);
   });
 
-  app.all("/auth", controller.auth);
+  router.all("/auth", controller.auth);
 
-  app.all("/articles", controller.articles.list);
-  app.all("/articles/:article_id", controller.articles.item);
+  router.all("/articles", controller.articles.list);
+  router.all("/articles/:article_id", controller.articles.item);
 
-  app.all("/categories", controller.category.list);
-  app.all("/categories/:category_id", controller.category.item);
+  router.all("/categories", controller.category.list);
+  router.all("/categories/:category_id", controller.category.item);
 
-  app.all("/tags", controller.tag.list);
-  app.all("/tags/:tag_id", controller.tag.item);
+  router.all("/tags", controller.tag.list);
+  router.all("/tags/:tag_id", controller.tag.item);
 
-  app.all("/comments", controller.comment.list);
-  app.all("/comments/:comment_id", controller.comment.item);
+  router.all("/comments", controller.comment.list);
+  router.all("/comments/:comment_id", controller.comment.item);
 
   // 友链
-  app.all("/links", controller.link.list);
+  router.all("/links", controller.link.list);
   // app.all("/links/:link_id", controller.link.item);
 
   // 公告
-  app.all("/notices", controller.notice.list);
-  app.all("/notices/:notice_id", controller.notice.item);
+  router.all("/notices", controller.notice.list);
+  router.all("/notices/:notice_id", controller.notice.item);
 
   // 站点配置
-  app.all("/option", controller.option);
+  router.all("/option", controller.option);
 
   // statistic
-  app.get("/statistic", controller.statistic);
+  router.get("/statistic", controller.statistic);
 
   // like
-  app.post("/like", controller.like);
+  router.post("/like", controller.like);
 
   // 文件上传
-  app.post("/uploads", upload.single("file"), controller.upload);
+  router.post("/uploads", upload.single("file"), controller.upload);
 
   // 站点地图
-  app.get("/sitemap.xml", controller.sitemap);
+  router.get("/sitemap.xml", controller.sitemap);
+
+  app.use("/api/", router);
 
   app.use("*", (_, res) => {
     res.status(404).jsonp({ code: 1, message: "404" });
