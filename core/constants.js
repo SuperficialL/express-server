@@ -1,7 +1,7 @@
 /*
  * @Author: SuperficialL
  * @Date: 2019-09-04 21:49:02
- * @LastEditTime: 2020-09-10 11:31:00
+ * @LastEditTime: 2020-09-16 14:27:27
  * @Description: 数据库常量
  */
 
@@ -65,4 +65,5 @@ exports.SORT_TYPE = {
 exports.LIKE_TYPE = {
   comment: 'comment',
   page: 'page',
+  article: 'article',
 };
