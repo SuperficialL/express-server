@@ -49,9 +49,9 @@ module.exports = {
       "https://zhangwurui.net",
       "https://admin.zhangwurui.net",
       "https://api.zhangwurui.net",
-      "https://servicewechat.com"
     ],
     allowedReferer: "zhangwurui.net",
+    weiChatReferer: "https://servicewechat.com"
   },
 
   BAIDU: {

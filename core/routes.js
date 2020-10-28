@@ -53,7 +53,9 @@ const routes = (app) => {
         !origin || origin.includes(CROSS_DOMAIN.allowedReferer);
       const refererVerified =
         !referer || referer.includes(CROSS_DOMAIN.allowedReferer);
-      if (!originVerified && !refererVerified) {
+      const weiChatRefererVerified =
+        !referer || referer.includes(CROSS_DOMAIN.weiChatReferer);
+      if (!originVerified && !refererVerified && !weiChatRefererVerified) {
         return res
           .status(403)
           .jsonp({ code: 0, message: "非正常请求,禁止访问！" });
