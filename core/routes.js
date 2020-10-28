@@ -46,6 +46,7 @@ const routes = (app) => {
     if (req.method === "OPTIONS") {
       return res.sendStatus(200);
     }
+    console.log(isProdMode,"isProdMode");
     // 如果是生产环境，需要验证用户来源渠道，防止非正常请求
     if (isProdMode) {
       const { origin, referer } = req.headers;
@@ -67,8 +68,9 @@ const routes = (app) => {
     const isLike = isPostUrl(req, "/like");
     const isPostAuth = isPostUrl(req, "/auth");
     const isPostComment = isPostUrl(req, "/comments");
+    const isPostQuestion = isPostUrl(req, "/question");
 
-    if (isLike || isPostAuth || isPostComment) {
+    if (isLike || isPostAuth || isPostComment || isPostQuestion) {
       return next();
     }
 
@@ -126,6 +128,9 @@ const routes = (app) => {
 
   // 站点地图
   router.get("/sitemap.xml", controller.sitemap);
+
+  // 问卷调查
+  router.all("/question", controller.question);
 
   app.use("/api", router);
 

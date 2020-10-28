@@ -6,7 +6,7 @@
  */
 
 const express = require("express");
-const helmet = require('helmet');
+const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const { ready } = require("consola");
 const { APP } = require("./app.config");
@@ -24,7 +24,7 @@ app.set("port", APP.PORT);
 app.use(helmet());
 app.use(bodyParser.json({ limit: "1mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static("public"));
 // app routes
 routes(app);
 

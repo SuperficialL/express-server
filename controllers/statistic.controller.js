@@ -5,9 +5,6 @@
  * @Description: 统计控制器
  */
 
-// const schedule = require("node-schedule");
-// const redis = require("../core/redis");
-const { REDIS_CACHE_FIELDS } = require("../core/constants");
 const { handleSuccess } = require("../core/processor");
 
 const Article = require("../models/Article");
@@ -56,6 +53,6 @@ module.exports = (req, res) => {
       res,
       message: "统计数据获取成功",
       result: resultData
-    })
-  })
+    });
+  });
 };

@@ -15,4 +15,5 @@ exports.upload = require("./upload.controller");
 exports.link = require("./link.controller");
 exports.sitemap = require("./sitemap.controller");
 exports.notice = require("./notice.controller");
-exports.option = require('./option.controller')
+exports.option = require("./option.controller");
+exports.question = require("./question.controller");

@@ -28,7 +28,6 @@ OptionCtrl.GET = (req, res) => {
 OptionCtrl.PATCH = ({ body: option, body: { _id } }, res) => {
   console.log(option, "option");
   // 如果 _id 是 null 或空值
-  console.log(_id,'id');
   if (!_id) {
     Reflect.deleteProperty(option, "_id");
   }
