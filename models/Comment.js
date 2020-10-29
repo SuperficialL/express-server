@@ -5,10 +5,10 @@
  * @Description: 评论模型
  */
 
-const mongoosePaginate = require('mongoose-paginate');
-const autoIncrement = require('mongoose-auto-increment');
+const mongoosePaginate = require("mongoose-paginate");
+const autoIncrement = require("mongoose-auto-increment");
 const { mongoose } = require("../core/mongodb");
-const { COMMENT_STATE, COMMENT_PARENT_TYPE } = require('../core/constants')
+const { COMMENT_STATE, COMMENT_PARENT_TYPE } = require("../core/constants");
 
 // 评论模型
 const commentSchema = new mongoose.Schema(
@@ -68,8 +68,8 @@ const commentSchema = new mongoose.Schema(
 // 翻页 + 自增 ID 插件配置
 commentSchema.plugin(mongoosePaginate);
 commentSchema.plugin(autoIncrement.plugin, {
-  model: 'Comment',
-  field: 'id',
+  model: "Comment",
+  field: "id",
   startAt: 1,
   incrementBy: 1
 });

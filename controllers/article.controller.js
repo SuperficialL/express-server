@@ -273,8 +273,8 @@ ArticleCtrl.item.GET = ({ params: { article_id } }, res) => {
   (isFindById
     ? Article.findById(article_id)
     : Article.findOne({ id: article_id, status: PUBLISH_STATE.published })
-        .populate("category tags")
-        .exec()
+      .populate("category tags")
+      .exec()
   )
     .then((result) => {
       // 每请求一次，浏览次数都要增加

@@ -131,7 +131,7 @@ const routes = (app) => {
   router.get("/sitemap.xml", controller.sitemap);
 
   // 问卷调查
-  router.all("/question", controller.question);
+  router.all("/questions", controller.question);
 
   app.use("/api", router);
 

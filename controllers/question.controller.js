@@ -8,20 +8,45 @@
 const Question = require("../models/Question");
 
 const {
+  handlePaginateData,
+  handleSuccess,
   humanizedHandleError,
   humanizedHandleSuccess,
   buildController,
   initController,
 } = require("../core/processor");
 
+const { numberIsInvalid } = require("../utils/tools");
+
 // controller
 const QuestionCtrl = initController();
 
 // 问卷获取
 QuestionCtrl.GET = (req, res) => {
-  Question.find()
-    .then(humanizedHandleSuccess(res, "问卷获取成功"))
-    .catch(humanizedHandleError(res, "问卷获取失败"));
+  const [page, per_page] = [
+    req.query.page || 1,
+    req.query.per_page || 8,
+  ].map((k) => Number(k));
+
+  // 过滤条件
+  const options = {
+    page
+  };
+  if (!numberIsInvalid(per_page)) {
+    options.limit = per_page;
+  }
+
+  const query = {};
+
+  Question.paginate(query, options)
+    .then((questions) => {
+      handleSuccess({
+        res,
+        result: handlePaginateData(questions),
+        message: "问卷列表获取成功",
+      });
+    })
+    .catch(humanizedHandleError(res, "问卷列表获取失败~"));
 };
 
 // 新增问卷
