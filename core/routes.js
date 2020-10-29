@@ -69,7 +69,7 @@ const routes = (app) => {
     const isLike = isPostUrl(req, "/like");
     const isPostAuth = isPostUrl(req, "/auth");
     const isPostComment = isPostUrl(req, "/comments");
-    const isPostQuestion = isPostUrl(req, "/question");
+    const isPostQuestion = isPostUrl(req, "/questions");
 
     if (isLike || isPostAuth || isPostComment || isPostQuestion) {
       return next();
